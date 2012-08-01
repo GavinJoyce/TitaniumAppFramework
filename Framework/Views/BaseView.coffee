@@ -23,6 +23,27 @@ root.BaseView = class BaseView
     })
     @window.add(@spinner)
     
+    
+    @noInternetView = Ti.UI.createView({
+      height: 60
+      width: "100%"
+      backgroundColor: "yellow"
+    })
+    noInternetHeader = Ti.UI.createLabel({
+      text: "No Internet Connection"
+      font: { fontSize: 20, fontWeight: "bold" }
+      height: Ti.UI.SIZE
+      top: 10
+    })
+    noInternetText = Ti.UI.createLabel({
+      text: "A working internet connection is required to use this app"
+      font: { fontSize: 18 }
+      height: Ti.UI.SIZE
+      bottom: 10
+    })
+    @noInternetView.add([ noInternetHeader, noInternetText ])
+    
+    
     @window.addEventListener('focus', @focus)
     @window.addEventListener('close', @onClose)
     

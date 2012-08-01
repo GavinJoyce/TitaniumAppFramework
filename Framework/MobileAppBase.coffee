@@ -15,6 +15,7 @@ root.MobileAppBase = class MobileAppBase
       viewBackgroundColor: '#FFFFFF'
       viewTitleBarColor: '#000000'
       debugMode: false
+      internetRequired: true
     }, options)
     
     if @settings.googleAnalyticsID

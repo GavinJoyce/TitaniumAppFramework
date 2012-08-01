@@ -38,11 +38,14 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework extends r
     if @table.data != null && @table.data.length > 0 && @table.data[0].rows.length > 0
       rowToDeleteIndex = @table.data[0].rows.length - 1
 
+    @i = 0
     for item in items
       @table.appendRow(root.app.create(@settings.rowClassName, { item: item }).row)
       
-    if rowToDeleteIndex
-      @table.deleteRow(rowToDeleteIndex)
+      if @i == 0 && rowToDeleteIndex
+        @table.deleteRow(rowToDeleteIndex)
+      
+      @i++
 
     if hasMoreRows
       @table.hasMoreRows = true

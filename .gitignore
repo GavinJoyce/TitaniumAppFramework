@@ -1,3 +1,4 @@
+.DS_Store*
 Framework/*.js
 Framework/Views/*.js
 Framework/Views/**/*.js

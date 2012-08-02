@@ -64,6 +64,12 @@ root.BaseView = class BaseView
     @uiInitialised = true
     
   onInit: ->
+    if Ti.Platform.osname == "ipad"
+      if @isPortrait
+        @onPortrait()
+      if @isLandscape
+        @onLandscape()
+      
   onFocus: ->
 
   showSpinner: -> @spinner.show()

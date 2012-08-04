@@ -19,17 +19,8 @@ root.MobileAppBase = class MobileAppBase
     @includedFiles = []
     
   delay: (ms, func) -> setTimeout func, ms
-  
-  create: (className, options = {}) ->
-    @classFactory.create(className, options)
-        
-  #TODO: GJ: delete
-  @include: (path = "", recursive = false) => root.framework.include(path, recursive)
-  @includeModule: (moduleName) -> root.framewotk.includeModule(moduleName)
-  @includeFile: (file) => root.framework.includeFile(file)
-  @getFiles: (path = "", recursive = false) -> root.framework.getFiles(path, recursive)
+  create: (className, options = {}) -> @classFactory.create(className, options)
 
-    
   post: (url, params, onSuccess, onError = null) =>
     @xhr.abort()
     @xhr.open('POST', url)

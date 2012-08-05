@@ -1,20 +1,19 @@
-root.SearchResultsTable_Framework = class SearchResultsTable_Framework extends root.BaseView
+root.SearchResultsTable_Framework = class SearchResultsTable_Framework
   constructor:(options = {}) ->
-    options = root._.extend({
+    @options = root._.extend({
       onTableClick: (e) =>
       infiniteScroll: true
       infiniteScrollCallback: (e) => Ti.API.info("scrolled to bottom")
       rowClassName: "SearchResultsTableRow"
       top: "auto"
     }, options)
-    super(options)
     
     @table = Ti.UI.createTableView({
-      top: @settings.top
+      top: @options.top
     })
     @moreRow = root.app.create("SearchResultsTableMoreRow").moreRow
     
-    if @settings.infiniteScroll
+    if @options.infiniteScroll
       @lastDistance = 0
 
       @table.addEventListener("scroll", (e) =>
@@ -25,7 +24,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework extends r
         distance = theEnd - total
         if distance < @lastDistance
           if (total >= theEnd) && e.contentSize.height > e.size.height && @table.hasMoreRows
-            @settings.infiniteScrollCallback()
+            @options.infiniteScrollCallback()
         @lastDistance = distance
       )
     
@@ -40,7 +39,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework extends r
 
     @i = 0
     for item in items
-      @table.appendRow(root.app.create(@settings.rowClassName, { item: item }).row)
+      @table.appendRow(root.app.create(@options.rowClassName, { item: item }).row)
       
       if @i == 0 && rowToDeleteIndex
         @table.deleteRow(rowToDeleteIndex)
@@ -53,6 +52,6 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework extends r
     else
       @table.hasMoreRows = false
 
-    @table.addEventListener("click", @settings.onTableClick)
+    @table.addEventListener("click", @options.onTableClick)
     
     Ti.API.info("-- Finish Update Table --")

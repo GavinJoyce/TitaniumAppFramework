@@ -1,30 +1,25 @@
 root.BaseView = class BaseView
   constructor: (options = {}) ->
     @uiInitialised = false
-    @settings = root._.extend({
+    @settings = root._.extend({ #TODO: GJ: can we pass in isModal?
       title: ''
       backgroundImage: root.app.settings.viewBackgroundImage
       backgroundRepeat: root.app.settings.viewBackgroundRepeat
       backgroundColor: root.app.settings.viewBackgroundColor
       barColor: root.app.settings.viewTitleBarColor
       fullscreen: false
+      modal: false
     }, options)
-    
     @isPortrait = (Ti.UI.orientation == Ti.UI.PORTRAIT || Ti.UI.orientation == Ti.UI.UPSIDE_PORTRAIT)
     @isLandscape = (Ti.UI.orientation == Ti.UI.LANDSCAPE_LEFT || Ti.UI.orientation == Ti.UI.LANDSCAPE_RIGHT)
     
     @controls = []
-    @window = Ti.UI.createWindow(@settings)
-    @window.title = @settings.title #NOTE: GJ: do we need this?
 
-    @spinner = Ti.UI.createActivityIndicator({
-      message: "Loading...", width: Ti.UI.SIZE
-      color: "#000", font: { fontSize: 18 }
-    })
-    @window.add(@spinner)
+    @window = Ti.UI.createWindow(@settings)
+
     
-    
-    @noInternetView = Ti.UI.createView({
+    #TODO: SS: perhaps this should be a modal view on the app itself? we don't want every view to have this overhead
+    ###@noInternetView = Ti.UI.createView({ #TODO: GJ: move to NoInternetView class
       height: 60
       width: "100%"
       backgroundColor: "yellow"
@@ -41,22 +36,11 @@ root.BaseView = class BaseView
       height: Ti.UI.SIZE
       bottom: 10
     })
-    @noInternetView.add([ noInternetHeader, noInternetText ])
-    
+    @noInternetView.add([ noInternetHeader, noInternetText ])###
     
     @window.addEventListener('focus', @focus)
     @window.addEventListener('close', @onClose)
     
-    Ti.App.addEventListener("forceLandscapeWindow", (e) =>
-      @window.orientationModes = [Ti.UI.LANDSCAPE_LEFT, Ti.UI.LANDSCAPE_RIGHT]
-    )
-    
-    Ti.Gesture.addEventListener("orientationchange", (e) =>
-      if Ti.UI.orientation == Ti.UI.PORTRAIT || Ti.UI.orientation == Ti.UI.UPSIDE_PORTRAIT
-        @onPortrait()
-      else
-        @onLandscape()
-    )
 
   focus: (e) =>
     @onInit() if !@uiInitialised
@@ -64,7 +48,21 @@ root.BaseView = class BaseView
     @uiInitialised = true
     
   onInit: ->
-    if Ti.Platform.osname == "ipad"
+    @spinner = Ti.UI.createActivityIndicator({
+      message: "Loading...", width: Ti.UI.SIZE
+      color: "#000", font: { fontSize: 18 }
+    })
+    @window.add(@spinner)
+    
+    Ti.App.addEventListener("forceLandscapeWindow", (e) => @window.orientationModes = [Ti.UI.LANDSCAPE_LEFT, Ti.UI.LANDSCAPE_RIGHT])
+    Ti.Gesture.addEventListener("orientationchange", (e) =>
+      if Ti.UI.orientation == Ti.UI.PORTRAIT || Ti.UI.orientation == Ti.UI.UPSIDE_PORTRAIT
+        @onPortrait()
+      else
+        @onLandscape()
+    )
+    
+    if Ti.Platform.osname == "ipad" #NOTE: GJ: shouldn't we trigger this regardless of the platform?
       if @isPortrait
         @onPortrait()
       if @isLandscape

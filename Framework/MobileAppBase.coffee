@@ -5,6 +5,7 @@ root.MobileAppBase = class MobileAppBase
       viewBackgroundImage: ""
       viewBackgroundRepeat: true
       viewBackgroundColor: '#FFFFFF'
+      viewBackgroundGradient: null
       viewTitleBarColor: '#000000'
       debugMode: false
       internetRequired: true

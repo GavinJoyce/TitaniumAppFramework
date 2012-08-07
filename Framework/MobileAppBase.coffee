@@ -19,6 +19,11 @@ root.MobileAppBase = class MobileAppBase
     @xhr = Ti.Network.createHTTPClient({ timeout: 15000 })
     @includedFiles = []
     
+    if @settings.internetRequired
+      @noInternetView = @create("NoInternetView")
+      @checkInternet()
+      Ti.Network.addEventListener('change', (e) => @checkInternet())
+    
   delay: (ms, func) -> setTimeout func, ms
   create: (className, options = {}) -> @classFactory.create(className, options)
 
@@ -31,3 +36,12 @@ root.MobileAppBase = class MobileAppBase
     @xhr.onerror = () ->
       onError() if onError
     @xhr.send(params)
+    
+    
+  checkInternet: ->
+    if(Ti.Network.online)
+      Ti.API.info('Welcome to the internet')
+      @noInternetView.window.close()
+    else
+      Ti.API.info('Bloody hell, the network just DISSAPEARED!')
+      @noInternetView.window.open()

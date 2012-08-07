@@ -58,8 +58,12 @@ root.BaseView = class BaseView
     Ti.App.addEventListener("forceLandscapeWindow", (e) => @window.orientationModes = [Ti.UI.LANDSCAPE_LEFT, Ti.UI.LANDSCAPE_RIGHT])
     Ti.Gesture.addEventListener("orientationchange", (e) =>
       if Ti.UI.orientation == Ti.UI.PORTRAIT || Ti.UI.orientation == Ti.UI.UPSIDE_PORTRAIT
+        @isPortrait = true
+        @isLandscape = false
         @onPortrait()
       else
+        @isLandscape = true
+        @isPortrait = false
         @onLandscape()
     )
     

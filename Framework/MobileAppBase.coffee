@@ -1,5 +1,7 @@
 root.framework.include('/Common/Framework/Network.js')
 
+root.moduleNames = []
+
 root.MobileAppBase = class MobileAppBase
   constructor: (options) ->
     @settings = root._.extend({
@@ -18,7 +20,6 @@ root.MobileAppBase = class MobileAppBase
       @analytics.start(10)
       
     @classFactory = new root.ClassFactory()
-    @xhr = Ti.Network.createHTTPClient({ timeout: 15000 })
     @network = new root.Network()
     @includedFiles = []
     

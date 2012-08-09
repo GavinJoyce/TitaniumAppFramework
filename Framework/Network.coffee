@@ -34,6 +34,7 @@ root.Network = class Network
     options.try++
     
     if options.try < @settings.retryCount
+      Ti.API.info("root.network : retrying ##{options.try}")
       options.onRetry(options.try)
       @ajax(options)
     else

@@ -1,3 +1,5 @@
+root.framework.include('/Common/Framework/Network.js')
+
 root.MobileAppBase = class MobileAppBase
   constructor: (options) ->
     @settings = root._.extend({
@@ -17,6 +19,7 @@ root.MobileAppBase = class MobileAppBase
       
     @classFactory = new root.ClassFactory()
     @xhr = Ti.Network.createHTTPClient({ timeout: 15000 })
+    @network = new root.Network()
     @includedFiles = []
     
     Ti.Network.addEventListener('change', (e) => @checkInternet() if !@checking)
@@ -24,17 +27,14 @@ root.MobileAppBase = class MobileAppBase
   delay: (ms, func) -> setTimeout func, ms
   create: (className, options = {}) -> @classFactory.create(className, options)
 
-  post: (url, params, onSuccess, onError = null) =>
-    @xhr.abort()
-    @xhr.open('POST', url)
-    @xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-    @xhr.onload = () ->
-      onSuccess(JSON.parse(@responseText))
-    @xhr.onerror = () ->
-      onError() if onError
-    @xhr.send(params)
+  post: (url, params, onSuccess, onError = null) => #TODO: GJ: depreciate
+    @network.ajax({
+      url: url
+      params: params
+      onSuccess: onSuccess
+      onError: onError
+    })
 
-    
   noInternetEnable: =>
     @settings.noInternetViewEnabled = true
     @checkInternet() if !@checking

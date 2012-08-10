@@ -6,7 +6,7 @@ root.NoInternetView_Framework = class NoInternetView_Framework
       modal: true
       backgroundColor: "#FFF"
       title: "Connection Issue"
-      barColor: "red"
+      barColor: "#333"
     })
     
     message = Ti.UI.createLabel({

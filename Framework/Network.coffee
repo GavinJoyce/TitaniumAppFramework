@@ -2,7 +2,7 @@ root.Network = class Network
   constructor: (options) ->
     @settings = root._.extend({
       timeout: 15000
-      retryCount: 30
+      retryCount: 5
       retryDelay: 500
     }, options)
     
@@ -36,8 +36,9 @@ root.Network = class Network
     if options.try < @settings.retryCount
       Ti.API.info("root.network : retrying ##{options.try}")
       options.onRetry(options.try)
-      root.app.delay(options.retryDelay, (options) => @ajax(options))
+      root.app.delay @settings.retryDelay, => @ajax(options)
     else
+      Ti.API.info('network error')
       options.onError
     
 

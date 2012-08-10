@@ -25,7 +25,7 @@ root.Network = class Network
     @xhr.open('POST', options.url) #TODO: GJ: add support for GET
     @xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     @xhr.onload = () -> options.onSuccess(JSON.parse(@responseText))
-    @xhr.onerror = () -> onError(options)
+    @xhr.onerror = () -> @onError(options)
     @xhr.send(options.params)
     
   reset: -> @xhr.abort()

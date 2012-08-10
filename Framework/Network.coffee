@@ -39,7 +39,7 @@ root.Network = class Network
       root.app.delay @settings.retryDelay, => @ajax(options)
     else
       Ti.API.info('network error')
-      options.onError
+      options.onError()
     
 
     

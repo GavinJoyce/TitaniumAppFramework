@@ -11,6 +11,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     @table = Ti.UI.createTableView({
       top: @options.top
     })
+    @table.addEventListener("click", @options.onTableClick)
     @moreRow = root.app.create("SearchResultsTableMoreRow").moreRow
     
     if @options.infiniteScroll
@@ -51,7 +52,5 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       @table.appendRow(@moreRow)
     else
       @table.hasMoreRows = false
-
-    @table.addEventListener("click", @options.onTableClick)
     
     Ti.API.info("-- Finish Update Table --")

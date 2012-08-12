@@ -22,6 +22,7 @@ root.MobileAppBase = class MobileAppBase
     @classFactory = new root.ClassFactory()
     @network = new root.Network()
     @includedFiles = []
+    @zIndex = 100
     
     Ti.Network.addEventListener('change', (e) => @checkInternet() if !@checking)
     

@@ -26,6 +26,9 @@ root.MobileAppBase = class MobileAppBase
     Ti.Network.addEventListener('change', (e) => @checkInternet() if !@checking)
     
   delay: (ms, func) -> setTimeout func, ms
+  randomDelay: (randomDelay, minDelay, func) -> @delay (Math.random() * randomDelay) + minDelay, func
+  timeout: (ms, func) -> setInterval func, ms
+
   create: (className, options = {}) -> @classFactory.create(className, options)
 
   post: (url, params, onSuccess, onError = null) => #TODO: GJ: depreciate

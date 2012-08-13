@@ -6,7 +6,7 @@ root.MobileAppBase = class MobileAppBase
   constructor: (options) ->
     @settings = root._.extend({
       title: 'MobileAppBase'
-      viewBackgroundImage: ""
+      viewBackgroundImage: null
       viewBackgroundRepeat: true
       viewBackgroundColor: null
       viewBackgroundGradient: null

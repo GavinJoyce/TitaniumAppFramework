@@ -73,9 +73,9 @@ root.ClassFactory = class ClassFactory
     else if Ti.Platform.osname == 'ipad'
       return ['iPad', 'iOS']
     else if @isTablet()
-      return ['AndroidTabet', 'Android']
+      return ['AndroidTablet', 'Android']
     else
-      return ['Android']
+      return ['AndroidPhone', 'Android']
       
   isTablet: ->
     return true if Ti.Platform.osname == 'ipad'

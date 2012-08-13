@@ -17,27 +17,6 @@ root.BaseView = class BaseView
     @controls = []
 
     @window = Ti.UI.createWindow(@settings)
-
-    
-    #TODO: SS: perhaps this should be a modal view on the app itself? we don't want every view to have this overhead
-    ###@noInternetView = Ti.UI.createView({ #TODO: GJ: move to NoInternetView class
-      height: 60
-      width: "100%"
-      backgroundColor: "yellow"
-    })
-    noInternetHeader = Ti.UI.createLabel({
-      text: "No Internet Connection"
-      font: { fontSize: 20, fontWeight: "bold" }
-      height: Ti.UI.SIZE
-      top: 10
-    })
-    noInternetText = Ti.UI.createLabel({
-      text: "A working internet connection is required to use this app"
-      font: { fontSize: 18 }
-      height: Ti.UI.SIZE
-      bottom: 10
-    })
-    @noInternetView.add([ noInternetHeader, noInternetText ])###
     
     @window.addEventListener('focus', @focus)
     @window.addEventListener('close', @onClose)

@@ -22,10 +22,16 @@ root.MobileAppBase = class MobileAppBase
     @classFactory = new root.ClassFactory()
     @network = new root.Network()
     @includedFiles = []
+    @zIndex = 100
     
     Ti.Network.addEventListener('change', (e) => @checkInternet() if !@checking)
     
   delay: (ms, func) -> setTimeout func, ms
+  randomDelay: (randomDelay, minDelay, func) -> @delay (Math.random() * randomDelay) + minDelay, func
+  timeout: (ms, func) -> setInterval func, ms
+
+  debug: (msg) -> Ti.API.info(msg)
+
   create: (className, options = {}) -> @classFactory.create(className, options)
 
   post: (url, params, onSuccess, onError = null) => #TODO: GJ: depreciate

@@ -13,13 +13,14 @@ root.MobileAppBase = class MobileAppBase
       viewTitleBarColor: '#000000'
       debugMode: false
       noInternetViewEnabled: false
+      ignoreAndroidTablet: false
     }, options)
     
     if @settings.googleAnalyticsID
       @analytics = new Analytics(@settings.googleAnalyticsID, @settings.appName, @settings.appVersion)
       @analytics.start(10)
       
-    @classFactory = new root.ClassFactory()
+    @classFactory = new root.ClassFactory({ ignoreAndroidTablet: @settings.ignoreAndroidTablet })
     @network = new root.Network()
     @includedFiles = []
     @zIndex = 100

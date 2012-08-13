@@ -2,6 +2,7 @@ root.ClassFactory = class ClassFactory
   constructor: (options) ->
     @settings = root._.extend({
       cacheEnabled: true
+      ignoreAndroidTablet: false
     }, options)
       
     @klassCache = {}  
@@ -71,5 +72,16 @@ root.ClassFactory = class ClassFactory
       return ['iPhone', 'iOS']
     else if Ti.Platform.osname == 'ipad'
       return ['iPad', 'iOS']
-    else #TODO: GJ: add support for android tablet?
+    else if @isTablet()
+      return ['AndroidTabet', 'Android']
+    else
       return ['Android']
+      
+  isTablet: ->
+    return true if Ti.Platform.osname == 'ipad'
+    return false if @settings.ignoreAndroidTablet
+    dpi = Ti.Platform.displayCaps.dpi
+    w = Ti.Platform.displayCaps.platformWidth / dpi
+    h = Ti.Platform.displayCaps.platformHeight / dpi
+    diagonalSize = Math.sqrt(w*w+h*h)
+    return diagonalSize >= 6

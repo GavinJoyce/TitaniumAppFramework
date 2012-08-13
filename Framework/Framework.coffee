@@ -51,14 +51,6 @@ root.Framework = class Framework
           files = files.concat additional
     root._.uniq files
     
-  isTablet: ->
-    return true if Ti.Platform.osname == 'ipad'
-    dpi = Ti.Platform.displayCaps.dpi
-    w = Ti.Platform.displayCaps.platformWidth / dpi
-    h = Ti.Platform.displayCaps.platformHeight / dpi
-    diagonalSize = Math.sqrt(w*w+h*h)
-    return diagonalSize >= 6
-    
   post: (url, params, onSuccess, onError = null) =>
     @xhr.abort()
     @xhr.open('POST', url)

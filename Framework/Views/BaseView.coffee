@@ -38,11 +38,10 @@ root.BaseView = class BaseView
         @onLandscape()
     )
     
-    if Ti.Platform.osname == "ipad" #NOTE: GJ: shouldn't we trigger this regardless of the platform?
-      if @isPortrait
-        @onPortrait()
-      if @isLandscape
-        @onLandscape()
+    if @isPortrait
+      @onPortrait()
+    if @isLandscape
+      @onLandscape()
       
   onFocus: ->
 

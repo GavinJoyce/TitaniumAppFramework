@@ -30,6 +30,8 @@ root.MobileAppBase = class MobileAppBase
   randomDelay: (randomDelay, minDelay, func) -> @delay (Math.random() * randomDelay) + minDelay, func
   timeout: (ms, func) -> setInterval func, ms
 
+  debug: (msg) -> Ti.API.info(msg)
+
   create: (className, options = {}) -> @classFactory.create(className, options)
 
   post: (url, params, onSuccess, onError = null) => #TODO: GJ: depreciate

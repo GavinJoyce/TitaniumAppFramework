@@ -5,7 +5,7 @@ root.LoadingIndicatorView_Framework = class LoadingIndicatorView_Framework exten
     }, options)
     super(options)
     
-    @loadingView = Ti.UI.createView({
+    ###@loadingView = Ti.UI.createView({
       height: "100%"
       width: "100%"
     })
@@ -22,10 +22,10 @@ root.LoadingIndicatorView_Framework = class LoadingIndicatorView_Framework exten
     
     @loadingView.add(@activityIndicator)
     @activityIndicator.show()
-    @window.add(@loadingView)
+    @window.add(@loadingView)###
   
   showLoadingIndicator: ->
-    @activityIndicator.show()
+   # @activityIndicator.show()
     
   hideLoadingIndicator: ->
-    @activityIndicator.hide()
+   # @activityIndicator.hide()

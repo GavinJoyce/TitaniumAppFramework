@@ -28,12 +28,6 @@ root.BaseView = class BaseView
     @uiInitialised = true
     
   onInit: ->
-    @spinner = Ti.UI.createActivityIndicator({
-      message: "Loading...", width: Ti.UI.SIZE
-      color: "#000", font: { fontSize: 18 }
-    })
-    @window.add(@spinner)
-    
     Ti.App.addEventListener("forceLandscapeWindow", (e) => @window.orientationModes = [Ti.UI.LANDSCAPE_LEFT, Ti.UI.LANDSCAPE_RIGHT])
     Ti.Gesture.addEventListener("orientationchange", (e) =>
       if Ti.UI.orientation == Ti.UI.PORTRAIT || Ti.UI.orientation == Ti.UI.UPSIDE_PORTRAIT
@@ -53,9 +47,6 @@ root.BaseView = class BaseView
         @onLandscape()
       
   onFocus: ->
-
-  showSpinner: -> @spinner.show()
-  hideSpinner: -> @spinner.hide()
 
   show: (options = {}) =>
     if root.tabGroup

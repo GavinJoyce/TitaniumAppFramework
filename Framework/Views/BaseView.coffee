@@ -3,8 +3,6 @@ root.BaseView = class BaseView
     @uiInitialised = false
     @settings = root._.extend({ #TODO: GJ: can we pass in isModal?
       title: ''
-      backgroundImage: root.app.settings.viewBackgroundImage
-      backgroundRepeat: root.app.settings.viewBackgroundRepeat
       backgroundColor: root.app.settings.viewBackgroundColor
       backgroundGradient: root.app.settings.viewBackgroundGradient
       barColor: root.app.settings.viewTitleBarColor

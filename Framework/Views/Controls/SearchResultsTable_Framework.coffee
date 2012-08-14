@@ -16,18 +16,20 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     
     if @options.infiniteScroll
       @lastDistance = 0
-
-      @table.addEventListener("scroll", (e) =>
-        offset = e.contentOffset.y
-        height = e.size.height
-        total = offset + height
-        theEnd = e.contentSize.height
-        distance = theEnd - total
-        if distance < @lastDistance
-          if (total >= theEnd) && e.contentSize.height > e.size.height && @table.hasMoreRows
-            @options.infiniteScrollCallback()
-        @lastDistance = distance
-      )
+      @addScrollListener()
+      
+  addScrollListener: ->
+    @table.addEventListener("scroll", (e) =>
+      offset = e.contentOffset.y
+      height = e.size.height
+      total = offset + height
+      theEnd = e.contentSize.height
+      distance = theEnd - total
+      if distance < @lastDistance
+        if (total >= theEnd) && e.contentSize.height > e.size.height && @table.hasMoreRows
+          @options.infiniteScrollCallback()
+      @lastDistance = distance
+    )
     
   clear: ->
     @table.setData([])  

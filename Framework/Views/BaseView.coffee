@@ -1,7 +1,7 @@
 root.BaseView = class BaseView
   constructor: (options = {}) ->
     @uiInitialised = false
-    @settings = root._.extend({ #TODO: GJ: can we pass in isModal?
+    @settings = root._.extend({
       title: ''
       backgroundColor: root.app.settings.viewBackgroundColor
       backgroundGradient: root.app.settings.viewBackgroundGradient

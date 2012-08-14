@@ -19,6 +19,12 @@ root.BaseView = class BaseView
     @window.addEventListener('focus', @focus)
     @window.addEventListener('close', @onClose)
     
+    @content = Ti.UI.createView({
+      height: Ti.UI.FILL
+      width: "100%"
+    })
+    @window.add(@content)
+    
 
   focus: (e) =>
     @onInit() if !@uiInitialised
@@ -67,12 +73,12 @@ root.BaseView = class BaseView
   onClose: ->
   
   add: (control) ->
-    @window.add control
+    @content.add control
     @controls.push control
   
   clear: ->
     for control in @controls
-      @window.remove control
+      @content.remove control
     @controls = []
     
   click: (callback) ->
@@ -83,3 +89,7 @@ root.BaseView = class BaseView
   onPortrait: ->
     
   onLandscape: ->
+
+  addHeader: (header) ->
+    @window.add(header)
+    @content.top = header.height

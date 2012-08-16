@@ -36,6 +36,7 @@ root.ClassFactory = class ClassFactory
       eval("var klass = root.#{klassName}")
       if(typeof klass != 'undefined')
         @klassCache[className] = klass if @settings.cacheEnabled
+        Ti.API.info("created #{klassName}")
         return new klass(options)
     catch error
       alert(error)

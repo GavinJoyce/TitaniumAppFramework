@@ -6,8 +6,8 @@ root.BaseView = class BaseView
       backgroundColor: root.app.settings.viewBackgroundColor
       backgroundGradient: root.app.settings.viewBackgroundGradient
       barColor: root.app.settings.viewTitleBarColor
-      fullscreen: false
-      modal: false
+      #fullscreen: false
+      #modal: false
     }, options)
     @isPortrait = (Ti.UI.orientation == Ti.UI.PORTRAIT || Ti.UI.orientation == Ti.UI.UPSIDE_PORTRAIT)
     @isLandscape = (Ti.UI.orientation == Ti.UI.LANDSCAPE_LEFT || Ti.UI.orientation == Ti.UI.LANDSCAPE_RIGHT)

@@ -27,7 +27,11 @@ root.MobileAppBase = class MobileAppBase
     
     Ti.Network.addEventListener('change', (e) => @checkInternet() if !@checking)
     
-  delay: (ms, func) -> setTimeout func, ms
+  delay: (ms, func) -> 
+    if ms == 0
+      func
+    else
+      setTimeout func, ms
   randomDelay: (randomDelay, minDelay, func) -> @delay (Math.random() * randomDelay) + minDelay, func
   timeout: (ms, func) -> setInterval func, ms
 

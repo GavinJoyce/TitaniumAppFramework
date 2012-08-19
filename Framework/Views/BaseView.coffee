@@ -69,6 +69,7 @@ root.BaseView = class BaseView
       root.navGroup.navGroup.close(@window)
     else
       @window.close({ animated: false })
+    @onClose()
       
   onClose: ->
   

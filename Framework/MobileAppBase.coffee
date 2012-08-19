@@ -1,4 +1,5 @@
 root.framework.include('/Common/Framework/Network.js')
+root.framework.include('/Common/Framework/SoundCache.js')
 
 root.moduleNames = []
 
@@ -19,7 +20,8 @@ root.MobileAppBase = class MobileAppBase
     if @settings.googleAnalyticsID
       @analytics = new Analytics(@settings.googleAnalyticsID, @settings.appName, @settings.appVersion)
       @analytics.start(10)
-      
+    
+    @sounds = new root.SoundCache()
     @classFactory = new root.ClassFactory({ ignoreAndroidTablet: @settings.ignoreAndroidTablet })
     @network = new root.Network()
     @includedFiles = []

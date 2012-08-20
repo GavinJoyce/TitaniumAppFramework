@@ -4,6 +4,11 @@ Ti.include('Lib/analytics.js')
 root._ = require('Common/Framework/Lib/underscore')._
 _ = root._
 
+Array::first = -> _.first @ #TODO: GJ: move to extensions.js
+Array::without = (value) -> _.without @, value
+Array::shuffle = -> _.shuffle(@) 
+Array::random = -> @.shuffle().first()
+
 root.moduleNames = []
 
 root.Framework = class Framework

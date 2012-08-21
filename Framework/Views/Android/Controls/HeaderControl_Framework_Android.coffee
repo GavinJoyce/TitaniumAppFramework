@@ -37,8 +37,8 @@ root.HeaderControl_Framework_Android = class HeaderControl_Framework_Android
       @left.add(@backButton)
       
     if @options.icon
-      icon = @createIcon(@options.icon, @backButton != undefined)
-      @left.add(icon)
+      @icon = @createIcon(@options.icon, @backButton != undefined)
+      @left.add(@icon)
     # End Left
       
     # Center
@@ -95,8 +95,8 @@ root.HeaderControl_Framework_Android = class HeaderControl_Framework_Android
       width: 30
       left: 10
     })
-    #if hasBackButton
-      #newIcon.addEventListener("click", @options.onBack)
+    if hasBackButton
+      newIcon.addEventListener("click", @options.onBack)
     newIcon
     
   createRightButton: (button) =>

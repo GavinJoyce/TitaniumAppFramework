@@ -38,7 +38,7 @@ root.HeaderControl_Framework_AndroidTablet = class HeaderControl_Framework_Andro
       newIcon.addEventListener("click", @options.onBack)
     newIcon
   ###
-  createRightButton: (button) ->
+  createRightButton: (button) =>
     rightButton = Ti.UI.createView({
       image: button.image
       right: 10

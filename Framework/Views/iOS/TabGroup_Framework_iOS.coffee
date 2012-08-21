@@ -1,13 +1,13 @@
 root.TabGroup_Framework_iOS = class TabGroup_Framework_iOS
   constructor:(options = {}) ->
     options = root._.extend({
-      views: [
+      items: [
         {
-          View: null
-          Callback: null
-          Tab: {
-            Name: "Tab 1"
-            Icon: ""
+          view: null
+          onClick: =>
+          tab: {
+            name: "Tab 1"
+            icon: ""
           }
         }
       ]
@@ -15,18 +15,17 @@ root.TabGroup_Framework_iOS = class TabGroup_Framework_iOS
     
     @tabs = Ti.UI.createTabGroup()
     
-    for view in options.views
+    for item in options.items
       tab = Ti.UI.createTab({
-        title: view.Tab.Name
-        icon: view.Tab.Icon
+        title: item.tab.name
+        icon: item.tab.icon
       })
       
-      if view.View?
-        tab.window = view.View.window
+      tab.window = item.view.window if item.view?
       
       @tabs.addTab(tab)
-      if view.Callback?
-        tab.addEventListener("click", view.Callback)
+      if item.onClick?
+        tab.addEventListener("click", item.onClick)
         
     @tabs.open()
 

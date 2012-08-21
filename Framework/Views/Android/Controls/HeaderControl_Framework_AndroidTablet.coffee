@@ -7,39 +7,45 @@ root.HeaderControl_Framework_AndroidTablet = class HeaderControl_Framework_Andro
     
     @title.font = { fontSize: 22, fontWeight: "bold" }
     
-    @left.width = 120
-    @left.height = 50
-    
     @center.height = 50
     @center.left = 125
     @center.right = 125
       
     @right.width = 120
     @right.height = 50
+    
+  createLeftArea: =>
+    Ti.UI.createView({
+      left: 10
+      width: 110
+      height: 50
+      layout: "horizontal"
+    })
 
   createBackButton: (image, onBack) =>
     back = Ti.UI.createImageView({
-      left: 10
+      right: 10
       height: 50
       width: 50
       image: image
     })
     back.addEventListener("click", onBack)
     back
-  ###
-  createIcon: (icon, hasBackButton) =>
+
+  createIcon: (iconUrl, hasBackButton) =>
+    Ti.API.info("in here")
+
     newIcon = Ti.UI.createImageView({
-      image: icon
+      image: iconUrl
       height: 50
-      width: 50
-      left: 10
+      width: 51
     })
     if hasBackButton
       newIcon.addEventListener("click", @options.onBack)
     newIcon
-  ###
+
   createRightButton: (button) =>
-    rightButton = Ti.UI.createView({
+    rightButton = Ti.UI.createImageView({
       image: button.image
       right: 10
       height: 50

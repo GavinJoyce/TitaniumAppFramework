@@ -25,12 +25,7 @@ root.HeaderControl_Framework_Android = class HeaderControl_Framework_Android
       @view.backgroundColor = @options.backgroundColor
     
     # Left
-    @left = Ti.UI.createView({
-      left: 0
-      width: 80
-      height: 30
-      layout: "horizontal"
-    })
+    @left = @createLeftArea()
 
     if @options.backButtonEnabled
       @backButton = @createBackButton(@options.backButtonImage, @options.onBack)
@@ -49,10 +44,12 @@ root.HeaderControl_Framework_Android = class HeaderControl_Framework_Android
     })
     
     @title = Ti.UI.createLabel({
+      textAlign: "left"
       text: @options.title
       color: @options.textColor
       shadowOffset: { x: 1, y: 1 }
       shadowColor: @options.shadowColor
+      width: Ti.UI.FILL
     })
     @center.add(@title)
     # End Center
@@ -78,9 +75,17 @@ root.HeaderControl_Framework_Android = class HeaderControl_Framework_Android
   updateTitle: (title) ->
     @title.text = title
     
+  createLeftArea: =>
+    Ti.UI.createView({
+      left: 10
+      width: 70
+      height: 30
+      layout: "horizontal"
+    })
+    
   createBackButton: (image, onBack) =>
     back = Ti.UI.createImageView({
-      left: 10
+      right: 10
       height: 30
       width: 30
       image: image
@@ -93,14 +98,13 @@ root.HeaderControl_Framework_Android = class HeaderControl_Framework_Android
       image: icon
       height: 30
       width: 30
-      left: 10
     })
     if hasBackButton
       newIcon.addEventListener("click", @options.onBack)
     newIcon
     
   createRightButton: (button) =>
-    rightButton = Ti.UI.createView({
+    rightButton = Ti.UI.createImageView({
       image: button.image
       right: 10
       height: 30

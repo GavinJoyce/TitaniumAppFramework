@@ -6,6 +6,7 @@ root.BaseView = class BaseView
       backgroundColor: root.app.settings.viewBackgroundColor
       backgroundGradient: root.app.settings.viewBackgroundGradient
       barColor: root.app.settings.viewTitleBarColor
+      backgroundImage: root.app.settings.viewBackgroundImage
       #fullscreen: false
       #modal: false
     }, options)
@@ -64,11 +65,11 @@ root.BaseView = class BaseView
     options = root._.extend({}, options)
     @window.open(options)
 
-  close: ->
+  close: (options = {}) =>
     if @window.inNavGroup
-      root.navGroup.navGroup.close(@window)
+      root.navGroup.navGroup.close(@window, options)
     else
-      @window.close({ animated: false })
+      @window.close(options)
     @onClose()
       
   onClose: ->

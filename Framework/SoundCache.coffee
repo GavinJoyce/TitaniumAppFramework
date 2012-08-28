@@ -4,6 +4,7 @@ root.SoundCache = class SoundCache
     @sounds = {}
   
   play: (url) ->
+    Ti.API.info "playing #{url}"
     sound = @register url, false
     sound.stop()
     sound.play()

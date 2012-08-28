@@ -74,3 +74,25 @@ root.MobileAppBase = class MobileAppBase
         @noInternetView.window.open()
 
     @checking = false
+    
+  createRadialGradient: (colour1, colour2) ->
+    if Ti.Platform.osname == "android"
+      { 
+        type: 'linear'
+        startPoint: { x: "50%", y: "50%" }
+        endPoint: { x: "50%", y: "50%" }
+        colors: [ colour1, colour2 ]
+        startRadius: '90%'
+        endRadius: 0
+        backfillStart: true 
+      }
+    else
+      { 
+        type: 'radial',
+        startPoint: { x: "50%", y: "50%" }
+        endPoint: { x: "50%", y: "50%" }
+        colors: [ colour1, colour2 ]
+        startRadius: '90%'
+        endRadius: 0
+        backfillStart: true 
+      }

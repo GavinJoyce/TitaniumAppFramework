@@ -1,5 +1,6 @@
 root.framework.include('/Common/Framework/Network.js')
 root.framework.include('/Common/Framework/SoundCache.js')
+root.framework.include('/Common/Framework/TimeoutGroup.js')
 
 root.moduleNames = []
 
@@ -28,14 +29,17 @@ root.MobileAppBase = class MobileAppBase
     @zIndex = 100
     
     Ti.Network.addEventListener('change', (e) => @checkInternet() if !@checking)
+  
+  
     
   delay: (ms, func) -> 
     if ms == 0
       func
     else
-      setTimeout func, ms
+      setTimeout(func, ms)
+      
   randomDelay: (randomDelay, minDelay, func) -> @delay (Math.random() * randomDelay) + minDelay, func
-  timeout: (ms, func) -> setInterval func, ms
+  timeout: (ms, func) -> setInterval func, ms #TODO: GJ: rename to interval
 
   debug: (msg) -> Ti.API.info(msg)
 
@@ -70,3 +74,25 @@ root.MobileAppBase = class MobileAppBase
         @noInternetView.window.open()
 
     @checking = false
+    
+  createRadialGradient: (colour1, colour2) ->
+    if Ti.Platform.osname == "android"
+      { 
+        type: 'linear'
+        startPoint: { x: "50%", y: "50%" }
+        endPoint: { x: "50%", y: "50%" }
+        colors: [ colour1, colour2 ]
+        startRadius: '90%'
+        endRadius: 0
+        backfillStart: true 
+      }
+    else
+      { 
+        type: 'radial',
+        startPoint: { x: "50%", y: "50%" }
+        endPoint: { x: "50%", y: "50%" }
+        colors: [ colour1, colour2 ]
+        startRadius: '90%'
+        endRadius: 0
+        backfillStart: true 
+      }

@@ -54,6 +54,7 @@ root.BaseView = class BaseView
 
   show: (options = {}) =>
     if root.tabGroup
+      @window.inTabGroup = true
       root.tabGroup.tabs.activeTab.open(@window, options)
     else if root.navGroup
       @window.inNavGroup = true
@@ -66,7 +67,9 @@ root.BaseView = class BaseView
     @window.open(options)
 
   close: (options = {}) =>
-    if @window.inNavGroup
+    if @window.inTabGroup
+      root.tabGroup.tabs.activeTab.close(@window, options)
+    else if @window.inNavGroup
       root.navGroup.navGroup.close(@window, options)
     else
       @window.close(options)

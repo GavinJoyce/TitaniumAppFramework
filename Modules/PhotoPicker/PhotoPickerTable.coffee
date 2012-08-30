@@ -35,6 +35,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     
   update: =>
     @label.text = "There are #{@photos.length} photos"
+    @grid.setData()
     
     if @photos.length > 0
       @photo.image = @photos[@photos.length-1]

@@ -10,24 +10,20 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     @label = Ti.UI.createLabel { left: 10, top: 10 }
     @view.add @label
     
-    @addFromGalleryButton = Ti.UI.createButton { title: 'Add From Gallery', bottom: 50 }
+    @addFromGalleryButton = Ti.UI.createButton { title: '+ Gallery', top: 50, left: 2 }
     @addFromGalleryButton.addEventListener 'click', @addFromGallery
     @view.add @addFromGalleryButton
     
-    @addFromCameraButton = Ti.UI.createButton { title: 'Add From Camera', bottom: 100 }
+    @addFromCameraButton = Ti.UI.createButton { title: '+ Camera', top: 50, right: 2 }
     @addFromCameraButton.addEventListener 'click', @addFromCamera
     @view.add @addFromCameraButton
     
-    @photo = Ti.UI.createImageView {
-      left: 30, top: 100, backgroundColor: 'yellow'
-      width: 300
-      height: 200
-    }
-    @view.add @photo
-    
     @grid = root.app.create 'PhotoPicker.PhotoGrid', {
-      top: 250
-      height: 500
+      top: 100
+      bottom: 0
+      cellWidth: 100
+      cellHeight: 100
+      cellMargin: 5
     }
     @view.add @grid.view
   
@@ -35,22 +31,27 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     
   update: =>
     @label.text = "There are #{@photos.length} photos"
-    @grid.setData()
     
     if @photos.length > 0
-      @photo.image = @photos[@photos.length-1]
+      @grid.setPhotos(@photos)
+    else
+      @grid.setData()
     
   addFromGallery: =>
+    alert 'TODO'
     
   addFromCamera: =>
-    Ti.Media.showCamera { #TODO: GJ: can we set the orientation to force landscape? 
+    Ti.Media.showCamera { #TODO: GJ: can we set the orientation to force landscape?  #TODO: GJ: resize image for thumbnail?
       success: (e) =>
+        image = e.media
+        thumbnail = image.imageAsThumbnail(100)
+        
         filename = "#{Ti.Filesystem.applicationDataDirectory}photoPicker#{new Date().getTime()}.png"
         file = Ti.Filesystem.getFile filename
         if file.exists()
           file.deleteFile()
           file = Ti.Filesystem.getFile filename
-        file.write e.media
+        file.write thumbnail
         @photos.push filename
         @update()
       cancel: ->

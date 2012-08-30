@@ -17,19 +17,35 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     @addFromCameraButton = Ti.UI.createButton { title: 'Add From Camera', bottom: 100 }
     @addFromCameraButton.addEventListener 'click', @addFromCamera
     @view.add @addFromCameraButton
+    
+    @photo = Ti.UI.createImageView {
+      left: 30, top: 100, backgroundColor: 'yellow'
+      width: 300
+      height: 200
+    }
+    @view.add @photo
   
     @update()
     
   update: =>
     @label.text = "There are #{@photos.length} photos"
     
+    if @photos.length > 0
+      @photo.image = @photos[@photos.length-1]
+    
   addFromGallery: =>
     
   addFromCamera: =>
     Ti.Media.showCamera { #TODO: GJ: can we set the orientation to force landscape? 
-      success: (e) ->
-        #TODO: GJ: save to temp location
-        image = e.media
+      success: (e) =>
+        filename = "#{Ti.Filesystem.applicationDataDirectory}photoPicker#{new Date().getTime()}.png"
+        file = Ti.Filesystem.getFile filename
+        if file.exists()
+          file.deleteFile()
+          file = Ti.Filesystem.getFile filename
+        file.write e.media
+        @photos.push filename
+        @update()
       cancel: ->
       error: ->
     }

@@ -24,6 +24,12 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       height: 200
     }
     @view.add @photo
+    
+    @grid = root.app.create 'PhotoPicker.PhotoGrid', {
+      top: 250
+      height: 500
+    }
+    @view.add @grid.view
   
     @update()
     

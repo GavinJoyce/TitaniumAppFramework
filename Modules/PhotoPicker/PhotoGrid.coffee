@@ -10,18 +10,12 @@ root.PhotoPicker.PhotoGrid = class PhotoGrid
       width: '100%'
       height: Ti.UI.FILL
       contentWidth: 320
-    }, options)
-    @controls = []
-    @view = Ti.UI.createScrollView({
-      contentWidth: @settings.contentWidth
       contentHeight: "auto"
       showVerticalScrollIndicator: true
       showHorizontalScrollIndicator: false
-      layout: @settings.layout
-      top: @settings.top
-      width: @settings.width
-      height: @settings.height
-    })
+    }, options)
+    @controls = []
+    @view = Ti.UI.createScrollView @settings
   
   addPhoto: (url) ->
     cell = Ti.UI.createImageView {

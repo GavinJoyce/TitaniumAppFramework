@@ -1,26 +1,26 @@
 root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
   constructor:(options = {}) ->
     options = root._.extend({
-      backgroundColor: 'pink'
+      backgroundColor: '#eee'
     }, options)
     
     @photos = []
+    @thumbnails = []
 
     @view = Ti.UI.createView options
-    @label = Ti.UI.createLabel { left: 10, top: 10 }
+    @label = Ti.UI.createLabel { left: 10, top: 2 }
     @view.add @label
     
-    @addFromGalleryButton = Ti.UI.createButton { title: '+ Gallery', top: 50, left: 2 }
+    @addFromGalleryButton = Ti.UI.createButton { title: '+ Gallery', top: 34, left: 2 }
     @addFromGalleryButton.addEventListener 'click', @addFromGallery
     @view.add @addFromGalleryButton
     
-    @addFromCameraButton = Ti.UI.createButton { title: '+ Camera', top: 50, right: 2 }
+    @addFromCameraButton = Ti.UI.createButton { title: '+ Camera', top: 34, right: 2 }
     @addFromCameraButton.addEventListener 'click', @addFromCamera
     @view.add @addFromCameraButton
     
     @grid = root.app.create 'PhotoPicker.PhotoGrid', {
-      top: 100
-      bottom: 0
+      top: 80
       cellWidth: 100
       cellHeight: 100
       cellMargin: 5
@@ -32,28 +32,41 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
   update: =>
     @label.text = "There are #{@photos.length} photos"
     
-    if @photos.length > 0
-      @grid.setPhotos(@photos)
-    else
-      @grid.setData()
+  addMedia: (image) =>
+    thumbnail = image.imageAsThumbnail(100)
     
+    filename = "#{Ti.Filesystem.applicationDataDirectory}photoPicker#{new Date().getTime()}.png"
+    thumbfilename = "#{Ti.Filesystem.applicationDataDirectory}photoPicker#{new Date().getTime()}-thumb.png"
+    
+    @saveImage image, filename
+    @saveImage thumbnail, thumbfilename
+    
+    @photos.push filename
+    @thumbnails.push thumbfilename
+    @grid.addPhoto thumbfilename
+    @update()
+  
   addFromGallery: =>
-    alert 'TODO'
-    
-  addFromCamera: =>
-    Ti.Media.showCamera { #TODO: GJ: can we set the orientation to force landscape?  #TODO: GJ: resize image for thumbnail?
+    Ti.Media.openPhotoGallery {
+      mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
       success: (e) =>
-        image = e.media
-        thumbnail = image.imageAsThumbnail(100)
-        
-        filename = "#{Ti.Filesystem.applicationDataDirectory}photoPicker#{new Date().getTime()}.png"
-        file = Ti.Filesystem.getFile filename
-        if file.exists()
-          file.deleteFile()
-          file = Ti.Filesystem.getFile filename
-        file.write thumbnail
-        @photos.push filename
-        @update()
+        @addMedia e.media
       cancel: ->
       error: ->
     }
+    
+  addFromCamera: =>
+    Ti.Media.showCamera { #TODO: GJ: can we set the orientation to force landscape?
+      success: (e) =>
+        @addMedia e.media
+      cancel: ->
+      error: ->
+    }
+    
+  saveImage: (image, filename) ->
+    Ti.API.info "saving image #{filename}"
+    file = Ti.Filesystem.getFile filename
+    if file.exists()
+      file.deleteFile()
+      file = Ti.Filesystem.getFile filename
+    file.write image

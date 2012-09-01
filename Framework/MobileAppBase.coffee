@@ -34,7 +34,7 @@ root.MobileAppBase = class MobileAppBase
     
   delay: (ms, func) -> 
     if ms == 0
-      func
+      func()
     else
       setTimeout(func, ms)
       

@@ -18,6 +18,6 @@ root.SoundCache = class SoundCache
       
       if preload
         sound.volume = 0
-        sound.play
+        sound.play()
         sound.volume = 1
     sound

@@ -7,3 +7,9 @@ root.NavGroup_Framework_iOS = class NavGroup_Framework_iOS
     @window.add(@navGroup)
     
     @window.open()
+
+  close: =>
+    @window.close()
+    
+  open: (window) =>
+    @navGroup.open(window)

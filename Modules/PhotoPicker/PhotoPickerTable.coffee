@@ -31,7 +31,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       onRemove: (photo, thumbnail) => 
         @photos = @photos.without photo
         @thumbnails = @thumbnails.without thumbnail
-        @update()
+        @update() #TODO: GJ: should we delete files?
     }
     @view.add @grid.view
     @update()
@@ -59,7 +59,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
   
     @photos.push url
     @thumbnails.push url
-    @grid.addPhoto url
+    @grid.addPhoto url, url
     @update()
     
   addMedia: (image) =>
@@ -72,7 +72,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
 
     @photos.push filename
     @thumbnails.push thumbfilename
-    @grid.addPhoto thumb, filename
+    @grid.addPhoto thumbfilename, filename
     @update()
     
   saveImage: (image, filename) ->

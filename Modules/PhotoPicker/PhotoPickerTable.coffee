@@ -2,7 +2,6 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
   constructor:(options = {}) ->
     @settings = root._.extend({
       backgroundColor: '#eee'
-      onUpdate: (photos) => 
     }, options)
     
     @photos = []
@@ -29,14 +28,16 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       cellWidth: 100
       cellHeight: 100
       cellMargin: 5
+      onRemove: (photo, thumbnail) => 
+        @photos = @photos.without photo
+        @thumbnails = @thumbnails.without thumbnail
+        @update()
     }
     @view.add @grid.view
-  
     @update()
     
   update: =>
     @label.text = "There are #{@photos.length} photos"
-    @settings.onUpdate @photos
   
   addFromGallery: =>
     Ti.Media.openPhotoGallery {
@@ -63,7 +64,6 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     
   addMedia: (image) =>
     thumbnail = image.imageAsThumbnail(100)
-
     filename = "#{Ti.Filesystem.applicationDataDirectory}photoPicker#{new Date().getTime()}.png"
     thumbfilename = "#{Ti.Filesystem.applicationDataDirectory}photoPicker#{new Date().getTime()}-thumb.png"
 
@@ -72,7 +72,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
 
     @photos.push filename
     @thumbnails.push thumbfilename
-    @grid.addPhoto thumbfilename
+    @grid.addPhoto thumb, filename
     @update()
     
   saveImage: (image, filename) ->

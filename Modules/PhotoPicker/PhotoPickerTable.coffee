@@ -66,6 +66,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     
   addMedia: (image) =>
     thumbnail = image.imageAsThumbnail(100)
+    image = image.imageAsResized(1600, 1200) #TODO: GJ: support other orientations
     filename = "#{Ti.Filesystem.applicationDataDirectory}photoPicker#{new Date().getTime()}.png"
     thumbfilename = "#{Ti.Filesystem.applicationDataDirectory}photoPicker#{new Date().getTime()}-thumb.png"
 

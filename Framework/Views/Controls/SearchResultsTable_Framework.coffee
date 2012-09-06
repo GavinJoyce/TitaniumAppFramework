@@ -13,6 +13,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     })
     @table.addEventListener("click", @options.onTableClick)
     @moreRow = root.app.create("SearchResultsTableMoreRow").moreRow
+    @noResultsRow = root.app.create("SearchResultsTableNoResultsRow").noResultsRow
     
     if @options.infiniteScroll
       @lastDistance = 0
@@ -36,18 +37,24 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
   
   update: (items, hasMoreRows) =>
     Ti.API.info("----- Update Table -----")
+    
+    @table.scrollable = true
 
     if @table.data != null && @table.data.length > 0 && @table.data[0].rows.length > 0
       rowToDeleteIndex = @table.data[0].rows.length - 1
 
-    @i = 0
-    for item in items
-      @table.appendRow(root.app.create(@options.rowClassName, { item: item }).row)
+    if items.length > 0
+      @i = 0
+      for item in items
+        @table.appendRow(root.app.create(@options.rowClassName, { item: item }).row)
       
-      if @i == 0 && rowToDeleteIndex
-        @table.deleteRow(rowToDeleteIndex)
+        if @i == 0 && rowToDeleteIndex
+          @table.deleteRow(rowToDeleteIndex)
       
-      @i++
+        @i++
+    else
+      @table.scrollable = false
+      @table.setData([@noResultsRow])
 
     if hasMoreRows
       @table.hasMoreRows = true

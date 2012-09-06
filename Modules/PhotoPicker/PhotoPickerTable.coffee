@@ -11,13 +11,22 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
 
     @view = Ti.UI.createView @settings
     
-    @addFromGalleryButton = Ti.UI.createButton { title: '+ Gallery', top: 34, left: 2 }
-    @addFromGalleryButton.addEventListener 'click', @addFromGallery
-    @view.add @addFromGalleryButton
+    @buttons = Ti.UI.createView({
+      width: "100%"
+      height: Ti.UI.SIZE
+      top: 0
+      backgroundColor: "#F9F9F9"
+    })
     
-    @addFromCameraButton = Ti.UI.createButton { title: '+ Camera', top: 34, right: 2 }
+    @addFromCameraButton = Ti.UI.createButton { title: 'Take Photo', height: 30, right: 5, top: 5, bottom: 5 }
     @addFromCameraButton.addEventListener 'click', @addFromCamera
-    @view.add @addFromCameraButton
+    @buttons.add @addFromCameraButton
+    
+    @addFromGalleryButton = Ti.UI.createButton { title: 'Choose From Gallery', height: 30, left: 5, top: 5, bottom: 5 }
+    @addFromGalleryButton.addEventListener 'click', @addFromGallery
+    @buttons.add @addFromGalleryButton
+    
+    @view.add(@buttons)
     
     @grid = root.app.create 'PhotoPicker.PhotoGrid', {
       top: 80

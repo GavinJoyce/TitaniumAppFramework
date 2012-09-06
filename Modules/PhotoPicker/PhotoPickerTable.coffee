@@ -2,6 +2,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
   constructor:(options = {}) ->
     @settings = root._.extend({
       backgroundColor: '#eee'
+      photos: []
       onUpdate: (photos, thumbnails) ->
     }, options)
     
@@ -9,16 +10,10 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     @thumbnails = []
 
     @view = Ti.UI.createView @settings
-    @label = Ti.UI.createLabel { left: 10, top: 2 }
-    @view.add @label
     
     @addFromGalleryButton = Ti.UI.createButton { title: '+ Gallery', top: 34, left: 2 }
     @addFromGalleryButton.addEventListener 'click', @addFromGallery
     @view.add @addFromGalleryButton
-    
-    @addCatButton = Ti.UI.createButton { title: '+ Cat', top: 34, left: 140 }
-    @addCatButton.addEventListener 'click', @addCat
-    @view.add @addCatButton
     
     @addFromCameraButton = Ti.UI.createButton { title: '+ Camera', top: 34, right: 2 }
     @addFromCameraButton.addEventListener 'click', @addFromCamera
@@ -29,16 +24,19 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       cellWidth: 100
       cellHeight: 100
       cellMargin: 5
-      onRemove: (photo, thumbnail) => 
+      onRemove: (photo, thumbnail) =>  #TODO: GJ: record existing image deletes
         @photos = @photos.without photo
         @thumbnails = @thumbnails.without thumbnail
-        @update() #TODO: GJ: should we delete files?
+        @update()
     }
     @view.add @grid.view
+    
+    for existingPhoto in @settings.photos
+      @grid.addPhoto existingPhoto, existingPhoto #TODO: GJ: thumbnail?
+    
     @update()
     
   update: =>
-    @label.text = "There are #{@photos.length} photos"
     @settings.onUpdate @photos, @thumbnails
   
   addFromGallery: =>
@@ -55,15 +53,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       cancel: ->
       error: ->
     }
-    
-  addCat: => #TEMP: GJ: adding remote images so that we can test on simulator
-    url = "http://placekitten.com/g/#{[100,110,120,130].random()}/#{[100,110,120,130].random()}"
-  
-    @photos.push url
-    @thumbnails.push url
-    @grid.addPhoto url, url
-    @update()
-    
+      
   addMedia: (image) =>
     thumbnail = image.imageAsThumbnail(100)
     image = image.imageAsResized(1600, 1200) #TODO: GJ: support other orientations

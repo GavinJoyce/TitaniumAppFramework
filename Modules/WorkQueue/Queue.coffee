@@ -10,18 +10,39 @@ root.WorkQueue.Queue = class Queue
     @jobs = []
     
   add: (job) =>
+    Ti.API.info "[WorkQueue.Queue] Adding job"
     @jobs.push job
     
-  check: =>
+  check: => #execute a job if one is available
     Ti.API.info "[WorkQueue.Queue] There are #{@jobs.length} items in the queue"
+    availableJobs = @jobs.filter (job) -> job.canExecute()
+    Ti.API.info "[WorkQueue.Queue] There are #{availableJobs.length} available jobs in the queue"
     
-    completedJobs = []
-    for job in @jobs when job.canExecute()
-      job.execute()
-      @jobs = @jobs.without job
+    if availableJobs.length > 0
+      job = availableJobs[0]
+      job.execute {
+        onSuccess: @onJobSuccess
+        onError: @onJobError
+        onJobProgress: @onJobProgress
+      }
+    else
+      @scheduleCheck()
     
-    setTimeout(@check, @settings.checkFrequency) if @running
+  onJobSuccess: (job) =>
+    Ti.API.info 'job was successful ' + job.settings.worker
+    @jobs = @jobs.without job
+    @check()
     
+  onJobError: (job) =>
+    Ti.API.info 'job was error'
+    @jobs = @jobs.without job #TODO: GJ: retry or set error state?
+    @check()
+    
+  onJobProgress: (job, percent) =>
+    Ti.API.info "Job progress #{percent}"
+    
+  scheduleCheck: -> setTimeout(@check, @settings.checkFrequency) if @running
+  
   start: =>
     unless @running
       @running = true

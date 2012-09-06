@@ -2,6 +2,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
   constructor:(options = {}) ->
     @settings = root._.extend({
       backgroundColor: '#eee'
+      onUpdate: (photos, thumbnails) ->
     }, options)
     
     @photos = []
@@ -38,6 +39,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     
   update: =>
     @label.text = "There are #{@photos.length} photos"
+    @settings.onUpdate @photos, @thumbnails
   
   addFromGallery: =>
     Ti.Media.openPhotoGallery {

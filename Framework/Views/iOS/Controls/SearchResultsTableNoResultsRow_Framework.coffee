@@ -2,7 +2,10 @@ root.SearchResultsTableNoResultsRow_Framework_iOS = class SearchResultsTableNoRe
   constructor: ->
     @noResultsRow = Ti.UI.createTableViewRow({
       backgroundColor: "#DDD"
+      backgroundSelectedColor: "#DDD"
       height: "100%"
+      touchEnabled: false
+      type: "noResultsRow"
     })
     
     label = Ti.UI.createLabel({

@@ -11,7 +11,10 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     @table = Ti.UI.createTableView({
       top: @options.top
     })
-    @table.addEventListener("click", @options.onTableClick)
+    @table.addEventListener("click", (e) =>
+      if e.row.type != "noResultsRow" && e.row.type != "loadMoreRow"
+        @options.onTableClick(e)
+    )
     @moreRow = root.app.create("SearchResultsTableMoreRow").moreRow
     @noResultsRow = root.app.create("SearchResultsTableNoResultsRow").noResultsRow
     

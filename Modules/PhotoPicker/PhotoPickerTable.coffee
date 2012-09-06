@@ -11,13 +11,44 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
 
     @view = Ti.UI.createView @settings
     
-    @addFromGalleryButton = Ti.UI.createButton { title: '+ Gallery', top: 34, left: 2 }
-    @addFromGalleryButton.addEventListener 'click', @addFromGallery
-    @view.add @addFromGalleryButton
+    @buttons = Ti.UI.createView({
+      width: "100%"
+      height: Ti.UI.SIZE
+      top: 0
+      backgroundColor: "#F9F9F9"
+    })
     
-    @addFromCameraButton = Ti.UI.createButton { title: '+ Camera', top: 34, right: 2 }
-    @addFromCameraButton.addEventListener 'click', @addFromCamera
-    @view.add @addFromCameraButton
+    @addFromCameraButton = root.app.create("Button", {
+      labelText: "Take Photo"
+      icon: "Images/camera.png"
+      gradientFrom: ["#08a700", "#068700"]
+      gradientTo: ["#068700", "#08a700"]
+      borderColor: "#067d00"
+      labelShadowColor: "#067d00"
+      left: 5
+      top: 5
+      bottom: 5
+      height: 30
+      onClick: @addFromCamera
+    })
+    @buttons.add @addFromCameraButton.button
+    
+    @addFromGalleryButton = root.app.create("Button", {
+      labelText: "Choose From Library"
+      icon: "Images/photos.png"
+      gradientFrom: ["#08a700", "#068700"]
+      gradientTo: ["#068700", "#08a700"]
+      borderColor: "#067d00"
+      labelShadowColor: "#067d00"
+      right: 5
+      top: 5
+      bottom: 5
+      height: 30
+      onClick: @addFromGallery
+    })
+    @buttons.add @addFromGalleryButton.button
+    
+    @view.add(@buttons)
     
     @grid = root.app.create 'PhotoPicker.PhotoGrid', {
       top: 80

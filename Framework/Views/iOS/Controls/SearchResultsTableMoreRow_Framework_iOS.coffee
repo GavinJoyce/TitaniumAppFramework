@@ -2,7 +2,9 @@ root.SearchResultsTableMoreRow_Framework_iOS = class SearchResultsTableMoreRow_F
   constructor: ->
     @moreRow = Ti.UI.createTableViewRow({
       backgroundColor: "#DDD"
+      backgroundSelectedColor: "#DDD"
       height: 50
+      type: "loadMoreRow"
     })
     
     indicator = Ti.UI.createActivityIndicator({

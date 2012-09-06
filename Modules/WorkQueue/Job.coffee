@@ -12,7 +12,7 @@ root.WorkQueue.Job = class Job
     worker.execute {
       onSuccess: => options.onSuccess @
       onError: => options.onError @
-      onJobProgress: (percent) => options.onJobProgress @, percent
+      onJobProgress: (progress) => options.onJobProgress @, progress
     }
 
   canExecute: =>

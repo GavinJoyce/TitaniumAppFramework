@@ -1,4 +1,4 @@
-#TODO: GJ: should we persist jobs to db?
+#TODO: GJ: persist jobs to db?
 
 root.WorkQueue.Queue = class Queue
   constructor:(options = {}) -> 
@@ -16,7 +16,7 @@ root.WorkQueue.Queue = class Queue
   check: => #execute a job if one is available
     Ti.API.info "[WorkQueue.Queue] There are #{@jobs.length} items in the queue"
     availableJobs = @jobs.filter (job) -> job.canExecute()
-    Ti.API.info "[WorkQueue.Queue] There are #{availableJobs.length} available jobs in the queue"
+    Ti.API.info "[WorkQueue.Queue]#{availableJobs.length} jobs,  #{} available jobs"
     
     if availableJobs.length > 0
       job = availableJobs[0]
@@ -38,8 +38,8 @@ root.WorkQueue.Queue = class Queue
     @jobs = @jobs.without job #TODO: GJ: retry or set error state?
     @check()
     
-  onJobProgress: (job, percent) =>
-    Ti.API.info "Job progress #{percent}"
+  onJobProgress: (job, progress) => #progress between 0 and 1
+    Ti.API.info "Job progress #{progress}"
     
   scheduleCheck: -> setTimeout(@check, @settings.checkFrequency) if @running
   

@@ -7,9 +7,13 @@ root.WorkQueue.Job = class Job
     }, options)
 
     
-  execute: =>
+  execute: (options) =>
     worker = root.app.create @settings.worker, { data: @settings.data }
-    worker.execute()
+    worker.execute {
+      onSuccess: => options.onSuccess @
+      onError: => options.onError @
+      onJobProgress: (progress) => options.onJobProgress @, progress
+    }
 
   canExecute: =>
     @settings.executeOn <= new Date()

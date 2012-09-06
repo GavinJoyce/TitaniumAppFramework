@@ -21,10 +21,10 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     @addFromCameraButton = root.app.create("Button", {
       labelText: "Take Photo"
       icon: "Images/camera.png"
-      gradientFrom: ["#0d5acd", "#0b4eb3"]
-      gradientTo: ["#0b4eb3", "#0b4eb3"]
-      borderColor: "#0b4eb3"
-      labelShadowColor: "#0b4eb3"
+      gradientFrom: ["#08a700", "#068700"]
+      gradientTo: ["#068700", "#08a700"]
+      borderColor: "#067d00"
+      labelShadowColor: "#067d00"
       left: 5
       top: 5
       bottom: 5
@@ -36,10 +36,10 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     @addFromGalleryButton = root.app.create("Button", {
       labelText: "Choose From Library"
       icon: "Images/photos.png"
-      gradientFrom: ["#0d5acd", "#0b4eb3"]
-      gradientTo: ["#0b4eb3", "#0b4eb3"]
-      borderColor: "#0b4eb3"
-      labelShadowColor: "#0b4eb3"
+      gradientFrom: ["#08a700", "#068700"]
+      gradientTo: ["#068700", "#08a700"]
+      borderColor: "#067d00"
+      labelShadowColor: "#067d00"
       right: 5
       top: 5
       bottom: 5

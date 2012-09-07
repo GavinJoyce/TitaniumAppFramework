@@ -1,7 +1,7 @@
 root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
   constructor:(options = {}) ->
     @settings = root._.extend({
-      backgroundColor: '#eee'
+      backgroundColor: '#FFF'
       photos: []
       onUpdate: (photos, thumbnails) ->
     }, options)
@@ -15,35 +15,47 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       width: "100%"
       height: Ti.UI.SIZE
       top: 0
-      backgroundColor: "#F9F9F9"
+      backgroundColor: "#F3F3F3"
     })
     
     @addFromCameraButton = root.app.create("Button", {
-      labelText: "Take Photo"
-      icon: "Images/camera.png"
-      gradientFrom: ["#08a700", "#068700"]
-      gradientTo: ["#068700", "#08a700"]
-      borderColor: "#067d00"
-      labelShadowColor: "#067d00"
-      left: 5
-      top: 5
-      bottom: 5
-      height: 30
+      style: {
+        gradient: ["#08a700", "#068700"]
+        borderColor: "#067d00"
+        labelShadowColor: "#067d00"
+        labelText: "Take Photo"
+        icon: "/Common/Modules/PhotoPicker/Images/camera.png"
+        left: 5
+        top: 5
+        bottom: 5
+        height: 30
+      }
+      onClickStyle: {
+       gradient: ["#068700", "#08a700"]
+       borderColor: "#067d00"
+       labelShadowColor: "#067d00"
+      }
       onClick: @addFromCamera
     })
     @buttons.add @addFromCameraButton.button
     
     @addFromGalleryButton = root.app.create("Button", {
-      labelText: "Choose From Library"
-      icon: "Images/photos.png"
-      gradientFrom: ["#08a700", "#068700"]
-      gradientTo: ["#068700", "#08a700"]
-      borderColor: "#067d00"
-      labelShadowColor: "#067d00"
-      right: 5
-      top: 5
-      bottom: 5
-      height: 30
+      style: {
+        gradient: ["#08a700", "#068700"]
+        borderColor: "#067d00"
+        labelShadowColor: "#067d00"
+        labelText: "Choose From Library"
+        icon: "/Common/Modules/PhotoPicker/Images/photos.png"
+        right: 5
+        top: 5
+        bottom: 5
+        height: 30
+      }
+      onClickStyle: {
+       gradient: ["#068700", "#08a700"]
+       borderColor: "#067d00"
+       labelShadowColor: "#067d00"
+      }
       onClick: @addFromGallery
     })
     @buttons.add @addFromGalleryButton.button

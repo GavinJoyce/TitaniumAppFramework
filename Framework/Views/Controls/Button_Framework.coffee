@@ -1,48 +1,64 @@
 root.Button_Framework = class Button
   constructor:(options = {}) ->
+    
     @settings = root._.extend({
+      onClick: () => Ti.API.info("button clicked")
+    }, options)
+    @settings.style = root._.extend({
+      borderColor: "#CCC"
+      gradient: ["#EEE", "#DDD"]
+      labelColor: "#FFF"
+      labelShadowColor: "#CCC"
       height: 30
       width: Ti.UI.SIZE
       bottom: null
       top: null
       left: null
       right: null
-      borderColor: "#CCC"
-      gradientFrom: "#EEE"
-      gradientTo: "#DDD"
-      labelColor: "#FFF"
       labelText: "Button"
       labelFontSize: 12
-      labelShadowColor: "#CCC"
-      onClick: () => Ti.API.info("button clicked")
-    }, options)
+    }, options.style)
+    @settings.onClickStyle = root._.extend({
+      
+    }, options.onClickStyle)
     
     @button = Ti.UI.createView({
-      height: @startValue("height")
-      width: @startValue("width")
-      bottom: @startValue("bottom")
-      top: @startValue("top")
-      left: @startValue("left")
-      right: @startValue("right")
+      height: @startStyle("height")
+      width: @startStyle("width")
+      bottom: @startStyle("bottom")
+      top: @startStyle("top")
+      left: @startStyle("left")
+      right: @startStyle("right")
       borderRadius: 3
       borderWidth: 1
-      borderColor: @startValue("borderColor")
+      borderColor: @startStyle("borderColor")
       backgroundGradient: {
         type: 'linear'
         startPoint: { x: 0, y: 0 }
         endPoint: { x: 0, y: "100%" }
-        colors: [ @startValue("gradientFrom"), @startValue("gradientTo")]
+        colors: @startStyle("gradient")
         backfillStart: false
       }
+      layout: "horizontal"
     })
     
+    if @startStyle("icon")
+      @icon = Ti.UI.createImageView({
+        image: @startStyle("icon")
+        width: 20
+        height: 20
+        left: 5
+      })
+      @button.add(@icon)
+    
     @label = Ti.UI.createLabel({
-      color: @startValue("labelColor")
-      text: @startValue("labelText")
-      font: { fontSize: @startValue("labelFontSize"), fontWeight: "bold" }
+      color: @startStyle("labelColor")
+      text: @startStyle("labelText")
+      font: { fontSize: @startStyle("labelFontSize"), fontWeight: "bold" }
       shadowOffset: { x: 1, y: 1 }
-      shadowColor: @startValue("labelShadowColor")
+      shadowColor: @startStyle("labelShadowColor")
       textAlign: "center"
+      height: Ti.UI.FILL
     })
     @button.add(@label)
     
@@ -52,80 +68,74 @@ root.Button_Framework = class Button
     
   onTouchStart: =>
     @button.updateLayout({
-      height: @clickValue("height")
-      width: @clickValue("width")
-      bottom: @clickValue("bottom")
-      top: @clickValue("top")
-      left: @clickValue("left")
-      right: @clickValue("right")
+      height: @clickStyle("height")
+      width: @clickStyle("width")
+      bottom: @clickStyle("bottom")
+      top: @clickStyle("top")
+      left: @clickStyle("left")
+      right: @clickStyle("right")
       borderRadius: 3
       borderWidth: 1
-      borderColor: @clickValue("borderColor")
+      borderColor: @clickStyle("borderColor")
       backgroundGradient: {
         type: 'linear'
         startPoint: { x: 0, y: 0 }
         endPoint: { x: 0, y: "100%" }
-        colors: [ @clickValue("gradientFrom"), @clickValue("gradientTo")]
+        colors: @clickStyle("gradient")
         backfillStart: false
       }
     })
     
     @label.updateLayout({
-      color: @clickValue("labelColor")
-      text: @clickValue("labelText")
-      font: @clickValue("labelFont")
+      color: @clickStyle("labelColor")
+      text: @clickStyle("labelText")
+      font: @clickStyle("labelFont")
       shadowOffset: { x: 1, y: 1 }
-      shadowColor: @clickValue("labelShadowColor")
+      shadowColor: @clickStyle("labelShadowColor")
       textAlign: "center"
     })
     
   onTouchEnd: =>
     @button.updateLayout({
-      height: @startValue("height")
-      width: @startValue("width")
-      bottom: @startValue("bottom")
-      top: @startValue("top")
-      left: @startValue("left")
-      right: @startValue("right")
+      height: @startStyle("height")
+      width: @startStyle("width")
+      bottom: @startStyle("bottom")
+      top: @startStyle("top")
+      left: @startStyle("left")
+      right: @startStyle("right")
       borderRadius: 3
       borderWidth: 1
-      borderColor: @startValue("borderColor")
+      borderColor: @startStyle("borderColor")
       backgroundGradient: {
         type: 'linear'
         startPoint: { x: 0, y: 0 }
         endPoint: { x: 0, y: "100%" }
-        colors: [ @startValue("gradientFrom"), @startValue("gradientTo")]
+        colors: @startStyle("gradient")
         backfillStart: false
       }
     })
     
     @label.updateLayout({
-      color: @startValue("labelColor")
-      text: @startValue("labelText")
-      font: @startValue("labelFont")
+      color: @startStyle("labelColor")
+      text: @startStyle("labelText")
+      font: @startStyle("labelFont")
       shadowOffset: { x: 1, y: 1 }
-      shadowColor: @startValue("labelShadowColor")
+      shadowColor: @startStyle("labelShadowColor")
       textAlign: "center"
     })
     
     
-  startValue: (param) =>
-    if @settings[param] == null
+  startStyle: (param) =>
+    if @settings.style[param] == null
       null
     else
-      if typeof @settings[param] == "object"
-        @settings[param][0]
-      else
-        @settings[param]
+      @settings.style[param]
     
-  clickValue: (param) =>
-    if @settings[param] == null
-      null
-    else
-      if typeof @settings[param] == "object"
-        if @settings[param][1]
-          @settings[param][1]
-        else
-          @settings[param][0]
+  clickStyle: (param) =>
+    if @settings.onClickStyle[param] == null
+      if @settings.style[param]
+        @settings.style[param]
       else
-        @settings[param]
+        null
+    else
+      @settings.onClickStyle[param]

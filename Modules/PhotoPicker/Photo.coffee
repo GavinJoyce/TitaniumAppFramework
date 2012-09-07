@@ -15,12 +15,16 @@ root.PhotoPicker.Photo = class Photo
       SS: Added this as a function to get around an issue with passing around '@' in the click event
       but still allows us to re-use in controls that extend, e.g. 'Photo_iPhone'
     ###
-    @remove = Ti.UI.createView {
-      right: 5
-      top: 5
-      width: 15
-      height: 15
-      backgroundColor: '#333'
+    @remove = Ti.UI.createImageView {
+      right: 1
+      top: 1
+      width: 20
+      height: 20
+      backgroundColor: "#C70000"
+      borderRadius: 10
+      borderWidth: 1
+      borderColor: "#C70000"
+      image: "/Common/Modules/PhotoPicker/Images/white/circlex.png"
     }
     @view.add(@remove)
     @remove.addEventListener("click", () =>

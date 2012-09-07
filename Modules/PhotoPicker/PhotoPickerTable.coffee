@@ -15,25 +15,24 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       width: "100%"
       height: Ti.UI.SIZE
       top: 0
-      backgroundColor: "#F3F3F3"
+      backgroundColor: "#333"
     })
     
     @addFromCameraButton = root.app.create("Button", {
       style: {
-        gradient: ["#08a700", "#068700"]
-        borderColor: "#067d00"
-        labelShadowColor: "#067d00"
+        gradient: ["#EEE", "#CECECE"]
+        borderColor: "#222"
+        labelShadowColor: "#FFF"
         labelText: "Take Photo"
-        icon: "/Common/Modules/PhotoPicker/Images/camera.png"
-        left: 5
-        top: 5
-        bottom: 5
-        height: 30
+        labelColor: "#222"
+        icon: "/Common/Modules/PhotoPicker/Images/black/camera.png"
+        left: 10
+        top: 10
+        bottom: 10
+        height: 35
       }
       onClickStyle: {
-       gradient: ["#068700", "#08a700"]
-       borderColor: "#067d00"
-       labelShadowColor: "#067d00"
+       gradient: ["#CECECE", "#EEE"]
       }
       onClick: @addFromCamera
     })
@@ -41,20 +40,19 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     
     @addFromGalleryButton = root.app.create("Button", {
       style: {
-        gradient: ["#08a700", "#068700"]
-        borderColor: "#067d00"
-        labelShadowColor: "#067d00"
+        gradient: ["#EEE", "#CECECE"]
+        borderColor: "#222"
+        labelShadowColor: "#FFF"
         labelText: "Choose From Library"
-        icon: "/Common/Modules/PhotoPicker/Images/photos.png"
-        right: 5
-        top: 5
-        bottom: 5
-        height: 30
+        labelColor: "#222"
+        icon: "/Common/Modules/PhotoPicker/Images/black/photos.png"
+        right: 10
+        top: 10
+        bottom: 10
+        height: 35
       }
       onClickStyle: {
-       gradient: ["#068700", "#08a700"]
-       borderColor: "#067d00"
-       labelShadowColor: "#067d00"
+       gradient: ["#CECECE", "#EEE"]
       }
       onClick: @addFromGallery
     })
@@ -63,10 +61,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     @view.add(@buttons)
     
     @grid = root.app.create 'PhotoPicker.PhotoGrid', {
-      top: 80
-      cellWidth: 100
-      cellHeight: 100
-      cellMargin: 5
+      top: 60
       onRemove: (photo, thumbnail) =>  #TODO: GJ: record existing image deletes
         @photos = @photos.without photo
         @thumbnails = @thumbnails.without thumbnail

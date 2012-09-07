@@ -1,9 +1,6 @@
 root.PhotoPicker.PhotoGrid = class PhotoGrid
   constructor:(options = {}) ->
     @settings = root._.extend({
-      cellWidth: 140
-      cellHeight: 100
-      cellMargin: 20
       layout: 'horizontal'
       width: '100%'
       height: Ti.UI.FILL
@@ -18,10 +15,6 @@ root.PhotoPicker.PhotoGrid = class PhotoGrid
   
   addPhoto: (thumb, filename) ->
     photo = root.app.create 'PhotoPicker.Photo', {
-      width: @settings.cellWidth
-      height: @settings.cellHeight
-      left: @settings.cellMargin
-      top: @settings.cellMargin / 2
       image: thumb
       thumb: thumb
       filename: filename

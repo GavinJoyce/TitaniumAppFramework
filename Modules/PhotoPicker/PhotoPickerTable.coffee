@@ -1,7 +1,7 @@
 root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
   constructor:(options = {}) ->
     @settings = root._.extend({
-      backgroundColor: '#eee'
+      backgroundColor: '#FFF'
       photos: []
       onUpdate: (photos, thumbnails) ->
     }, options)
@@ -15,7 +15,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       width: "100%"
       height: Ti.UI.SIZE
       top: 0
-      backgroundColor: "#F9F9F9"
+      backgroundColor: "#F3F3F3"
     })
     
     @addFromCameraButton = root.app.create("Button", {

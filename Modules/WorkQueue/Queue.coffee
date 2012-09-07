@@ -14,17 +14,22 @@ root.WorkQueue.Queue = class Queue
     @jobs.push job
     
   check: => #execute a job if one is available
-    Ti.API.info "[WorkQueue.Queue] There are #{@jobs.length} items in the queue"
+    Ti.App.fireEvent 'HeadsUp.HeadsUpMessage.close', {}
     availableJobs = @jobs.filter (job) -> job.canExecute()
-    Ti.API.info "[WorkQueue.Queue]#{availableJobs.length} jobs,  #{} available jobs"
+    Ti.API.info "[WorkQueue.Queue]#{@jobs.length} jobs, #{availableJobs.length} available jobs"
     
     if availableJobs.length > 0
       job = availableJobs[0]
+      Ti.App.fireEvent 'HeadsUp.HeadsUpMessage.update', {
+        message: 'Job Starting'
+        progress: 0
+      }
       job.execute {
         onSuccess: @onJobSuccess
         onError: @onJobError
-        onJobProgress: @onJobProgress
+        onProgress: @onJobProgress
       }
+      
     else
       @scheduleCheck()
     
@@ -40,6 +45,10 @@ root.WorkQueue.Queue = class Queue
     
   onJobProgress: (job, progress) => #progress between 0 and 1
     Ti.API.info "Job progress #{progress}"
+    Ti.App.fireEvent 'HeadsUp.HeadsUpMessage.update', {
+      message: 'Job in Progress'
+      progress: progress
+    }
     
   scheduleCheck: -> setTimeout(@check, @settings.checkFrequency) if @running
   

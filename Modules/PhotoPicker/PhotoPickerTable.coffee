@@ -1,7 +1,7 @@
 root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
   constructor:(options = {}) ->
     @settings = root._.extend({
-      backgroundColor: '#FFF'
+      backgroundColor: '#EEE'
       photos: []
       onUpdate: (photos, thumbnails) ->
     }, options)
@@ -15,7 +15,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       width: "100%"
       height: Ti.UI.SIZE
       top: 0
-      backgroundColor: "#333"
+      backgroundColor: "#3b3b43"
     })
     
     @addFromCameraButton = root.app.create("Button", {
@@ -43,7 +43,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
         gradient: ["#EEE", "#CECECE"]
         borderColor: "#222"
         labelShadowColor: "#FFF"
-        labelText: "Choose From Library"
+        labelText: "From Library"
         labelColor: "#222"
         icon: "/Common/Modules/PhotoPicker/Images/black/photos.png"
         right: 10

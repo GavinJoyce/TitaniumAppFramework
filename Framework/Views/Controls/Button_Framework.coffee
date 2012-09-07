@@ -39,7 +39,17 @@ root.Button_Framework = class Button
         colors: @startStyle("gradient")
         backfillStart: false
       }
+      layout: "horizontal"
     })
+    
+    if @startStyle("icon")
+      @icon = Ti.UI.createImageView({
+        image: @startStyle("icon")
+        width: 20
+        height: 20
+        left: 5
+      })
+      @button.add(@icon)
     
     @label = Ti.UI.createLabel({
       color: @startStyle("labelColor")
@@ -48,6 +58,7 @@ root.Button_Framework = class Button
       shadowOffset: { x: 1, y: 1 }
       shadowColor: @startStyle("labelShadowColor")
       textAlign: "center"
+      height: Ti.UI.FILL
     })
     @button.add(@label)
     

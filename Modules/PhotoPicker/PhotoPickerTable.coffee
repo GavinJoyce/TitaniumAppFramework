@@ -24,7 +24,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
         borderColor: "#067d00"
         labelShadowColor: "#067d00"
         labelText: "Take Photo"
-        icon: "Images/camera.png"
+        icon: "/Common/Modules/PhotoPicker/Images/camera.png"
         left: 5
         top: 5
         bottom: 5
@@ -45,7 +45,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
         borderColor: "#067d00"
         labelShadowColor: "#067d00"
         labelText: "Choose From Library"
-        icon: "Images/photos.png"
+        icon: "/Common/Modules/PhotoPicker/Images/photos.png"
         right: 5
         top: 5
         bottom: 5

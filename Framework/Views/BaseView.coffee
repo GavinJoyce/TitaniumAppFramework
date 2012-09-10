@@ -8,6 +8,7 @@ root.BaseView = class BaseView
       barColor: root.app.settings.viewTitleBarColor
       barImage: root.app.settings.viewTitleBarImage
       backgroundImage: root.app.settings.viewBackgroundImage
+      barImage: root.app.settings.barImage
       #fullscreen: false
       #modal: false
     }, options)

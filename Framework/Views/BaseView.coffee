@@ -7,6 +7,7 @@ root.BaseView = class BaseView
       backgroundGradient: root.app.settings.viewBackgroundGradient
       barColor: root.app.settings.viewTitleBarColor
       backgroundImage: root.app.settings.viewBackgroundImage
+      barImage: root.app.settings.barImage
       #fullscreen: false
       #modal: false
     }, options)

@@ -34,5 +34,3 @@ root.PhotoPicker.PhotoGrid = class PhotoGrid
   
   addPhotos: (photos) =>
     @addPhoto photo for photo in photos
-    
-  

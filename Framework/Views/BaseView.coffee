@@ -6,7 +6,6 @@ root.BaseView = class BaseView
       backgroundColor: root.app.settings.viewBackgroundColor
       backgroundGradient: root.app.settings.viewBackgroundGradient
       barColor: root.app.settings.viewTitleBarColor
-      barImage: root.app.settings.viewTitleBarImage
       backgroundImage: root.app.settings.viewBackgroundImage
     }, options)
     @applyStyle()

@@ -8,10 +8,9 @@ root.BaseView = class BaseView
       barColor: root.app.settings.viewTitleBarColor
       barImage: root.app.settings.viewTitleBarImage
       backgroundImage: root.app.settings.viewBackgroundImage
-      barImage: root.app.settings.barImage
-      #fullscreen: false
-      #modal: false
     }, options)
+    @applyStyle()
+    
     @isPortrait = (Ti.UI.orientation == Ti.UI.PORTRAIT || Ti.UI.orientation == Ti.UI.UPSIDE_PORTRAIT)
     @isLandscape = (Ti.UI.orientation == Ti.UI.LANDSCAPE_LEFT || Ti.UI.orientation == Ti.UI.LANDSCAPE_RIGHT)
     
@@ -28,6 +27,9 @@ root.BaseView = class BaseView
     })
     @window.add(@content)
     
+  applyStyle: ->
+    if @settings.viewTitleBarStyle? #TODO: GJ: add support for different platforms
+      @settings.barImage = "/Common/Framework/Images/iOS/TitleBar/#{@settings.viewTitleBarStyle}.png"
 
   focus: (e) =>
     @onInit() if !@uiInitialised

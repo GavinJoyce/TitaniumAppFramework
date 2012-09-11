@@ -9,6 +9,7 @@ root.TabGroup_Framework_iOS = class TabGroup_Framework_iOS
             name: "Tab 1"
             icon: ""
           }
+          barImage: null
         }
       ]
     }, options)

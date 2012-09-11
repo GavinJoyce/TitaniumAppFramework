@@ -43,12 +43,14 @@ root.WorkQueue.Queue = class Queue
     @jobs = @jobs.without job #TODO: GJ: retry or set error state?
     @check()
     
-  onJobProgress: (job, progress) => #progress between 0 and 1
+  onJobProgress: (job, worker, progress) => #progress between 0 and 1
     Ti.API.info "Job progress #{progress}"
-    Ti.App.fireEvent 'HeadsUp.HeadsUpMessage.update', {
-      message: 'Job in Progress'
-      progress: progress
-    }
+    
+    if worker.settings.showProgress
+      Ti.App.fireEvent 'HeadsUp.HeadsUpMessage.update', {
+        message: 'Job in Progress'
+        progress: progress
+      }
     
   scheduleCheck: -> setTimeout(@check, @settings.checkFrequency) if @running
   

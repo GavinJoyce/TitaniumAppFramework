@@ -148,50 +148,10 @@ root.Button_Framework = class Button
       
   setEnabled: (enabled) =>
     if enabled
-      @button.updateLayout({
-        height: @startStyle("height")
-        width: @startStyle("width")
-        bottom: @startStyle("bottom")
-        top: @startStyle("top")
-        left: @startStyle("left")
-        right: @startStyle("right")
-        borderRadius: 3
-        borderWidth: 1
-        borderColor: @startStyle("borderColor")
-        backgroundGradient: {
-          type: 'linear'
-          startPoint: { x: 0, y: 0 }
-          endPoint: { x: 0, y: "100%" }
-          colors: @startStyle("gradient")
-          backfillStart: false
-        }
-      })
-      @label.updateLayout({
-        color: @startStyle("labelColor")
-        shadowColor: @startStyle("labelShadowColor")
-      })
-      
       @button.addEventListener("singletap", @settings.onClick)
       @button.addEventListener("touchstart", @onTouchStart)
       @button.addEventListener("touchend", @onTouchEnd)
     else
-      @button.updateLayout({
-        labelColor: "#ddd"
-        labelShadowColor: "#999"
-        borderColor: 'CCC'
-        backgroundGradient: {
-          type: 'linear'
-          startPoint: { x: 0, y: 0 }
-          endPoint: { x: 0, y: "100%" }
-          colors: ["#EEE", "#DDD"]
-          backfillStart: false
-        }
-      })
-      @label.updateLayout({
-        color: '#ccc'
-        shadowColor: '#999'
-      })
-      
       @button.removeEventListener("singletap", @settings.onClick)
       @button.removeEventListener("touchstart", @onTouchStart)
       @button.removeEventListener("touchend", @onTouchEnd)

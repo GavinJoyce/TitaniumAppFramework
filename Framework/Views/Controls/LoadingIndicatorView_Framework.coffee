@@ -7,10 +7,12 @@ root.LoadingIndicatorView_Framework = class LoadingIndicatorView_Framework exten
     
     if Ti.Platform.osname == "iphone" || Ti.Platform.osname == "ipad"
       @loadingView = Ti.UI.createView({
+        top: 0
         height: "100%"
         width: "100%"
       })
       @activityIndicator = Ti.UI.createActivityIndicator({
+        top: 200
         message: "Loading..."
         width: Ti.UI.SIZE
         height: Ti.UI.SIZE

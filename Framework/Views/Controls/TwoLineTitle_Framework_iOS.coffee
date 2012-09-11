@@ -9,7 +9,7 @@ root.TwoLineTitle_Framework_iOS = class TwoLineTitle_Framework_iOS
       text: ' '
       textAlign: 'center'
       font: { fontSize: 15, fontWeight: 'bold' }
-      shadowColor: '#222', shadowOffset: { x: 1, y: 1 }
+      shadowColor: '#222', shadowOffset: { x: 0, y: -1 }
       wordWrap: false
       ellipsize: true
     })
@@ -21,7 +21,7 @@ root.TwoLineTitle_Framework_iOS = class TwoLineTitle_Framework_iOS
       text: ' '
       textAlign: 'center'
       font: { fontSize: 11, fontWeight: 'bold' }
-      shadowColor: '#222', shadowOffset: { x: 0, y: 1 }
+      shadowColor: '#222', shadowOffset: { x: 0, y: -1 }
     })
     
     @bigtitle = Ti.UI.createLabel({
@@ -30,7 +30,7 @@ root.TwoLineTitle_Framework_iOS = class TwoLineTitle_Framework_iOS
       text: ' '
       textAlign: 'center'
       font: { fontSize: 17, fontWeight: 'bold' }
-      shadowColor: '#222', shadowOffset: { x: 0, y: 1 }
+      shadowColor: '#222', shadowOffset: { x: 0, y: -1 }
     })
     @bigtitle.hide()
     

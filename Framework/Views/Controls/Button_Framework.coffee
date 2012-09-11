@@ -40,7 +40,11 @@ root.Button_Framework = class Button
         colors: @startStyle("gradient")
         backfillStart: false
       }
-      layout: "horizontal"
+    })
+    
+    @content = Ti.UI.createView({
+      layout: 'horizontal'
+      width: Ti.UI.SIZE
     })
     
     if @startStyle("icon")
@@ -50,7 +54,7 @@ root.Button_Framework = class Button
         height: 20
         left: 5
       })
-      @button.add(@icon)
+      @content.add(@icon)
     
     @label = Ti.UI.createLabel({
       color: @startStyle("labelColor")
@@ -62,11 +66,9 @@ root.Button_Framework = class Button
       height: Ti.UI.FILL
     })
     
-    @button.add(@label)
+    @content.add(@label)
     
-    # @button.addEventListener("singletap", @settings.onClick)
-    # @button.addEventListener("touchstart", @onTouchStart)
-    # @button.addEventListener("touchend", @onTouchEnd)
+    @button.add(@content)
     
     @setEnabled(@settings.enabled)
     
@@ -176,7 +178,7 @@ root.Button_Framework = class Button
       @button.updateLayout({
         labelColor: "#ddd"
         labelShadowColor: "#999"
-        borderColor: 'ddd'
+        borderColor: 'CCC'
         backgroundGradient: {
           type: 'linear'
           startPoint: { x: 0, y: 0 }

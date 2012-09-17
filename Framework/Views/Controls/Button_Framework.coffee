@@ -3,6 +3,8 @@ root.Button_Framework = class Button
     
     @settings = root._.extend({
       enabled: true
+      borderRadius: 3
+      opacity: 1.0
       onClick: () => Ti.API.info("button clicked")
     }, options)
     @settings.style = root._.extend({
@@ -30,7 +32,7 @@ root.Button_Framework = class Button
       top: @startStyle("top")
       left: @startStyle("left")
       right: @startStyle("right")
-      borderRadius: 3
+      borderRadius: @settings.borderRadius
       borderWidth: 1
       borderColor: @startStyle("borderColor")
       backgroundGradient: {
@@ -40,6 +42,7 @@ root.Button_Framework = class Button
         colors: @startStyle("gradient")
         backfillStart: false
       }
+      opacity: @settings.opacity
     })
     
     @content = Ti.UI.createView({
@@ -47,13 +50,8 @@ root.Button_Framework = class Button
       width: Ti.UI.SIZE
     })
     
-    if @startStyle("icon")
-      @icon = Ti.UI.createImageView({
-        image: @startStyle("icon")
-        width: 20
-        height: 20
-        left: 5
-      })
+    if @startStyle("iconSettings")
+      @icon = Ti.UI.createImageView(@startStyle("iconSettings"))
       @content.add(@icon)
     
     @label = Ti.UI.createLabel({
@@ -80,8 +78,6 @@ root.Button_Framework = class Button
       top: @clickStyle("top")
       left: @clickStyle("left")
       right: @clickStyle("right")
-      borderRadius: 3
-      borderWidth: 1
       borderColor: @clickStyle("borderColor")
       backgroundGradient: {
         type: 'linear'
@@ -109,8 +105,6 @@ root.Button_Framework = class Button
       top: @startStyle("top")
       left: @startStyle("left")
       right: @startStyle("right")
-      borderRadius: 3
-      borderWidth: 1
       borderColor: @startStyle("borderColor")
       backgroundGradient: {
         type: 'linear'

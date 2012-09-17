@@ -25,13 +25,19 @@ root.Button_Framework = class Button
       
     }, options.onClickStyle)
     
-    @button = Ti.UI.createView({
-      height: @startStyle("height")
-      width: @startStyle("width")
+    @view = Ti.UI.createView({
+      height: Ti.UI.SIZE
+      width: Ti.UI.SIZE
       bottom: @startStyle("bottom")
       top: @startStyle("top")
       left: @startStyle("left")
       right: @startStyle("right")
+      backgroundColor: "transparent"
+    })
+    
+    @button = Ti.UI.createView({
+      height: @startStyle("height")
+      width: @startStyle("width")
       borderRadius: @settings.borderRadius
       borderWidth: 1
       borderColor: @startStyle("borderColor")
@@ -44,29 +50,32 @@ root.Button_Framework = class Button
       }
       opacity: @settings.opacity
     })
+    @view.add(@button)
     
     @content = Ti.UI.createView({
       layout: 'horizontal'
       width: Ti.UI.SIZE
+      height: Ti.UI.SIZE
+      backgroundColor: "transparent"
     })
     
     if @startStyle("iconSettings")
       @icon = Ti.UI.createImageView(@startStyle("iconSettings"))
       @content.add(@icon)
     
-    @label = Ti.UI.createLabel({
-      color: @startStyle("labelColor")
-      text: @startStyle("labelText")
-      font: { fontSize: @startStyle("labelFontSize"), fontWeight: "bold" }
-      shadowOffset: { x: 1, y: 1 }
-      shadowColor: @startStyle("labelShadowColor")
-      textAlign: "center"
-      height: Ti.UI.FILL
-    })
+    if @startStyle("labelText") && @startStyle("labelText") != ""
+      @label = Ti.UI.createLabel({
+        color: @startStyle("labelColor")
+        text: @startStyle("labelText")
+        font: { fontSize: @startStyle("labelFontSize"), fontWeight: "bold" }
+        shadowOffset: { x: 1, y: 1 }
+        shadowColor: @startStyle("labelShadowColor")
+        textAlign: "center"
+        height: Ti.UI.FILL
+      })
+      @content.add(@label)
     
-    @content.add(@label)
-    
-    @button.add(@content)
+    @view.add(@content)
     
     @setEnabled(@settings.enabled)
     
@@ -74,10 +83,6 @@ root.Button_Framework = class Button
     @button.updateLayout({
       height: @clickStyle("height")
       width: @clickStyle("width")
-      bottom: @clickStyle("bottom")
-      top: @clickStyle("top")
-      left: @clickStyle("left")
-      right: @clickStyle("right")
       borderColor: @clickStyle("borderColor")
       backgroundGradient: {
         type: 'linear'
@@ -101,10 +106,6 @@ root.Button_Framework = class Button
     @button.updateLayout({
       height: @startStyle("height")
       width: @startStyle("width")
-      bottom: @startStyle("bottom")
-      top: @startStyle("top")
-      left: @startStyle("left")
-      right: @startStyle("right")
       borderColor: @startStyle("borderColor")
       backgroundGradient: {
         type: 'linear'
@@ -142,10 +143,10 @@ root.Button_Framework = class Button
       
   setEnabled: (enabled) =>
     if enabled
-      @button.addEventListener("singletap", @settings.onClick)
-      @button.addEventListener("touchstart", @onTouchStart)
-      @button.addEventListener("touchend", @onTouchEnd)
+      @view.addEventListener("singletap", @settings.onClick)
+      @view.addEventListener("touchstart", @onTouchStart)
+      @view.addEventListener("touchend", @onTouchEnd)
     else
-      @button.removeEventListener("singletap", @settings.onClick)
-      @button.removeEventListener("touchstart", @onTouchStart)
-      @button.removeEventListener("touchend", @onTouchEnd)
+      @view.removeEventListener("singletap", @settings.onClick)
+      @view.removeEventListener("touchstart", @onTouchStart)
+      @view.removeEventListener("touchend", @onTouchEnd)

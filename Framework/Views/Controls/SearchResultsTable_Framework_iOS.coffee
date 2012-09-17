@@ -8,7 +8,7 @@ root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS e
     @offset = 0
     
     tableHeader = Ti.UI.createView({
-      backgroundColor:'#e2e7ed'
+      backgroundColor: "#e2e7ed"
       width: Ti.UI.FILL
       height: 60
     })
@@ -19,6 +19,32 @@ root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS e
       height:2
     })
     tableHeader.add(border)
+    
+    headerContents = Ti.UI.createView({
+      backgroundColor: "green"
+      layout: "horizontal"
+      top: 0
+      height: Ti.UI.SIZE
+      width: Ti.UI.SIZE
+    })
+    
+    activityIndicator = Ti.UI.createActivityIndicator({
+      height: 30
+      width: 30
+      right: 20
+    })
+    headerContents.add(activityIndicator)
+    
+    headerLabel = Ti.UI.createLabel({
+      color: "#576c89"
+      font: { fontSize: 13, fontWeight: "bold" }
+      text: "Pull down to refresh..."
+      textAlign: "center"
+      width: Ti.UI.FILL
+    })
+    headerContents.add(headerLabel)
+    
+    tableHeader.add(headerContents)
     
     @table.headerPullView = tableHeader
 

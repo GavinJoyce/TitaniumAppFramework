@@ -56,6 +56,22 @@ root.Framework = class Framework
           files = files.concat additional
     root._.uniq files
     
+  fromJson: (json, klass) ->
+    obj = new klass()
+    for key, value of JSON.parse(json)
+      obj[key] = value
+    obj
+    
+  deepExtend = (object, extenders...) ->
+    return {} if not object?
+    for other in extenders
+      for own key, val of other
+        if not object[key]? or typeof val isnt "object"
+          object[key] = val
+        else
+          object[key] = deepExtend object[key], val
+    object
+    
   post: (url, params, onSuccess, onError = null) =>
     @xhr.abort()
     @xhr.open('POST', url)

@@ -13,7 +13,7 @@ root.Button_Framework = class Button
       labelColor: "#FFF"
       labelShadowColor: "#CCC"
       height: 30
-      width: Ti.UI.SIZE
+      width: Ti.UI.FILL
       bottom: null
       top: null
       left: null
@@ -21,9 +21,7 @@ root.Button_Framework = class Button
       labelText: "Button"
       labelFontSize: 12
     }, options.style)
-    @settings.onClickStyle = root._.extend({
-      
-    }, options.onClickStyle)
+    @settings.onClickStyle = root._.extend({}, options.onClickStyle)
     
     @view = Ti.UI.createView({
       height: @startStyle("height")
@@ -32,12 +30,11 @@ root.Button_Framework = class Button
       top: @startStyle("top")
       left: @startStyle("left")
       right: @startStyle("right")
-      backgroundColor: "transparent"
     })
     
     @button = Ti.UI.createView({
-      height: @startStyle("height")
-      width: @startStyle("width")
+      height: Ti.UI.FILL
+      width: Ti.UI.FILL
       borderRadius: @settings.borderRadius
       borderWidth: 1
       borderColor: @startStyle("borderColor")
@@ -85,8 +82,6 @@ root.Button_Framework = class Button
     
   onTouchStart: =>
     @button.updateLayout({
-      height: @clickStyle("height")
-      width: @clickStyle("width")
       borderColor: @clickStyle("borderColor")
       backgroundGradient: {
         type: 'linear'
@@ -97,19 +92,16 @@ root.Button_Framework = class Button
       }
     })
     
-    @label.updateLayout({
-      color: @clickStyle("labelColor")
-      text: @clickStyle("labelText")
-      font: @clickStyle("labelFont")
-      shadowOffset: { x: 1, y: 1 }
-      shadowColor: @clickStyle("labelShadowColor")
-      textAlign: "center"
-    })
+    if @label
+      @label.updateLayout({
+        color: @clickStyle("labelColor")
+        text: @clickStyle("labelText")
+        font: @clickStyle("labelFont")
+        shadowColor: @clickStyle("labelShadowColor")
+      })
     
   onTouchEnd: =>
     @button.updateLayout({
-      height: @startStyle("height")
-      width: @startStyle("width")
       borderColor: @startStyle("borderColor")
       backgroundGradient: {
         type: 'linear'
@@ -120,14 +112,13 @@ root.Button_Framework = class Button
       }
     })
     
-    @label.updateLayout({
-      color: @startStyle("labelColor")
-      text: @startStyle("labelText")
-      font: @startStyle("labelFont")
-      shadowOffset: { x: 1, y: 1 }
-      shadowColor: @startStyle("labelShadowColor")
-      textAlign: "center"
-    })
+    if @label
+      @label.updateLayout({
+        color: @startStyle("labelColor")
+        text: @startStyle("labelText")
+        font: @startStyle("labelFont")
+        shadowColor: @startStyle("labelShadowColor")
+      })
     
     
   startStyle: (param) =>

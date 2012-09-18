@@ -49,6 +49,7 @@ root.Button_Framework = class Button
         backfillStart: false
       }
       opacity: @settings.opacity
+      zIndex: 1
     })
     @view.add(@button)
     
@@ -57,6 +58,7 @@ root.Button_Framework = class Button
       width: Ti.UI.SIZE
       height: Ti.UI.SIZE
       backgroundColor: "transparent"
+      zIndex: 2
     })
     
     if @startStyle("iconSettings")

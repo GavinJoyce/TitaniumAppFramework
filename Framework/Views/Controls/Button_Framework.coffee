@@ -26,8 +26,8 @@ root.Button_Framework = class Button
     }, options.onClickStyle)
     
     @view = Ti.UI.createView({
-      height: Ti.UI.SIZE
-      width: Ti.UI.SIZE
+      height: @startStyle("height")
+      width: @startStyle("width")
       bottom: @startStyle("bottom")
       top: @startStyle("top")
       left: @startStyle("left")

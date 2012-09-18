@@ -71,7 +71,9 @@ root.Button_Framework = class Button
         shadowOffset: { x: 1, y: 1 }
         shadowColor: @startStyle("labelShadowColor")
         textAlign: "center"
-        height: Ti.UI.FILL
+        height: Ti.UI.SIZE
+        width: Ti.UI.SIZE
+        backgroundColor: "transparent"
       })
       @content.add(@label)
     

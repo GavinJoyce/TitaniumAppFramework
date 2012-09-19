@@ -36,7 +36,6 @@ root.TwoLineTitle_Framework_iOS = class TwoLineTitle_Framework_iOS
     
     @view = Ti.UI.createView({
       top: 0
-      width: Ti.UI.SIZE
     })
     @view.add(@title)
     @view.add(@subtitle)

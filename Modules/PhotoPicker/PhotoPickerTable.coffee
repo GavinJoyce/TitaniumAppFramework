@@ -25,18 +25,25 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
         labelShadowColor: "#FFF"
         labelText: "Take Photo"
         labelColor: "#222"
-        icon: "/Common/Modules/PhotoPicker/Images/black/camera.png"
+        iconSettings: {
+          image: "/Common/Modules/PhotoPicker/Images/black/camera.png"
+          height: 20
+          width: 20
+          left: 5
+          right: 5
+        }
         left: 10
         top: 10
         bottom: 10
         height: 35
+        width: 120
       }
       onClickStyle: {
        gradient: ["#CECECE", "#EEE"]
       }
       onClick: @addFromCamera
     })
-    @buttons.add @addFromCameraButton.button
+    @buttons.add @addFromCameraButton.view
     
     @addFromGalleryButton = root.app.create("Button", {
       style: {
@@ -45,18 +52,25 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
         labelShadowColor: "#FFF"
         labelText: "From Library"
         labelColor: "#222"
-        icon: "/Common/Modules/PhotoPicker/Images/black/photos.png"
+        iconSettings: {
+          image: "/Common/Modules/PhotoPicker/Images/black/photos.png"
+          height: 20
+          width: 20
+          left: 5
+          right: 5
+        }
         right: 10
         top: 10
         bottom: 10
         height: 35
+        width: 120
       }
       onClickStyle: {
        gradient: ["#CECECE", "#EEE"]
       }
       onClick: @addFromGallery
     })
-    @buttons.add @addFromGalleryButton.button
+    @buttons.add @addFromGalleryButton.view
     
     @view.add(@buttons)
     

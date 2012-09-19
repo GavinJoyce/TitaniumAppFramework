@@ -4,8 +4,6 @@ root.ImageButton_Framework = class ImageButton_Framework
       type: "flat"
     }, options)
     
-    Ti.API.info(options)
-    
     if options.type == "back"
       @view = @createBackButton(options)
     else
@@ -50,16 +48,8 @@ root.ImageButton_Framework = class ImageButton_Framework
     button
 
   createButton: (settings) =>
-    bg = ""
-    bgPressed = ""
-
-    switch settings.color
-      when "red"
-        bg = "/Common/Framework/Images/iOS/TitleBar/Buttons/red.png"
-        bgPressed = "/Common/Framework/Images/iOS/TitleBar/Buttons/redPressed.png"
-      when "blue"
-        bg = "/Common/Framework/Images/iOS/TitleBar/Buttons/blue.png"
-        bgPressed = "/Common/Framework/Images/iOS/TitleBar/Buttons/bluePressed.png"
+    bg = "/Common/Framework/Images/iOS/TitleBar/Buttons/button.png"
+    bgPressed = "/Common/Framework/Images/iOS/TitleBar/Buttons/buttonPressed.png"
 
     button = Ti.UI.createLabel({
       backgroundImage: bg

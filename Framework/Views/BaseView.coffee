@@ -27,9 +27,13 @@ root.BaseView = class BaseView
     })
     @window.add(@content)
     
-  applyStyle: ->
-    if @settings.viewTitleBarStyle? #TODO: GJ: add support for different platforms
+  applyStyle: -> #TODO: GJ: add support for different platforms
+    if @settings.viewTitleBarStyle?
       @settings.barImage = "/Common/Framework/Images/iOS/TitleBar/#{@settings.viewTitleBarStyle}.png"
+    if @settings.style?
+      if @settings.style == 'brushedMetal'
+       @settings.backgroundImage = '/Common/Framework/Images/Patterns/brushedMetal.png'
+       #@settings.backgroundRepeat = true #NOTE: GJ: waiting for titanium retina bug to be fixed
 
   focus: (e) =>
     @onInit() if !@uiInitialised

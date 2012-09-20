@@ -2,6 +2,7 @@ root.ImageButton_Framework = class ImageButton_Framework
   constructor:(options = {}) ->
     options = root._.extend({
       type: "flat"
+      onClick: () => Ti.API.info("button clicked")
     }, options)
     
     if options.type == "back"
@@ -15,7 +16,7 @@ root.ImageButton_Framework = class ImageButton_Framework
 
     button = Ti.UI.createLabel({
       backgroundImage: bg
-      backgroundLeftCap: 20
+      backgroundLeftCap: 15
       backgroundRightCap: 10
       height: 30
       width: Ti.UI.SIZE
@@ -31,7 +32,7 @@ root.ImageButton_Framework = class ImageButton_Framework
       button.add(icon)
 
     if settings.text?
-      label = Ti.UI.createLabel({
+      @label = Ti.UI.createLabel({
         text: settings.text
         textAlign: "center"
         left: 13
@@ -41,10 +42,13 @@ root.ImageButton_Framework = class ImageButton_Framework
         width: Ti.UI.SIZE
         height: 28
       })
-      button.add(label)
+      button.add(@label)
 
     button.addEventListener("touchstart", () => button.backgroundImage = bgPressed)
-    button.addEventListener("touchend", () => button.backgroundImage = bg)
+    button.addEventListener("touchend", () => 
+      settings.onClick()
+      button.backgroundImage = bg
+    )
     button
 
   createButton: (settings) =>
@@ -69,7 +73,7 @@ root.ImageButton_Framework = class ImageButton_Framework
       button.add(icon)
 
     if settings.text?
-      label = Ti.UI.createLabel({
+      @label = Ti.UI.createLabel({
         text: settings.text
         textAlign: "center"
         left: 8
@@ -79,8 +83,15 @@ root.ImageButton_Framework = class ImageButton_Framework
         width: Ti.UI.SIZE
         height: 28
       })
-      button.add(label)
+      button.add(@label)
 
     button.addEventListener("touchstart", () => button.backgroundImage = bgPressed)
-    button.addEventListener("touchend", () => button.backgroundImage = bg)
+    button.addEventListener("touchend", () => 
+      settings.onClick()
+      button.backgroundImage = bg
+    )
     button
+    
+    
+  setTitle: (title) =>
+    @label.text = title

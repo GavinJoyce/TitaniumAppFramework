@@ -32,6 +32,10 @@ root.Button_Framework = class Button
       right: @startStyle("right")
     })
     
+    @view.addEventListener("singletap", () => @settings.onClick() if @view.enabled)
+    @view.addEventListener("touchstart", () => @onTouchStart() if @view.enabled)
+    @view.addEventListener("touchend", () => @onTouchEnd() if @view.enabled)
+    
     @button = Ti.UI.createView({
       height: Ti.UI.FILL
       width: Ti.UI.FILL
@@ -138,10 +142,6 @@ root.Button_Framework = class Button
       
   setEnabled: (enabled) =>
     if enabled
-      @view.addEventListener("singletap", @settings.onClick)
-      @view.addEventListener("touchstart", @onTouchStart)
-      @view.addEventListener("touchend", @onTouchEnd)
+      @view.enabled = true
     else
-      @view.removeEventListener("singletap", @settings.onClick)
-      @view.removeEventListener("touchstart", @onTouchStart)
-      @view.removeEventListener("touchend", @onTouchEnd)
+      @view.enabled = false

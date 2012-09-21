@@ -1,36 +1,48 @@
 root.Button_Framework = class Button
   constructor:(options = {}) ->
-    
+    # Settings
     @settings = root._.extend({
-      enabled: true
-      borderRadius: 3
-      opacity: 1.0
-      onClick: () => Ti.API.info("button clicked")
-    }, options)
-    @settings.style = root._.extend({
-      borderColor: "#CCC"
-      gradient: ["#EEE", "#DDD"]
-      labelColor: "#FFF"
-      labelShadowColor: "#CCC"
-      height: 30
-      width: Ti.UI.FILL
+      borderWidth: 1
+      borderRadius: 5
       bottom: null
-      top: null
+      enabled: true
+      fontSize: 12
+      height: 30
       left: null
       right: null
-      labelText: "Button"
-      labelFontSize: 12
+      text: "Button"
+      top: null
+      width: Ti.UI.SIZE
+      onClick: () => Ti.API.info("button clicked")
+    }, options)
+    
+    @settings.style = root._.extend({
+      borderColor: "#CCC"
+      gradient: ["#DDD", "#CCC"]
+      labelColor: "#FFF"
+      labelShadowColor: "#CCC"
     }, options.style)
+
     @settings.onClickStyle = root._.extend({}, options.onClickStyle)
+    # /Settings
     
     @view = Ti.UI.createView({
-      height: @startStyle("height")
-      width: @startStyle("width")
-      bottom: @startStyle("bottom")
-      top: @startStyle("top")
-      left: @startStyle("left")
-      right: @startStyle("right")
+      bottom: @settings.bottom
+      height: @settings.height
+      left: @settings.left
+      right: @settings.right
+      top: @settings.top
+      width: @settings.width
     })
+    
+    @disabledOverlay = Ti.UI.createView({
+      height: Ti.UI.FILL
+      width: Ti.UI.FILL
+      backgroundColor: "#EEE"
+      opacity: 0.5
+      zIndex: 10
+    })
+    @view.add(@disabledOverlay)
     
     @view.addEventListener("singletap", () => @settings.onClick() if @view.enabled)
     @view.addEventListener("touchstart", () => @onTouchStart() if @view.enabled)
@@ -40,17 +52,15 @@ root.Button_Framework = class Button
       height: Ti.UI.FILL
       width: Ti.UI.FILL
       borderRadius: @settings.borderRadius
-      borderWidth: 1
-      borderColor: @startStyle("borderColor")
+      borderWidth: @settings.borderWidth
+      borderColor: @settings.style.borderColor
       backgroundGradient: {
         type: 'linear'
         startPoint: { x: 0, y: 0 }
         endPoint: { x: 0, y: "100%" }
-        colors: @startStyle("gradient")
+        colors: @settings.style.gradient
         backfillStart: false
       }
-      opacity: @settings.opacity
-      zIndex: 1
     })
     @view.add(@button)
     
@@ -59,20 +69,19 @@ root.Button_Framework = class Button
       width: Ti.UI.SIZE
       height: Ti.UI.SIZE
       backgroundColor: "transparent"
-      zIndex: 2
     })
     
-    if @startStyle("iconSettings")
-      @icon = Ti.UI.createImageView(@startStyle("iconSettings"))
+    if @settings.iconSettings
+      @icon = Ti.UI.createImageView(@settings.iconSettings)
       @content.add(@icon)
     
-    if @startStyle("labelText") && @startStyle("labelText") != ""
+    if @settings.text && @settings.text != ""
       @label = Ti.UI.createLabel({
-        color: @startStyle("labelColor")
-        text: @startStyle("labelText")
-        font: { fontSize: @startStyle("labelFontSize"), fontWeight: "bold" }
+        color: @settings.style.labelColor
+        text: @settings.text
+        font: { fontSize: @settings.fontSize, fontWeight: "bold" }
         shadowOffset: { x: 1, y: 1 }
-        shadowColor: @startStyle("labelShadowColor")
+        shadowColor: @settings.style.labelShadowColor
         textAlign: "center"
         height: Ti.UI.SIZE
         width: Ti.UI.SIZE
@@ -86,62 +95,44 @@ root.Button_Framework = class Button
     
   onTouchStart: =>
     @button.updateLayout({
-      borderColor: @clickStyle("borderColor")
+      borderColor: @settings.onClickStyle.borderColor
       backgroundGradient: {
         type: 'linear'
         startPoint: { x: 0, y: 0 }
         endPoint: { x: 0, y: "100%" }
-        colors: @clickStyle("gradient")
+        colors: @settings.onClickStyle.gradient
         backfillStart: false
       }
     })
     
     if @label
       @label.updateLayout({
-        color: @clickStyle("labelColor")
-        text: @clickStyle("labelText")
-        font: @clickStyle("labelFont")
-        shadowColor: @clickStyle("labelShadowColor")
+        color: @settings.onClickStyle.labelColor
+        shadowColor: @settings.onClickStyle.labelShadowColor
       })
     
   onTouchEnd: =>
     @button.updateLayout({
-      borderColor: @startStyle("borderColor")
+      borderColor: @settings.style.borderColor
       backgroundGradient: {
         type: 'linear'
         startPoint: { x: 0, y: 0 }
         endPoint: { x: 0, y: "100%" }
-        colors: @startStyle("gradient")
+        colors: @settings.style.gradient
         backfillStart: false
       }
     })
     
     if @label
       @label.updateLayout({
-        color: @startStyle("labelColor")
-        text: @startStyle("labelText")
-        font: @startStyle("labelFont")
-        shadowColor: @startStyle("labelShadowColor")
+        color: @settings.style.labelColor
+        shadowColor: @settings.style.labelShadowColor
       })
-    
-    
-  startStyle: (param) =>
-    if @settings.style[param] == null
-      null
-    else
-      @settings.style[param]
-    
-  clickStyle: (param) =>
-    if @settings.onClickStyle[param] == null
-      if @settings.style[param]
-        @settings.style[param]
-      else
-        null
-    else
-      @settings.onClickStyle[param]
       
   setEnabled: (enabled) =>
     if enabled
       @view.enabled = true
+      @disabledOverlay.hide()
     else
       @view.enabled = false
+      @disabledOverlay.show()

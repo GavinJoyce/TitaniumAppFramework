@@ -3,6 +3,7 @@ root.ImageButton_Framework = class ImageButton_Framework
     options = root._.extend({
       type: "flat"
       onClick: () => Ti.API.info("button clicked")
+      backgroundColor: "transparent"
     }, options)
     
     if options.type == "back"
@@ -15,6 +16,7 @@ root.ImageButton_Framework = class ImageButton_Framework
     bgPressed = "/Common/Framework/Images/iOS/TitleBar/Buttons/backPressed.png"
 
     button = Ti.UI.createLabel({
+      backgroundColor: settings.backgroundColor
       backgroundImage: bg
       backgroundLeftCap: 15
       backgroundRightCap: 10
@@ -56,6 +58,7 @@ root.ImageButton_Framework = class ImageButton_Framework
     bgPressed = "/Common/Framework/Images/iOS/TitleBar/Buttons/buttonPressed.png"
 
     button = Ti.UI.createLabel({
+      backgroundColor: settings.backgroundColor
       backgroundImage: bg
       backgroundLeftCap: 10
       backgroundRightCap: 10

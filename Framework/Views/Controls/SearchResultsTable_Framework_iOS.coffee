@@ -7,62 +7,25 @@ root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS e
     @reloading = false
     @offset = 0
     
-    tableHeader = Ti.UI.createView({
-      backgroundColor: "#e2e7ed"
-      width: Ti.UI.FILL
-      height: 60
-    })
-
-    border = Ti.UI.createView({
-      backgroundColor:'#576c89'
-      bottom:0
-      height:2
-    })
-    tableHeader.add(border)
-    
-    headerContents = Ti.UI.createView({
-      backgroundColor: "green"
-      layout: "horizontal"
-      top: 0
-      height: Ti.UI.SIZE
-      width: Ti.UI.SIZE
-    })
-    
-    activityIndicator = Ti.UI.createActivityIndicator({
-      height: 30
-      width: 30
-      right: 20
-    })
-    headerContents.add(activityIndicator)
-    
-    headerLabel = Ti.UI.createLabel({
-      color: "#576c89"
-      font: { fontSize: 13, fontWeight: "bold" }
-      text: "Pull down to refresh..."
-      textAlign: "center"
-      width: Ti.UI.FILL
-    })
-    headerContents.add(headerLabel)
-    
-    tableHeader.add(headerContents)
+    tableHeader = @createTableHeader()
     
     @table.headerPullView = tableHeader
 
     @table.addEventListener('scroll', (e) =>
       @offset = e.contentOffset.y
-      if @pulling && !@reloading && @offset > -80 && @offset < 0
+      if @pulling && !@reloading && @offset > -50 && @offset < 0
         @pulling = false
-      else if !@pulling && !@reloading && @offset < -80
+      else if !@pulling && !@reloading && @offset < -50
         @pulling = true
     )
-    
+
     @table.addEventListener('dragEnd', (e) =>
-      if @pulling && !@reloading && @offset < -80
+      if @pulling && !@reloading && @offset < -50
         @pulling = false
         @reloading = true
-        e.source.setContentInsets({ top: 80 }, { animated: true })
-        @options.pullToRefreshCallback(e)
-        @resetPullHeader()
+        e.source.setContentInsets({ top: 50 }, { animated: true })
+        #@options.pullToRefreshCallback(e)
+        #@resetPullHeader()
     )
     
   resetPullHeader: ->
@@ -72,3 +35,48 @@ root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS e
   getFormattedDate: ->
     date = new Date()
     return date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes()
+    
+    
+  createTableHeader: ->
+    tableHeader = Ti.UI.createView({
+      backgroundColor: "#e2e7ed"
+      width: Ti.UI.FILL
+      height: 50
+    })
+
+    border = Ti.UI.createView({
+      backgroundColor: '#576c89'
+      bottom: 0
+      height: 1
+    })
+    tableHeader.add(border)
+    
+    headerContents = Ti.UI.createView({
+      layout: "horizontal"
+      height: Ti.UI.SIZE
+      width: Ti.UI.SIZE
+      bottom: 10
+    })
+    
+    activityIndicator = Ti.UI.createActivityIndicator({
+      height: 30
+      width: Ti.UI.SIZE
+      left: 0
+      right: 15
+      style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK
+    })
+    activityIndicator.show()
+    headerContents.add(activityIndicator)
+    
+    headerLabel = Ti.UI.createLabel({
+      color: "#576c89"
+      font: { fontSize: 13 }
+      text: "Pull down to refresh..."
+      textAlign: "center"
+      width: Ti.UI.SIZE
+      height: Ti.UI.SIZE
+    })
+    headerContents.add(headerLabel)
+    
+    tableHeader.add(headerContents)
+    tableHeader

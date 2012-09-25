@@ -6,6 +6,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       infiniteScrollCallback: (e) => Ti.API.info("scrolled to bottom")
       rowClassName: "SearchResultsTableRow"
       top: "auto"
+      pullToRefresh: false
       pullToRefreshCallback: (e) => Ti.API.info("pull to refresh fired")
     }, options)
     

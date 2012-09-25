@@ -3,34 +3,35 @@ root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS e
     @options = root._.extend({}, options)
     super
     
-    @pulling = false
-    @reloading = false
-    @offset = 0
+    if @options.pullToRefresh
+      @pulling = false
+      @reloading = false
+      @offset = 0
     
-    tableHeader = @createTableHeader()
+      tableHeader = @createTableHeader()
     
-    @table.headerPullView = tableHeader
+      @table.headerPullView = tableHeader
 
-    @table.addEventListener('scroll', (e) =>
-      @offset = e.contentOffset.y
+      @table.addEventListener('scroll', (e) =>
+        @offset = e.contentOffset.y
       
-      if @pulling && !@reloading && @offset < -50
-        @pulling = false
-        @headerLabel.text = "Release to refresh..."
-      else if !@pulling && !@reloading && @offset > -50
-        @pulling = true
-        @headerLabel.text = "Pull down to refresh..."
-    )
+        if @pulling && !@reloading && @offset < -50
+          @pulling = false
+          @headerLabel.text = "Release to refresh..."
+        else if !@pulling && !@reloading && @offset > -50
+          @pulling = true
+          @headerLabel.text = "Pull down to refresh..."
+      )
 
-    @table.addEventListener('dragEnd', (e) =>
-      if !@reloading && @offset < -50
-        Ti.API.info("yo")
-        @pulling = false
-        @reloading = true
-        @table.setContentInsets({ top: 50 }, { animated: true })
-        @options.pullToRefreshCallback(e)
-        @resetPullHeader()
-    )
+      @table.addEventListener('dragEnd', (e) =>
+        if !@reloading && @offset < -50
+          Ti.API.info("yo")
+          @pulling = false
+          @reloading = true
+          @table.setContentInsets({ top: 50 }, { animated: true })
+          @options.pullToRefreshCallback(e)
+          #@resetPullHeader()
+      )
     
   resetPullHeader: ->
     @reloading = false

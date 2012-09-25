@@ -25,12 +25,10 @@ root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS e
 
       @table.addEventListener('dragEnd', (e) =>
         if !@reloading && @offset < -50
-          Ti.API.info("yo")
           @pulling = false
           @reloading = true
           @table.setContentInsets({ top: 50 }, { animated: true })
           @options.pullToRefreshCallback(e)
-          #@resetPullHeader()
       )
     
   resetPullHeader: ->

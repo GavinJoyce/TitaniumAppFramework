@@ -13,31 +13,36 @@ root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS e
 
     @table.addEventListener('scroll', (e) =>
       @offset = e.contentOffset.y
-      if @pulling && !@reloading && @offset > -50 && @offset < 0
+      
+      if @pulling && !@reloading && @offset < -50
         @pulling = false
-      else if !@pulling && !@reloading && @offset < -50
+        @headerLabel.text = "Release to refresh..."
+      else if !@pulling && !@reloading && @offset > -50
         @pulling = true
+        @headerLabel.text = "Pull down to refresh..."
     )
 
     @table.addEventListener('dragEnd', (e) =>
-      if @pulling && !@reloading && @offset < -50
+      if !@reloading && @offset < -50
+        Ti.API.info("yo")
         @pulling = false
         @reloading = true
-        e.source.setContentInsets({ top: 50 }, { animated: true })
-        #@options.pullToRefreshCallback(e)
-        #@resetPullHeader()
+        @table.setContentInsets({ top: 50 }, { animated: true })
+        @options.pullToRefreshCallback(e)
+        @resetPullHeader()
     )
     
   resetPullHeader: ->
     @reloading = false
     @table.setContentInsets({ top: 0 }, { animated: true })
+    @headerLabel.text = "Pull down to refresh..."
   
   getFormattedDate: ->
     date = new Date()
     return date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes()
     
     
-  createTableHeader: ->
+  createTableHeader: =>
     tableHeader = Ti.UI.createView({
       backgroundColor: "#e2e7ed"
       width: Ti.UI.FILL
@@ -68,7 +73,7 @@ root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS e
     activityIndicator.show()
     headerContents.add(activityIndicator)
     
-    headerLabel = Ti.UI.createLabel({
+    @headerLabel = Ti.UI.createLabel({
       color: "#576c89"
       font: { fontSize: 13 }
       text: "Pull down to refresh..."
@@ -76,7 +81,7 @@ root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS e
       width: Ti.UI.SIZE
       height: Ti.UI.SIZE
     })
-    headerContents.add(headerLabel)
+    headerContents.add(@headerLabel)
     
     tableHeader.add(headerContents)
     tableHeader

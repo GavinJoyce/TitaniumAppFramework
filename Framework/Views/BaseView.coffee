@@ -17,7 +17,6 @@ root.BaseView = class BaseView
     @controls = []
 
     @window = Ti.UI.createWindow(@settings)
-    
     @window.addEventListener('focus', @focus)
     @window.addEventListener('close', @onClose)
     
@@ -34,6 +33,15 @@ root.BaseView = class BaseView
       if @settings.style == 'brushedMetal'
        @settings.backgroundImage = '/Common/Framework/Images/Patterns/brushedMetal.png'
        #@settings.backgroundRepeat = true #NOTE: GJ: waiting for titanium retina bug to be fixed
+  
+  applyBackButtonStyle: =>
+    if @window.getBackButtonTitle()?
+      button = root.app.create 'ImageButton', {
+        type: 'back'
+        text: 'Back'
+        onClick: => @close()
+      }
+      @window.setLeftNavButton(button.view)
 
   focus: (e) =>
     @onInit() if !@uiInitialised

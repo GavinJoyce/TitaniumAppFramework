@@ -30,7 +30,6 @@ root.MobileAppBase = class MobileAppBase
     @includedFiles = []
     @zIndex = 100
     
-    @checkInternet() #Call on load
     Ti.Network.addEventListener('change', (e) => @checkInternet() if !@checking)
   
   
@@ -69,11 +68,11 @@ root.MobileAppBase = class MobileAppBase
 
     if Ti.Network.online
       Ti.API.info('Welcome to the internet')
-      @noInternetView = @create("NoInternetView") unless @noInternetView
-      @noInternetView.window.close()
+      @noInternetView.window.close() if @noInternetView
     else
       Ti.API.info('Bloody hell, the network just DISSAPEARED!')
-      if @noInternetView? && @settings.noInternetViewEnabled
+      @noInternetView = @create("NoInternetView") unless @noInternetView
+      if @settings.noInternetViewEnabled
         @noInternetView.window.open()
 
     @checking = false

@@ -2,7 +2,7 @@ root.SearchResultsTableMoreRow_Framework_iOS = class SearchResultsTableMoreRow_F
   constructor: ->
     @moreRow = Ti.UI.createTableViewRow({
       backgroundColor: "#DDD"
-      backgroundSelectedColor: "#DDD"
+      selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
       height: 50
       type: "loadMoreRow"
     })

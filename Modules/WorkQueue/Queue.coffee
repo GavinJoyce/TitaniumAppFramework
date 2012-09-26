@@ -6,6 +6,7 @@ root.WorkQueue.Queue = class Queue
       checkFrequency: 5000
     }, options)
     @running = false
+    @checking = false
     
     @jobs = []
     
@@ -13,34 +14,38 @@ root.WorkQueue.Queue = class Queue
     Ti.API.info "[WorkQueue.Queue] Adding job"
     @jobs.push job
     
-  check: => #execute a job if one is available
-    Ti.App.fireEvent 'HeadsUp.HeadsUpMessage.close', {}
-    availableJobs = @jobs.filter (job) -> job.canExecute()
-    Ti.API.info "[WorkQueue.Queue]#{@jobs.length} jobs, #{availableJobs.length} available jobs"
+  check: (recurring = false) => #execute a job if one is available
+    Ti.API.info 'checking...'
+    unless @checking
+      @checking = true
+      Ti.App.fireEvent 'HeadsUp.HeadsUpMessage.close', {}
+      availableJobs = @jobs.filter (job) -> job.canExecute()
+      Ti.API.info "[WorkQueue.Queue]#{@jobs.length} jobs, #{availableJobs.length} available jobs"
   
-    if availableJobs.length > 0
-      job = availableJobs[0]
-      ###Ti.App.fireEvent 'HeadsUp.HeadsUpMessage.update', {
-        message: 'Job Starting'
-        progress: 0
-      }###
-      job.execute {
-        onSuccess: @onJobSuccess
-        onError: @onJobError
-        onProgress: @onJobProgress
-      }
-    else
-      @scheduleCheck()
+      if availableJobs.length > 0
+        job = availableJobs[0]
+      
+        job.execute {
+          onSuccess: @onJobSuccess
+          onError: @onJobError
+          onProgress: @onJobProgress
+        }
+      else
+        @checking = false
+        @scheduleCheck() if recurring
+      
 
     
   onJobSuccess: (job) =>
     Ti.API.info 'job was successful ' + job.settings.worker
     @jobs = @jobs.without job
-    @check()
+    @checking = false
+    @check(true)
     
   onJobError: (job) =>
     Ti.API.info 'job was error'
     @jobs = @jobs.without job #TODO: GJ: retry or set error state?
+    @checking = false
     @check()
     
   onJobProgress: (job, worker, progress) => #progress between 0 and 1
@@ -52,7 +57,7 @@ root.WorkQueue.Queue = class Queue
         progress: progress
       }
     
-  scheduleCheck: -> setTimeout(@check, @settings.checkFrequency) if @running
+  scheduleCheck: -> setTimeout((=> @check(true)), @settings.checkFrequency) if @running
   
   start: =>
     unless @running

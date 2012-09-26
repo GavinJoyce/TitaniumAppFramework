@@ -17,6 +17,7 @@ root.MobileAppBase = class MobileAppBase
       debugMode: false
       noInternetViewEnabled: false
       ignoreAndroidTablet: false
+      useImageButtons: false
     }, options)
     
     if @settings.googleAnalyticsID

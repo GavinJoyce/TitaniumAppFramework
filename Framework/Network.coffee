@@ -24,7 +24,7 @@ root.Network = class Network
     @reset()
     @xhr.open('POST', options.url) #TODO: GJ: add support for GET
     @xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-    @xhr.onload = () -> 
+    @xhr.onload = (e) ->
       Ti.API.info "@responseText: #{@responseText}"
       options.onSuccess(JSON.parse(@responseText))
     @xhr.onerror = () => @onError(options)
@@ -32,7 +32,7 @@ root.Network = class Network
     
   reset: -> @xhr.abort()
     
-  onError: (options) ->
+  onError: (options) =>
     options.try++
     
     if options.try < @settings.retryCount
@@ -41,7 +41,7 @@ root.Network = class Network
       root.app.delay @settings.retryDelay, => @ajax(options)
     else
       Ti.API.info('network error')
-      options.onError()
+      options.onError(@xhr.status)
     
 
     

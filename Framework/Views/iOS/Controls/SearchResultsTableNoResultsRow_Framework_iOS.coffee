@@ -1,5 +1,7 @@
 root.SearchResultsTableNoResultsRow_Framework_iOS = class SearchResultsTableNoResultsRow_Framework_iOS
-  constructor: ->
+  constructor: (options = {}) ->
+    @options = root._.extend({}, options)
+    
     @noResultsRow = Ti.UI.createTableViewRow({
       backgroundColor: "#FFF"
       height: "100%"

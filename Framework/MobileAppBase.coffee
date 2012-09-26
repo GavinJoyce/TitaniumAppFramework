@@ -29,6 +29,7 @@ root.MobileAppBase = class MobileAppBase
     @includedFiles = []
     @zIndex = 100
     
+    @checkInternet() #Call on load
     Ti.Network.addEventListener('change', (e) => @checkInternet() if !@checking)
   
   

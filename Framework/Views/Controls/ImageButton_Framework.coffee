@@ -37,7 +37,7 @@ root.ImageButton_Framework = class ImageButton_Framework
       @label = Ti.UI.createLabel({
         text: settings.text
         textAlign: "center"
-        left: 13
+        left: 15
         right: 8
         color: "#FFF"
         font: { fontSize: 13, fontWeight: "bold" }

@@ -54,8 +54,15 @@ root.ImageButton_Framework = class ImageButton_Framework
     button
 
   createButton: (settings) =>
-    bg = "/Common/Framework/Images/iOS/TitleBar/Buttons/button.png"
-    bgPressed = "/Common/Framework/Images/iOS/TitleBar/Buttons/buttonPressed.png"
+    if settings.bg
+      bg = settings.bg
+    else
+      bg = "/Common/Framework/Images/iOS/TitleBar/Buttons/button.png"
+
+    if settings.bgPressed
+      bgPressed = settings.bgPressed
+    else
+      bgPressed = "/Common/Framework/Images/iOS/TitleBar/Buttons/buttonPressed.png"
 
     button = Ti.UI.createLabel({
       backgroundColor: settings.backgroundColor

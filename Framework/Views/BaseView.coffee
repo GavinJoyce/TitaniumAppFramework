@@ -8,6 +8,7 @@ root.BaseView = class BaseView
       barColor: root.app.settings.viewTitleBarColor
       backgroundImage: root.app.settings.viewBackgroundImage
       viewTitleBarStyle: root.app.settings.viewTitleBarStyle
+      useImageButtons: root.app.settings.useImageButtons
     }, options)
     @applyStyle()
     
@@ -26,6 +27,14 @@ root.BaseView = class BaseView
     })
     @window.add(@content)
     
+    if @settings.useImageButtons && @settings.hasBackButton
+      button = root.app.create 'ImageButton', {
+        type: 'back'
+        text: 'Back'
+        onClick: => @close()
+      }
+      @window.setLeftNavButton(button.view)
+    
   applyStyle: -> #TODO: GJ: add support for different platforms
     if @settings.viewTitleBarStyle?
       @settings.barImage = "/Common/Framework/Images/iOS/TitleBar/#{@settings.viewTitleBarStyle}.png"
@@ -35,13 +44,7 @@ root.BaseView = class BaseView
        #@settings.backgroundRepeat = true #NOTE: GJ: waiting for titanium retina bug to be fixed
   
   applyBackButtonStyle: =>
-    if @window.getBackButtonTitle()?
-      button = root.app.create 'ImageButton', {
-        type: 'back'
-        text: 'Back'
-        onClick: => @close()
-      }
-      @window.setLeftNavButton(button.view)
+    Ti.API.info("applyBackButtonStyle: deprecated method")
 
   focus: (e) =>
     @onInit() if !@uiInitialised

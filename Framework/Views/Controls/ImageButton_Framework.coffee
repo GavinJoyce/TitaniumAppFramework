@@ -72,8 +72,8 @@ root.ImageButton_Framework = class ImageButton_Framework
     })
 
     if settings.iconSettings?
-      icon = Ti.UI.createImageView(settings.iconSettings)
-      button.add(icon)
+      @icon = Ti.UI.createImageView(settings.iconSettings)
+      button.add(@icon)
 
     if settings.text?
       @label = Ti.UI.createLabel({
@@ -98,3 +98,6 @@ root.ImageButton_Framework = class ImageButton_Framework
     
   setTitle: (title) =>
     @label.text = title
+    
+  setIcon: (image) =>
+    @icon.setImage(image)

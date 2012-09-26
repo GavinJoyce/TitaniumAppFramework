@@ -24,7 +24,9 @@ root.Network = class Network
     @reset()
     @xhr.open('POST', options.url) #TODO: GJ: add support for GET
     @xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-    @xhr.onload = () -> options.onSuccess(JSON.parse(@responseText))
+    @xhr.onload = () -> 
+      Ti.API.info "@responseText: #{@responseText}"
+      options.onSuccess(JSON.parse(@responseText))
     @xhr.onerror = () => @onError(options)
     @xhr.send(options.params)
     

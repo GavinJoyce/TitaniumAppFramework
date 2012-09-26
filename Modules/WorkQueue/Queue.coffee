@@ -17,21 +17,21 @@ root.WorkQueue.Queue = class Queue
     Ti.App.fireEvent 'HeadsUp.HeadsUpMessage.close', {}
     availableJobs = @jobs.filter (job) -> job.canExecute()
     Ti.API.info "[WorkQueue.Queue]#{@jobs.length} jobs, #{availableJobs.length} available jobs"
-    
+  
     if availableJobs.length > 0
       job = availableJobs[0]
-      Ti.App.fireEvent 'HeadsUp.HeadsUpMessage.update', {
+      ###Ti.App.fireEvent 'HeadsUp.HeadsUpMessage.update', {
         message: 'Job Starting'
         progress: 0
-      }
+      }###
       job.execute {
         onSuccess: @onJobSuccess
         onError: @onJobError
         onProgress: @onJobProgress
       }
-      
     else
       @scheduleCheck()
+
     
   onJobSuccess: (job) =>
     Ti.API.info 'job was successful ' + job.settings.worker

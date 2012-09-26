@@ -19,24 +19,24 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     })
     
     @addFromCameraButton = root.app.create("Button", {
+      text: "Take Photo"
+      left: 10
+      top: 10
+      bottom: 10
+      height: 34
+      width: 120
+      iconSettings: {
+        image: "/Common/Modules/PhotoPicker/Images/black/camera.png"
+        height: 20
+        width: 20
+        left: 5
+        right: 5
+      }
       style: {
         gradient: ["#EEE", "#CECECE"]
         borderColor: "#222"
         labelShadowColor: "#FFF"
-        labelText: "Take Photo"
         labelColor: "#222"
-        iconSettings: {
-          image: "/Common/Modules/PhotoPicker/Images/black/camera.png"
-          height: 20
-          width: 20
-          left: 5
-          right: 5
-        }
-        left: 10
-        top: 10
-        bottom: 10
-        height: 35
-        width: 120
       }
       onClickStyle: {
        gradient: ["#CECECE", "#EEE"]
@@ -46,24 +46,24 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     @buttons.add @addFromCameraButton.view
     
     @addFromGalleryButton = root.app.create("Button", {
+      text: "From Library"
+      right: 10
+      top: 10
+      bottom: 10
+      height: 34
+      width: 120
+      iconSettings: {
+        image: "/Common/Modules/PhotoPicker/Images/black/photos.png"
+        height: 20
+        width: 20
+        left: 5
+        right: 5
+      }
       style: {
         gradient: ["#EEE", "#CECECE"]
         borderColor: "#222"
         labelShadowColor: "#FFF"
-        labelText: "From Library"
         labelColor: "#222"
-        iconSettings: {
-          image: "/Common/Modules/PhotoPicker/Images/black/photos.png"
-          height: 20
-          width: 20
-          left: 5
-          right: 5
-        }
-        right: 10
-        top: 10
-        bottom: 10
-        height: 35
-        width: 120
       }
       onClickStyle: {
        gradient: ["#CECECE", "#EEE"]

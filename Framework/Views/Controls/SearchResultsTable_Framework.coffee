@@ -17,8 +17,8 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       if e.row.type != "noResultsRow" && e.row.type != "loadMoreRow"
         @options.onTableClick(e)
     )
-    @moreRow = root.app.create("SearchResultsTableMoreRow").moreRow
-    @noResultsRow = root.app.create("SearchResultsTableNoResultsRow").noResultsRow
+    @moreRow = @createMoreRow()
+    @noResultsRow = @createNoResultsRow()
     
     if @options.infiniteScroll
       @lastDistance = 0
@@ -68,3 +68,10 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       @table.hasMoreRows = false
     
     Ti.API.info("-- Finish Update Table --")
+    
+    
+  createMoreRow: =>
+    root.app.create("SearchResultsTableMoreRow").moreRow
+    
+  createNoResultsRow: =>
+    root.app.create("SearchResultsTableNoResultsRow").moreRow

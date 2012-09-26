@@ -17,4 +17,3 @@ root.WorkQueue.Job = class Job
 
   canExecute: =>
     @settings.executeOn <= new Date()
-  

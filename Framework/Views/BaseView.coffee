@@ -90,6 +90,8 @@ root.BaseView = class BaseView
       root.tabGroup.tabs.activeTab.close(@window, options)
     else if @window.inNavGroup
       root.navGroup.navGroup.close(@window, options)
+    else if @window.navGroup
+      @window.navGroup.close(@window, options)
     else
       @window.close(options)
     @onClose()

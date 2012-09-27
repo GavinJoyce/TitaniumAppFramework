@@ -14,4 +14,5 @@ root.NavGroup_Framework_iOS = class NavGroup_Framework_iOS
     @window.close()
     
   open: (window) =>
+    window.navGroup = @navGroup
     @navGroup.open(window)

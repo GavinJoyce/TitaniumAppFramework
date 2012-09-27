@@ -6,18 +6,21 @@ root.ImageButton_Framework = class ImageButton_Framework
       backgroundColor: "transparent"
     }, options)
     
+    @bg = ""
+    @bgPressed = ""
+    
     if options.type == "back"
       @view = @createBackButton(options)
     else
       @view = @createButton(options)
     
   createBackButton: (settings) =>
-    bg = "/Common/Framework/Images/iOS/TitleBar/Buttons/back.png"
-    bgPressed = "/Common/Framework/Images/iOS/TitleBar/Buttons/backPressed.png"
+    @bg = "/Common/Framework/Images/iOS/TitleBar/Buttons/back.png"
+    @bgPressed = "/Common/Framework/Images/iOS/TitleBar/Buttons/backPressed.png"
 
-    button = Ti.UI.createLabel({
+    @button = Ti.UI.createLabel({
       backgroundColor: settings.backgroundColor
-      backgroundImage: bg
+      backgroundImage: @bg
       backgroundLeftCap: 15
       backgroundRightCap: 10
       height: 30
@@ -30,8 +33,8 @@ root.ImageButton_Framework = class ImageButton_Framework
     })
 
     if settings.iconSettings?
-      icon = Ti.UI.createImageView(settings.iconSettings)
-      button.add(icon)
+      @icon = Ti.UI.createImageView(settings.iconSettings)
+      @button.add(@icon)
 
     if settings.text?
       @label = Ti.UI.createLabel({
@@ -44,29 +47,29 @@ root.ImageButton_Framework = class ImageButton_Framework
         width: Ti.UI.SIZE
         height: 28
       })
-      button.add(@label)
+      @button.add(@label)
 
-    button.addEventListener("touchstart", () => button.backgroundImage = bgPressed)
-    button.addEventListener("touchend", () => 
+    @button.addEventListener("touchstart", () => @button.backgroundImage = @bgPressed)
+    @button.addEventListener("touchend", () => 
       settings.onClick()
-      button.backgroundImage = bg
+      @button.backgroundImage = @bg if !@button.isPressed
     )
-    button
+    @button
 
   createButton: (settings) =>
     if settings.bg
-      bg = settings.bg
+      @bg = settings.bg
     else
-      bg = "/Common/Framework/Images/iOS/TitleBar/Buttons/button.png"
+      @bg = "/Common/Framework/Images/iOS/TitleBar/Buttons/button.png"
 
     if settings.bgPressed
-      bgPressed = settings.bgPressed
+      @bgPressed = settings.bgPressed
     else
-      bgPressed = "/Common/Framework/Images/iOS/TitleBar/Buttons/buttonPressed.png"
+      @bgPressed = "/Common/Framework/Images/iOS/TitleBar/Buttons/buttonPressed.png"
 
-    button = Ti.UI.createLabel({
+    @button = Ti.UI.createLabel({
       backgroundColor: settings.backgroundColor
-      backgroundImage: bg
+      backgroundImage: @bg
       backgroundLeftCap: 10
       backgroundRightCap: 10
       height: 30
@@ -80,7 +83,7 @@ root.ImageButton_Framework = class ImageButton_Framework
 
     if settings.iconSettings?
       @icon = Ti.UI.createImageView(settings.iconSettings)
-      button.add(@icon)
+      @button.add(@icon)
 
     if settings.text?
       @label = Ti.UI.createLabel({
@@ -93,14 +96,14 @@ root.ImageButton_Framework = class ImageButton_Framework
         width: Ti.UI.SIZE
         height: 28
       })
-      button.add(@label)
+      @button.add(@label)
 
-    button.addEventListener("touchstart", () => button.backgroundImage = bgPressed)
-    button.addEventListener("touchend", () => 
+    @button.addEventListener("touchstart", () => @button.backgroundImage = @bgPressed)
+    @button.addEventListener("touchend", () => 
       settings.onClick()
-      button.backgroundImage = bg
+      @button.backgroundImage = @bg if !@button.isPressed
     )
-    button
+    @button
     
     
   setTitle: (title) =>
@@ -108,3 +111,11 @@ root.ImageButton_Framework = class ImageButton_Framework
     
   setIcon: (image) =>
     @icon.setImage(image)
+    
+  togglePressed: =>
+    if @button.isPressed
+      @button.isPressed = false
+      @button.backgroundImage = @bg
+    else
+      @button.isPressed = true
+      @button.backgroundImage = @bgPressed

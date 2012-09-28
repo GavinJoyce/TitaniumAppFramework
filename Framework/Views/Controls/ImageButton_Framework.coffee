@@ -1,18 +1,19 @@
 root.ImageButton_Framework = class ImageButton_Framework
   constructor:(options = {}) ->
-    options = root._.extend({
+    @options = root._.extend({
       type: "flat"
       onClick: () => Ti.API.info("button clicked")
       backgroundColor: "transparent"
+      enabled: true
     }, options)
     
     @bg = ""
     @bgPressed = ""
     
-    if options.type == "back"
-      @view = @createBackButton(options)
+    if @options.type == "back"
+      @view = @createBackButton(@options)
     else
-      @view = @createButton(options)
+      @view = @createButton(@options)
     
   createBackButton: (settings) =>
     @bg = "/Common/Framework/Images/iOS/TitleBar/Buttons/back.png"
@@ -49,11 +50,8 @@ root.ImageButton_Framework = class ImageButton_Framework
       })
       @button.add(@label)
 
-    @button.addEventListener("touchstart", () => @button.backgroundImage = @bgPressed)
-    @button.addEventListener("touchend", () => 
-      settings.onClick()
-      @button.backgroundImage = @bg if !@button.isPressed
-    )
+    @setEnabled(settings.enabled)
+    
     @button
 
   createButton: (settings) =>
@@ -98,13 +96,9 @@ root.ImageButton_Framework = class ImageButton_Framework
       })
       @button.add(@label)
 
-    @button.addEventListener("touchstart", () => @button.backgroundImage = @bgPressed)
-    @button.addEventListener("touchend", () => 
-      settings.onClick()
-      @button.backgroundImage = @bg if !@button.isPressed
-    )
-    @button
+    @setEnabled(settings.enabled)
     
+    @button
     
   setTitle: (title) =>
     @label.text = title
@@ -119,3 +113,22 @@ root.ImageButton_Framework = class ImageButton_Framework
     else
       @button.isPressed = true
       @button.backgroundImage = @bgPressed
+     
+  onTouchStart: =>
+    @button.backgroundImage = @bgPressed
+  
+  onTouchEnd: =>
+    @options.onClick()
+    @button.backgroundImage = @bg if !@button.isPressed
+     
+  setEnabled: (enabled) =>
+    if enabled
+      @button.addEventListener "touchstart", @onTouchStart
+      @button.addEventListener "touchend", @onTouchEnd
+      if @label?
+        @label.setOpacity(1)
+    else
+      @button.removeEventListener "touchstart", @onTouchStart
+      @button.removeEventListener "touchend", @onTouchEnd
+      if @label?
+        @label.setOpacity(0.4)

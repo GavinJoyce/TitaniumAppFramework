@@ -34,6 +34,12 @@ root.BaseView = class BaseView
         onClick: => @close()
       }
       @window.setLeftNavButton(button.view)
+    else if @settings.useImageButtons && @settings.hasDoneButton
+      button = root.app.create 'ImageButton', {
+        text: 'Done'
+        onClick: => @close()
+      }
+      @window.setRightNavButton(button.view)
     
   applyStyle: -> #TODO: GJ: add support for different platforms
     if @settings.viewTitleBarStyle?

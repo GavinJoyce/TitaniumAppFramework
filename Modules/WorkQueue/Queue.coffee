@@ -60,9 +60,10 @@ root.WorkQueue.Queue = class Queue
   scheduleCheck: -> setTimeout((=> @check(true)), @settings.checkFrequency) if @running
   
   start: =>
+    Ti.API.info 'starting job queue'
     unless @running
       @running = true
-      @check()
+      @check(true)
     
   stop: =>
     @running = false

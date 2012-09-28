@@ -13,6 +13,9 @@ root.Network = class Network
       url: null
       params: {}
       method: 'POST'
+      contentType: 'application/x-www-form-urlencoded'
+      userID: null
+      token: null
       onSuccess: ->
       onError: ->
       onRetry: (retryCount) ->
@@ -23,12 +26,20 @@ root.Network = class Network
     
     @reset()
     @xhr.open('POST', options.url) #TODO: GJ: add support for GET
-    @xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    @xhr.setRequestHeader('Content-Type', options.contentType)
+    
+    @xhr.setRequestHeader('MyHome-UserID', options.userID) if options.userID?
+    @xhr.setRequestHeader('MyHome-Token', options.token) if options.token?
+    
     @xhr.onload = (e) ->
       Ti.API.info "@responseText: #{@responseText}"
       options.onSuccess(JSON.parse(@responseText))
     @xhr.onerror = () => @onError(options)
-    @xhr.send(options.params)
+    
+    if options.contentType == 'application/json'
+      @xhr.send(JSON.stringify(options.params))
+    else
+      @xhr.send(options.params)
     
   reset: -> @xhr.abort()
     

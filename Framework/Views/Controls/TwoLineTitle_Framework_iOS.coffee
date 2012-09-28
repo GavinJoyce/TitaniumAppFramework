@@ -5,10 +5,12 @@ root.TwoLineTitle_Framework_iOS = class TwoLineTitle_Framework_iOS
     @title = Ti.UI.createLabel({
       color: '#FFF'
       height: 18
+      width: Ti.UI.FILL
       top: 5
       text: ' '
       textAlign: 'center'
       font: { fontSize: 15, fontWeight: 'bold' }
+      minimumFontSize: 13
       shadowColor: '#222', shadowOffset: { x: 0, y: -1 }
       wordWrap: false
       ellipsize: true
@@ -17,6 +19,7 @@ root.TwoLineTitle_Framework_iOS = class TwoLineTitle_Framework_iOS
     @subtitle = Ti.UI.createLabel({
       color:'#FFF'
       height: 14
+      width: Ti.UI.FILL
       bottom: 5
       text: ' '
       textAlign: 'center'
@@ -27,15 +30,19 @@ root.TwoLineTitle_Framework_iOS = class TwoLineTitle_Framework_iOS
     @bigtitle = Ti.UI.createLabel({
       color:'#FFF'
       height: 20
+      width: Ti.UI.FILL
       text: ' '
       textAlign: 'center'
       font: { fontSize: 17, fontWeight: 'bold' }
+      minimumFontSize: 15
       shadowColor: '#222', shadowOffset: { x: 0, y: -1 }
     })
     @bigtitle.hide()
     
     @view = Ti.UI.createView({
       top: 0
+      width: Ti.UI.FILL
+      height: Ti.UI.FILL
     })
     @view.add(@title)
     @view.add(@subtitle)

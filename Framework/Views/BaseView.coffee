@@ -42,9 +42,6 @@ root.BaseView = class BaseView
       if @settings.style == 'brushedMetal'
        @settings.backgroundImage = '/Common/Framework/Images/Patterns/brushedMetal.png'
        #@settings.backgroundRepeat = true #NOTE: GJ: waiting for titanium retina bug to be fixed
-  
-  applyBackButtonStyle: =>
-    Ti.API.info("applyBackButtonStyle: deprecated method")
 
   focus: (e) =>
     @onInit() if !@uiInitialised

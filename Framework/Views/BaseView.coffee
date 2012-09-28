@@ -34,6 +34,12 @@ root.BaseView = class BaseView
         onClick: => @close()
       }
       @window.setLeftNavButton(button.view)
+    else if @settings.useImageButtons && @settings.hasDoneButton
+      button = root.app.create 'ImageButton', {
+        text: 'Done'
+        onClick: => @close()
+      }
+      @window.setRightNavButton(button.view)
     
   applyStyle: -> #TODO: GJ: add support for different platforms
     if @settings.viewTitleBarStyle?
@@ -42,9 +48,6 @@ root.BaseView = class BaseView
       if @settings.style == 'brushedMetal'
        @settings.backgroundImage = '/Common/Framework/Images/Patterns/brushedMetal.png'
        #@settings.backgroundRepeat = true #NOTE: GJ: waiting for titanium retina bug to be fixed
-  
-  applyBackButtonStyle: =>
-    Ti.API.info("applyBackButtonStyle: deprecated method")
 
   focus: (e) =>
     @onInit() if !@uiInitialised

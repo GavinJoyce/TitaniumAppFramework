@@ -33,6 +33,7 @@ root.Button_Framework = class Button
       right: @settings.right
       top: @settings.top
       width: @settings.width
+      opacity: @settings.opacity
     })
     
     @disabledOverlay = Ti.UI.createView({

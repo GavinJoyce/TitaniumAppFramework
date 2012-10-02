@@ -127,8 +127,12 @@ root.ImageButton_Framework = class ImageButton_Framework
       @button.addEventListener "touchend", @onTouchEnd
       if @label?
         @label.setOpacity(1)
+      if @icon
+        @icon.setOpacity(1)
     else
       @button.removeEventListener "touchstart", @onTouchStart
       @button.removeEventListener "touchend", @onTouchEnd
       if @label?
         @label.setOpacity(0.4)
+      if @icon
+        @icon.setOpacity(0.4)

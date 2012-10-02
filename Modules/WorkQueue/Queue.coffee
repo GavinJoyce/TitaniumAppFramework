@@ -46,7 +46,7 @@ root.WorkQueue.Queue = class Queue
     Ti.API.info 'job was error'
     @jobs = @jobs.without job #TODO: GJ: retry or set error state?
     @checking = false
-    @check()
+    @check(true)
     
   onJobProgress: (job, worker, progress) => #progress between 0 and 1
     Ti.API.info "Job progress #{progress}"

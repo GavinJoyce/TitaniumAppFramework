@@ -6,7 +6,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       onUpdate: (photos, thumbnails) ->
     }, options)
     
-    @photos = []
+    @photos = @settings.photos
     @thumbnails = []
 
     @view = Ti.UI.createView @settings

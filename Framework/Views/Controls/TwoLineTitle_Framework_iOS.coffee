@@ -51,7 +51,7 @@ root.TwoLineTitle_Framework_iOS = class TwoLineTitle_Framework_iOS
     @view.addEventListener('click', (e) => options.onClick(e) if options.onClick)
     
   update: (title, subtitle) ->
-    if subtitle == null || subtitle == ''
+    if !subtitle? || subtitle == ''
       @title.hide()
       @subtitle.hide()
       @bigtitle.show()

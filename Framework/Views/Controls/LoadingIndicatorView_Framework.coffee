@@ -11,13 +11,14 @@ root.LoadingIndicatorView_Framework = class LoadingIndicatorView_Framework exten
         height: "100%"
         width: "100%"
       })
+      
       @activityIndicator = Ti.UI.createActivityIndicator({
         top: 200
         message: "Loading..."
         width: Ti.UI.SIZE
         height: Ti.UI.SIZE
         color: "#333"
-        font: { fontSize: 16 }
+        font: { fontSize: 14, fontWeight: 'bold' }, shadowOffset: { x: 0, y: 1 }, shadowColor: '#fff'
         style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK
       })
 

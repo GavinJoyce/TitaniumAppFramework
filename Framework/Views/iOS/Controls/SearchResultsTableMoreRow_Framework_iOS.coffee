@@ -8,9 +8,10 @@ root.SearchResultsTableMoreRow_Framework_iOS = class SearchResultsTableMoreRow_F
     })
     
     indicator = Ti.UI.createActivityIndicator({
+      top: 15
       message: "Loading More..."
       color: "#333"
-      font: { fontSize: 14 }
+      font: { fontSize: 14 }, shadowOffset: { x: 0, y: 1 }, shadowColor: '#fff'
       style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK
     })
     indicator.show()

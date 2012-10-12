@@ -74,4 +74,4 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     root.app.create("SearchResultsTableMoreRow").moreRow
     
   createNoResultsRow: =>
-    root.app.create("SearchResultsTableNoResultsRow").moreRow
+    root.app.create("SearchResultsTableNoResultsRow").noResultsRow

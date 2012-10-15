@@ -43,7 +43,10 @@ root.BaseView = class BaseView
     
   applyStyle: -> #TODO: GJ: add support for different platforms
     if @settings.viewTitleBarStyle?
-      @settings.barImage = "/Common/Framework/Images/iOS/TitleBar/#{@settings.viewTitleBarStyle}.png"
+      if Ti.Platform.osname == 'ipad'
+        @settings.barImage = "/Common/Framework/Images/iOS/TitleBar/iPad/#{@settings.viewTitleBarStyle}.png"
+      else
+        @settings.barImage = "/Common/Framework/Images/iOS/TitleBar/#{@settings.viewTitleBarStyle}.png"
     if @settings.style?
       if @settings.style == 'brushedMetal'
        @settings.backgroundImage = '/Common/Framework/Images/Patterns/brushedMetal.png'

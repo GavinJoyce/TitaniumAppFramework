@@ -94,6 +94,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
   addFromGallery: =>
     Ti.Media.openPhotoGallery {
       mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
+      popoverView: @addFromGalleryButton.view
       success: (e) => @addMedia e.media
       cancel: ->
       error: ->

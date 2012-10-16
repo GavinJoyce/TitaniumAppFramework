@@ -7,8 +7,17 @@ root.StatusBar.StatusBarOverlay = class StatusBarOverlay
   flash: (message, duration = 2.5) ->
     @statusBarOverlay.postMessage(message, duration)
     
-  loadingMessage: (message, duration = 2.5) ->
-    @statusBarOverlay.postMessageInProgress(message, duration)
+  loadingMessage: (message, duration) ->
+    @statusBarOverlay.postImmediateMessageInProgress(message, duration)
     
   finishMessage: (message, duration = 1) ->
-    @statusBarOverlay.postFinishMessage(message, duration)
+    @statusBarOverlay.postImmediateFinishMessage(message, duration)
+    
+  errorMessage: (message, duration = 1) ->
+    @statusBarOverlay.postImmediateErrorMessage(message, duration)
+  
+  hide: => @statusBarOverlay.hide()
+  
+  show: => @statusBarOverlay.show()
+    
+  clear: => @statusBarOverlay.stop()

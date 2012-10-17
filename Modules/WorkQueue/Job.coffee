@@ -4,14 +4,20 @@ root.WorkQueue.Job = class Job
       worker: 'WorkQueue.DefaultWorker'
       data: {}
       executeOn: new Date()
+      onSuccess: ->
+      onError: ->
     }, options)
 
     
   execute: (options) =>
     worker = root.app.create @settings.worker, { data: @settings.data }
     worker.execute {
-      onSuccess: => options.onSuccess @
-      onError: => options.onError @
+      onSuccess: =>
+        options.onSuccess @
+        @settings.onSuccess()
+      onError: =>
+        options.onError @
+        @settings.onError()
       onProgress: (progress) => options.onProgress(@, worker, progress)
     }
 

@@ -6,7 +6,7 @@ root.PhotoPicker.Photo_iPad = class Photo_iPad extends root.PhotoPicker.Photo
       height: 182
       width: 182
       left: 8
-      bottom: 8
+      top: 8
       backgroundColor: "#FFF"
       borderWidth: 1
       borderColor: "#CCC"

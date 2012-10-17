@@ -75,7 +75,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     @view.add(@buttons)
     
     @grid = root.app.create 'PhotoPicker.PhotoGrid', {
-      top: 60
+      top: 54
       onRemove: (photo, thumbnail) =>  #TODO: GJ: record existing image deletes
         @photos = @photos.without photo
         @thumbnails = @thumbnails.without thumbnail
@@ -90,6 +90,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     
   update: =>
     @settings.onUpdate @photos, @thumbnails
+    @grid.checkForPhotos()
   
   addFromGallery: =>
     Ti.Media.openPhotoGallery {

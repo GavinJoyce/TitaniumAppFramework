@@ -6,7 +6,7 @@ root.PhotoPicker.Photo_iPhone = class Photo_iPhone extends root.PhotoPicker.Phot
       height: 100
       width: 100
       left: 5
-      bottom: 5
+      top: 5
       backgroundColor: "#FFF"
       borderWidth: 1
       borderColor: "#CCC"

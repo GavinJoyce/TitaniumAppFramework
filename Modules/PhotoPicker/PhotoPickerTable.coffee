@@ -43,7 +43,7 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       }
       onClick: @addFromCamera
     })
-    @buttons.add @addFromCameraButton.view
+    @buttons.add @addFromCameraButton.view if Ti.Media.isCameraSupported
     
     @addFromGalleryButton = root.app.create("Button", {
       text: "From Library"

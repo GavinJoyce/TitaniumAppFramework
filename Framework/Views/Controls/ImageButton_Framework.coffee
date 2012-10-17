@@ -35,6 +35,7 @@ root.ImageButton_Framework = class ImageButton_Framework
 
     if settings.iconSettings?
       @icon = Ti.UI.createImageView(settings.iconSettings)
+      @icon.touchEnabled = false
       @button.add(@icon)
 
     if settings.text?
@@ -81,6 +82,7 @@ root.ImageButton_Framework = class ImageButton_Framework
 
     if settings.iconSettings?
       @icon = Ti.UI.createImageView(settings.iconSettings)
+      @icon.touchEnabled = false
       @button.add(@icon)
 
     if settings.text?

@@ -7,6 +7,7 @@ root.WorkQueue.Queue = class Queue
     }, options)
     @running = false
     @checking = false
+    @activeJob = null
     
     @jobs = []
     
@@ -23,9 +24,9 @@ root.WorkQueue.Queue = class Queue
       Ti.API.info "[WorkQueue.Queue]#{@jobs.length} jobs, #{availableJobs.length} available jobs"
   
       if availableJobs.length > 0
-        job = availableJobs[0]
+        @activeJob = availableJobs[0]
       
-        job.execute {
+        @activeJob.execute {
           onSuccess: @onJobSuccess
           onError: @onJobError
           onProgress: @onJobProgress
@@ -34,17 +35,19 @@ root.WorkQueue.Queue = class Queue
         @checking = false
         @scheduleCheck() if recurring
       
-
-    
   onJobSuccess: (job) =>
     Ti.API.info 'job was successful ' + job.settings.worker
     @jobs = @jobs.without job
     @checking = false
+    @activeJob = null
+    @check true
     
   onJobError: (job) =>
     Ti.API.info 'job was error'
     @jobs = @jobs.without job #TODO: GJ: retry or set error state?
     @checking = false
+    @activeJob = null
+    @check true
     
   onJobProgress: (job, worker, progress) => #progress between 0 and 1
     Ti.API.info "Job progress #{progress}"
@@ -55,7 +58,9 @@ root.WorkQueue.Queue = class Queue
         progress: progress
       }
     
-  scheduleCheck: -> setTimeout((=> @check(true)), @settings.checkFrequency) if @running
+  scheduleCheck: -> 
+    if @scheduledCheck then clearTimeout @scheduledCheck
+    @scheduledCheck = setTimeout((=> @check(true)), @settings.checkFrequency) if @running
   
   start: =>
     Ti.API.info 'starting job queue'

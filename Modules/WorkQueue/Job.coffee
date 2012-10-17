@@ -14,10 +14,10 @@ root.WorkQueue.Job = class Job
     worker.execute {
       onSuccess: =>
         options.onSuccess @
-        @settings.onSuccess()
+        @settings.onSuccess() if @settings.onSuccess?
       onError: =>
         options.onError @
-        @settings.onError()
+        @settings.onError() if @settings.onError?
       onProgress: (progress) => options.onProgress(@, worker, progress)
     }
 

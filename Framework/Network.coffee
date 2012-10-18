@@ -38,7 +38,7 @@ root.Network = class Network
     @xhr.setRequestHeader('MyHome-Token', options.token) if options.token?
     
     @xhr.onload = (e) ->
-      @activeRequest = null;
+      @activeRequest = null
       Ti.API.info "@responseText: #{@responseText}"
       options.onSuccess(JSON.parse(@responseText))
     @xhr.onerror = () => @onError(options)
@@ -51,13 +51,13 @@ root.Network = class Network
   reset: (options) ->
     if @xhr.readyState not in [0,4]
       Ti.API.info('-------------- Something happening')
-      @activeRequest.onAbort() if @activeRequest.onAbort?
+      @activeRequest.onAbort() if @activeRequest? && @activeRequest.onAbort?
     
     @xhr.abort()
-    @activeRequest = null;
+    @activeRequest = null
     
   onError: (options) =>
-    @activeRequest = null;
+    @activeRequest = null
     options.try++
     
     if options.try < @settings.retryCount

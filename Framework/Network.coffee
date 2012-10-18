@@ -41,7 +41,9 @@ root.Network = class Network
     else
       @xhr.send(options.params)
     
-  reset: -> @xhr.abort()
+  reset: -> 
+    Ti.API.info("xhr reset")
+    @xhr.abort()
     
   onError: (options) =>
     options.try++

@@ -19,7 +19,7 @@ root.Network = class Network
       token: null
       onSuccess: ->
       onError: ->
-      onAbort: ->
+      onAbort: -> Ti.API.info('root.Network: onAbort')
       onRetry: (retryCount) ->
       try: 0
     }, options)
@@ -27,21 +27,22 @@ root.Network = class Network
     Ti.API.info('root.network.ajax : ' + options.url)
     
     @reset(options)
+    @activeRequest = options
     
-    Ti.API.info("#{@xhr.readyState}: READY STATE CHANGED")
-    @xhr.setOnreadystatechange((e) => Ti.API.info("#{e.source.readyState}: READY STATE CHANGED"))
+    # Ti.API.info("#{@xhr.readyState}: READY STATE CHANGED")
+    # @xhr.setOnreadystatechange((e) => Ti.API.info("#{e.source.readyState}: READY STATE CHANGED"))
+    
     @xhr.open('POST', options.url) #TODO: GJ: add support for GET
     @xhr.setRequestHeader('Content-Type', options.contentType)
-    
     @xhr.setRequestHeader('MyHome-UserID', options.userID) if options.userID?
     @xhr.setRequestHeader('MyHome-Token', options.token) if options.token?
     
     @xhr.onload = (e) ->
+      @activeRequest = null;
       Ti.API.info "@responseText: #{@responseText}"
       options.onSuccess(JSON.parse(@responseText))
     @xhr.onerror = () => @onError(options)
     
-    @activeRequest = options
     if options.contentType == 'application/json'
       @xhr.send(JSON.stringify(options.params))
     else
@@ -56,6 +57,7 @@ root.Network = class Network
     @activeRequest = null;
     
   onError: (options) =>
+    @activeRequest = null;
     options.try++
     
     if options.try < @settings.retryCount

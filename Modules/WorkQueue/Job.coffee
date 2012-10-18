@@ -3,6 +3,7 @@ root.WorkQueue.Job = class Job
     @settings = root._.extend({
       worker: 'WorkQueue.DefaultWorker'
       data: {}
+      requiresInternet: false
       executeOn: new Date()
       onSuccess: ->
       onError: ->

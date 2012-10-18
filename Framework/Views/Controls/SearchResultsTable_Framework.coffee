@@ -2,6 +2,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
   constructor:(options = {}) ->
     @options = root._.extend({
       onTableClick: (e) =>
+      loadMoreOnClick: =>
       infiniteScroll: true
       infiniteScrollCallback: (e) => Ti.API.info("scrolled to bottom")
       rowClassName: "SearchResultsTableRow"
@@ -63,7 +64,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
 
     if hasMoreRows
       @table.hasMoreRows = true
-      @table.appendRow(@moreRow)
+      @table.appendRow(@moreRow.moreRow)
     else
       @table.hasMoreRows = false
     
@@ -71,7 +72,9 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     
     
   createMoreRow: =>
-    root.app.create("SearchResultsTableMoreRow").moreRow
+    root.app.create("SearchResultsTableMoreRow", {
+      loadMoreOnClick: @options.loadMoreOnClick
+    })
     
   createNoResultsRow: =>
     root.app.create("SearchResultsTableNoResultsRow").noResultsRow

@@ -19,6 +19,9 @@ root.WorkQueue.Job = class Job
         options.onError @
         @settings.onError() if @settings.onError?
       onProgress: (progress) => options.onProgress(@, worker, progress)
+      onAbort: =>
+        options.onAbort @
+        @settings.onAbort() if @settings.onAbort?
     }
 
   canExecute: =>

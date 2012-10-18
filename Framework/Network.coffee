@@ -7,6 +7,7 @@ root.Network = class Network
     }, options)
     
     @xhr = Ti.Network.createHTTPClient({ timeout: @settings.timeout })
+    @activeRequest = null
       
   ajax: (options) ->
     options = root._.extend({
@@ -18,13 +19,17 @@ root.Network = class Network
       token: null
       onSuccess: ->
       onError: ->
+      onAbort: ->
       onRetry: (retryCount) ->
       try: 0
     }, options)
     
     Ti.API.info('root.network.ajax : ' + options.url)
     
-    @reset()
+    @reset(options)
+    
+    Ti.API.info("#{@xhr.readyState}: READY STATE CHANGED")
+    @xhr.setOnreadystatechange((e) => Ti.API.info("#{e.source.readyState}: READY STATE CHANGED"))
     @xhr.open('POST', options.url) #TODO: GJ: add support for GET
     @xhr.setRequestHeader('Content-Type', options.contentType)
     
@@ -36,12 +41,19 @@ root.Network = class Network
       options.onSuccess(JSON.parse(@responseText))
     @xhr.onerror = () => @onError(options)
     
+    @activeRequest = options
     if options.contentType == 'application/json'
       @xhr.send(JSON.stringify(options.params))
     else
       @xhr.send(options.params)
     
-  reset: -> @xhr.abort()
+  reset: (options) ->
+    if @xhr.readyState not in [0,4]
+      Ti.API.info('-------------- Something happening')
+      @activeRequest.onAbort() if @activeRequest.onAbort?
+    
+    @xhr.abort()
+    @activeRequest = null;
     
   onError: (options) =>
     options.try++

@@ -30,6 +30,7 @@ root.WorkQueue.Queue = class Queue
           onSuccess: @onJobSuccess
           onError: @onJobError
           onProgress: @onJobProgress
+          onAbort: @onJobAbort
         }
       else
         @checking = false
@@ -45,6 +46,12 @@ root.WorkQueue.Queue = class Queue
   onJobError: (job) =>
     Ti.API.info 'job was error'
     @jobs = @jobs.without job #TODO: GJ: retry or set error state?
+    @checking = false
+    @activeJob = null
+    @check true
+    
+  onJobAbort: (job) =>
+    Ti.API.info 'job was aborted'
     @checking = false
     @activeJob = null
     @check true

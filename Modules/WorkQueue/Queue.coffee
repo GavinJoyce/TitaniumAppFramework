@@ -26,9 +26,9 @@ root.WorkQueue.Queue = class Queue
       if availableJobs.length > 0
         @activeJob = availableJobs[0]
         
-        if @activeJob.requiresInternet && !root.app.network.activeRequest?
-          @checking = false
-          @scheduleCheck() if recurring
+        if @activeJob.settings.requiresInternet && root.app.network.xhr.readyState not in [0,4]
+          @rescheduleCheck(recurring)
+          return
           
         @activeJob.execute {
           onSuccess: @onJobSuccess
@@ -37,8 +37,7 @@ root.WorkQueue.Queue = class Queue
           onAbort: @onJobAbort
         }
       else
-        @checking = false
-        @scheduleCheck() if recurring
+        @rescheduleCheck(recurring)
       
   onJobSuccess: (job) =>
     Ti.API.info 'job was successful ' + job.settings.worker
@@ -58,7 +57,7 @@ root.WorkQueue.Queue = class Queue
     Ti.API.info 'job was aborted'
     @checking = false
     @activeJob = null
-    # @check true
+    @check true
     
   onJobProgress: (job, worker, progress) => #progress between 0 and 1
     Ti.API.info "Job progress #{progress}"
@@ -68,6 +67,10 @@ root.WorkQueue.Queue = class Queue
         message: 'Job in Progress'
         progress: progress
       }
+  
+  rescheduleCheck: (recurring = false) =>
+    @checking = false
+    @scheduleCheck() if recurring
     
   scheduleCheck: -> 
     if @scheduledCheck then clearTimeout @scheduledCheck

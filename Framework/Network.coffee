@@ -55,7 +55,10 @@ root.Network = class Network
     
     @xhr.abort()
     @activeRequest = null
-    
+
+  hasActiveRequest: =>
+    @activeRequest?
+
   onError: (options) =>
     @activeRequest = null
     options.try++

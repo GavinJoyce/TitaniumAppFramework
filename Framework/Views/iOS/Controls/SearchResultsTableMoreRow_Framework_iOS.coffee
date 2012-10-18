@@ -3,7 +3,7 @@ root.SearchResultsTableMoreRow_Framework_iOS = class SearchResultsTableMoreRow_F
     @settings = root._.extend({}, options)
     
     @moreRow = Ti.UI.createTableViewRow({
-      backgroundColor: "#FFF"
+      backgroundColor: "#DDD"
       selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
       height: 50
       type: "loadMoreRow"
@@ -23,7 +23,7 @@ root.SearchResultsTableMoreRow_Framework_iOS = class SearchResultsTableMoreRow_F
     @loadMoreWrap = Ti.UI.createView({
       height: Ti.UI.FILL
       width: Ti.UI.FILL
-      backgroundColor: "#FFF"
+      backgroundColor: "#DDD"
     })
     @loadMoreButton = root.app.create("Button", {
       text: "Load More"

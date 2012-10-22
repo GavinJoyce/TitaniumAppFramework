@@ -6,7 +6,7 @@ root.BaseView = class BaseView
       backgroundColor: root.app.settings.viewBackgroundColor
       backgroundGradient: root.app.settings.viewBackgroundGradient
       barColor: root.app.settings.viewTitleBarColor
-      backgroundImage: root.app.settings.viewBackgroundImage
+      #backgroundImage: root.app.settings.viewBackgroundImage     # Commented out: CMC : Causing backgroundColor to fail on Android when '' | null
       viewTitleBarStyle: root.app.settings.viewTitleBarStyle
       useImageButtons: root.app.settings.useImageButtons
     }, options)

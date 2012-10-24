@@ -29,8 +29,8 @@ root.Network = class Network
     @reset(options)
     @activeRequest = options
     
-    # Ti.API.info("#{@xhr.readyState}: READY STATE CHANGED")
-    # @xhr.setOnreadystatechange((e) => Ti.API.info("#{e.source.readyState}: READY STATE CHANGED"))
+    if Ti.Platform.osname != 'iphone' || Ti.Platform.osname != 'ipad'        # CMC put this here as Android was having trouble making multiple requests with params
+      @xhr = Ti.Network.createHTTPClient({ timeout: @settings.timeout })
     
     @xhr.open('POST', options.url) #TODO: GJ: add support for GET
     @xhr.setRequestHeader('Content-Type', options.contentType)

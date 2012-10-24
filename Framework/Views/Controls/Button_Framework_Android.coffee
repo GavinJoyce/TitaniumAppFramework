@@ -1,6 +1,8 @@
-root.Button_Framework = class Button_Framework
+root.Button_Framework_Android = class Button_Framework_Android extends root.Button_Framework
   constructor:(options = {}) ->
-    # Settings
+    options = root._.extend {}, options
+    # super options
+    
     @settings = root._.extend({
       borderWidth: 1
       borderRadius: 5
@@ -24,7 +26,6 @@ root.Button_Framework = class Button_Framework
     }, options.style)
 
     @settings.onClickStyle = root._.extend({}, options.onClickStyle)
-    # /Settings
     
     @view = Ti.UI.createView({
       bottom: @settings.bottom
@@ -33,7 +34,6 @@ root.Button_Framework = class Button_Framework
       right: @settings.right
       top: @settings.top
       width: @settings.width
-      opacity: @settings.opacity
     })
     
     @disabledOverlay = Ti.UI.createView({
@@ -81,8 +81,6 @@ root.Button_Framework = class Button_Framework
         color: @settings.style.labelColor
         text: @settings.text
         font: { fontSize: @settings.fontSize, fontWeight: "bold" }
-        shadowOffset: { x: 1, y: 1 }
-        shadowColor: @settings.style.labelShadowColor
         textAlign: "center"
         height: Ti.UI.SIZE
         width: Ti.UI.SIZE
@@ -95,45 +93,15 @@ root.Button_Framework = class Button_Framework
     @setEnabled(@settings.enabled)
     
   onTouchStart: =>
-    @button.updateLayout({
-      borderColor: @settings.onClickStyle.borderColor
-      backgroundGradient: {
-        type: 'linear'
-        startPoint: { x: 0, y: 0 }
-        endPoint: { x: 0, y: "100%" }
-        colors: @settings.onClickStyle.gradient
-        backfillStart: false
-      }
-    })
-    
     if @label
-      @label.updateLayout({
+      @label.updateLayout {
         color: @settings.onClickStyle.labelColor
-        shadowColor: @settings.onClickStyle.labelShadowColor
-      })
+      }
     
   onTouchEnd: =>
-    @button.updateLayout({
-      borderColor: @settings.style.borderColor
-      backgroundGradient: {
-        type: 'linear'
-        startPoint: { x: 0, y: 0 }
-        endPoint: { x: 0, y: "100%" }
-        colors: @settings.style.gradient
-        backfillStart: false
-      }
-    })
-    
     if @label
-      @label.updateLayout({
+      @label.updateLayout {
         color: @settings.style.labelColor
-        shadowColor: @settings.style.labelShadowColor
-      })
-      
-  setEnabled: (enabled) =>
-    if enabled
-      @view.enabled = true
-      @disabledOverlay.hide()
-    else
-      @view.enabled = false
-      @disabledOverlay.show()
+      }
+
+  

@@ -20,6 +20,7 @@ root.BaseView = class BaseView
     @window = Ti.UI.createWindow(@settings)
     @window.addEventListener('focus', @focus)
     @window.addEventListener('close', @onClose)
+    @window.addEventListener('blur', @onBlur)
     
     @content = Ti.UI.createView({
       height: Ti.UI.FILL
@@ -105,6 +106,8 @@ root.BaseView = class BaseView
     @onClose()
       
   onClose: ->
+    
+  onBlur: ->
   
   add: (control) ->
     @content.add control

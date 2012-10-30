@@ -16,6 +16,7 @@ root.Framework = class Framework
     @settings = root._.extend({}, options)
     @classFactory = new root.ClassFactory()
     @includedFiles = []
+    @unloadedModules = []
         
   includePath: (path = "", recursive = false) =>
     for file in @getFiles(path, recursive)
@@ -23,9 +24,20 @@ root.Framework = class Framework
       @include file
 
   includeModule: (moduleName) ->
+    Ti.API.info("include module ..... #{moduleName}")
     root.moduleNames.push moduleName
     root[moduleName] = {}
     @includePath("Common/Modules/#{moduleName}", true)
+    
+  includeDynamicModule: (moduleName) ->
+    Ti.API.info("include Dynamic module ..... #{moduleName}")
+    @unloadedModules.push moduleName
+    
+  loadDynamicModule: (moduleName) ->
+    if moduleName in @unloadedModules
+      Ti.API.info("TODOTOTOTOTOTOTO: GJ: load Dynamic module ..... #{moduleName}")
+      @includeModule moduleName
+      @unloadedModules = @unloadedModules.without moduleName
     
   include: (file) =>    
     if @includedFiles.indexOf(file) == -1

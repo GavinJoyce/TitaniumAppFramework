@@ -18,6 +18,7 @@ root.ClassFactory = class ClassFactory
       
       if isModule
         klassNames = @moduleKlassNames
+        root.framework.loadDynamicModule className.split('.')[0]
       else
         klassNames = @klassNames
     

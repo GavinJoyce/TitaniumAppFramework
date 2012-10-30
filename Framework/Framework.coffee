@@ -24,18 +24,18 @@ root.Framework = class Framework
       @include file
 
   includeModule: (moduleName) ->
-    Ti.API.info("Including module ..... #{moduleName}")
+    Ti.API.info("Including module ..... [#{moduleName}]")
     root.moduleNames.push moduleName
     root[moduleName] = {}
     @includePath("Common/Modules/#{moduleName}", true)
     
   includeDynamicModule: (moduleName) ->
-    Ti.API.info("Including Dynamic module ..... #{moduleName}")
+    Ti.API.info("Including Dynamic module ..... [#{moduleName}]")
     @unloadedModules.push moduleName
     
   loadDynamicModule: (moduleName) ->
     if moduleName in @unloadedModules
-      Ti.API.info("Loading Dynamic Module ..... #{moduleName}")
+      Ti.API.info("Loading Dynamic Module ..... [#{moduleName}]")
       @includeModule moduleName
       @unloadedModules = @unloadedModules.without moduleName
     

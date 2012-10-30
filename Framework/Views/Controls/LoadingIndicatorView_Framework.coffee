@@ -1,9 +1,6 @@
 root.LoadingIndicatorView_Framework = class LoadingIndicatorView_Framework extends root.BaseView
   constructor:(options = {}) ->
-    options = root._.extend({
-      title: 'LoadingIndicatorView_Framework_Common'
-    }, options)
-    super(options)
+    super options
     
     if Ti.Platform.osname == "iphone" || Ti.Platform.osname == "ipad"
       @loadingView = Ti.UI.createView({

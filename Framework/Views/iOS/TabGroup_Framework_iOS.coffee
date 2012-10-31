@@ -25,8 +25,8 @@ root.TabGroup_Framework_iOS = class TabGroup_Framework_iOS
       tab.window = item.view.window if item.view?
       
       @tabs.addTab(tab)
-      if item.onClick?
-        tab.addEventListener("click", item.onClick)
+      #if item.onClick?
+        #tab.addEventListener("click", item.onClick)
         
     @tabs.open()
 

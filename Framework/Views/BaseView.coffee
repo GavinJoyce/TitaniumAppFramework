@@ -81,10 +81,12 @@ root.BaseView = class BaseView
     Ti.API.info 'BaseView.onFocus'
     
   show: (options = {}) =>
-    if root.tabGroup
+    if @settings.navGroup?
+      @settings.navGroup.navGroup.open(@window, options)
+    else if root.tabGroup?
       @window.inTabGroup = true
       root.tabGroup.tabs.activeTab.open(@window, options)
-    else if root.navGroup
+    else if root.navGroup?
       @window.inNavGroup = true
       root.navGroup.navGroup.open(@window, options)
     else
@@ -95,12 +97,12 @@ root.BaseView = class BaseView
     @window.open(options)
 
   close: (options = {}) =>
-    if @window.inTabGroup
+    if @settings.navGroup?
+      @settings.navGroup.navGroup.close(@window, options)
+    else if @window.inTabGroup
       root.tabGroup.tabs.activeTab.close(@window, options)
     else if @window.inNavGroup
       root.navGroup.navGroup.close(@window, options)
-    else if @window.navGroup
-      @window.navGroup.close(@window, options)
     else
       @window.close(options)
     @onClose()

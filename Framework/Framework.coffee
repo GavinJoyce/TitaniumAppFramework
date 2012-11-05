@@ -8,6 +8,7 @@ Array::first = -> _.first @ #TODO: GJ: move to extensions.js
 Array::without = (value) -> _.without @, value
 Array::shuffle = -> _.shuffle(@) 
 Array::random = -> @.shuffle().first()
+Array::random_without = (value) -> @without(value).random()
 
 root.moduleNames = []
 

@@ -97,8 +97,8 @@ root.BaseView = class BaseView
     @window.open(options)
 
   close: (options = {}) =>
-    if @settings.navGroup?
-      @settings.navGroup.navGroup.close(@window, options)
+    if @window.navGroup?
+      @window.navGroup.navGroup.close(@window, options)
     else if @window.inTabGroup
       root.tabGroup.tabs.activeTab.close(@window, options)
     else if @window.inNavGroup

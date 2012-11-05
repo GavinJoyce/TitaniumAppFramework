@@ -15,7 +15,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       top: @options.top
     })
     @table.addEventListener("click", (e) =>
-      if e.row.type != "noResultsRow" && e.row.type != "loadMoreRow"
+      if e.row.type != "noResultsRow" && e.row.type != "loadMoreRow" && e.row.type != "retryRow"
         @options.onTableClick(e)
     )
     @moreRow = @createMoreRow()

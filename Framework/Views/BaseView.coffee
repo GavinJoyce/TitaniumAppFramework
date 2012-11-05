@@ -114,6 +114,10 @@ root.BaseView = class BaseView
   add: (control) ->
     @content.add control
     @controls.push control
+    
+  remove: (control) ->
+    @content.remove control
+    @controls = root._.without(@controls, control)
   
   clear: ->
     for control in @controls

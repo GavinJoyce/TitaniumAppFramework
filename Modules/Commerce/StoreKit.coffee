@@ -20,8 +20,8 @@ root.Commerce.StoreKit = class StoreKit
     @tiStorekit.purchase product, (e) =>
       Ti.API.info('root.Commerce.StoreKit : purchase -- reply') 
       switch e.state
-        when @tiStorekit.FAILED then options.onFailed(product) if options.onFailed
-        when @tiStorekit.PURCHASED then options.onPurchased(product) if options.onPurchased
-        when @tiStorekit.RESTORED then options.onRestored(product) if options.onRestored
+        when @tiStorekit.FAILED then options.onFailed(e, product) if options.onFailed
+        when @tiStorekit.PURCHASED then options.onPurchased(e, product) if options.onPurchased
+        when @tiStorekit.RESTORED then options.onRestored(e, product) if options.onRestored
     
   

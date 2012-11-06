@@ -13,6 +13,7 @@ root.Network = class Network
     options = root._.extend({
       url: null
       params: {}
+      xhr: null
       method: 'POST'
       contentType: 'application/x-www-form-urlencoded'
       userID: null
@@ -29,24 +30,26 @@ root.Network = class Network
     @reset(options)
     @activeRequest = options
     
+    options.xhr = @xhr unless options.xhr
+    
     if Ti.Platform.osname != 'iphone' || Ti.Platform.osname != 'ipad'        # CMC put this here as Android was having trouble making multiple requests with params
-      @xhr = Ti.Network.createHTTPClient({ timeout: @settings.timeout })
+      options.xhr = Ti.Network.createHTTPClient({ timeout: @settings.timeout })
     
-    @xhr.open('POST', options.url) #TODO: GJ: add support for GET
-    @xhr.setRequestHeader('Content-Type', options.contentType)
-    @xhr.setRequestHeader('MyHome-UserID', options.userID) if options.userID?
-    @xhr.setRequestHeader('MyHome-Token', options.token) if options.token?
+    options.xhr.open('POST', options.url) #TODO: GJ: add support for GET
+    options.xhr.setRequestHeader('Content-Type', options.contentType)
+    options.xhr.setRequestHeader('MyHome-UserID', options.userID) if options.userID?
+    options.xhr.setRequestHeader('MyHome-Token', options.token) if options.token?
     
-    @xhr.onload = (e) ->
+    options.xhr.onload = (e) ->
       @activeRequest = null
       Ti.API.info "@responseText: #{@responseText}"
       options.onSuccess(JSON.parse(@responseText))
-    @xhr.onerror = () => @onError(options)
+    options.xhr.onerror = () => @onError(options)
     
     if options.contentType == 'application/json'
-      @xhr.send(JSON.stringify(options.params))
+      options.xhr.send(JSON.stringify(options.params))
     else
-      @xhr.send(options.params)
+      options.xhr.send(options.params)
     
   reset: (options) ->
     if @xhr.readyState not in [0,4]
@@ -69,7 +72,7 @@ root.Network = class Network
       root.app.delay @settings.retryDelay, => @ajax(options)
     else
       Ti.API.info('network error')
-      options.onError(@xhr.status)
+      options.onError(options.xhr.status)
     
 
     

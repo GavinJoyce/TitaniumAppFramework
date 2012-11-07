@@ -1,6 +1,6 @@
 #https://github.com/appersonlabs/TitaniumStatusbarOverlay
 
-root.StatusBar.StatusBarOverlay = class StatusBarOverlay
+root.StatusBar.StatusBarOverlay_Andriod = class StatusBarOverlay_Andriod extends root.StatusBar.StatusBarOverlay
   constructor: ->
      
   flash: (message, duration = 2.5) =>

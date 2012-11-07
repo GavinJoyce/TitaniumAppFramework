@@ -9,7 +9,7 @@ root.Network = class Network
     @xhr = Ti.Network.createHTTPClient({ timeout: @settings.timeout })
     @activeRequest = null
       
-  ajax: (options) ->
+  ajax: (options) =>
     options = root._.extend({
       url: null
       params: {}
@@ -29,10 +29,10 @@ root.Network = class Network
     
     @reset(options)
     @activeRequest = options
-    
-    options.xhr = @xhr unless options.xhr
-    
-    if Ti.Platform.osname != 'iphone' || Ti.Platform.osname != 'ipad'        # CMC put this here as Android was having trouble making multiple requests with params
+
+    options.xhr = @xhr unless options.xhr?
+
+    if Ti.Platform.osname != 'iphone' && Ti.Platform.osname != 'ipad'        # CMC put this here as Android was having trouble making multiple requests with params
       options.xhr = Ti.Network.createHTTPClient({ timeout: @settings.timeout })
     
     options.xhr.open('POST', options.url) #TODO: GJ: add support for GET
@@ -51,11 +51,12 @@ root.Network = class Network
     else
       options.xhr.send(options.params)
     
-  reset: (options) ->
+  reset: (options) =>
     if @xhr.readyState not in [0,4]
       Ti.API.info('-------------- Something happening')
       @activeRequest.onAbort() if @activeRequest? && @activeRequest.onAbort?
     
+    Ti.API.info("----- xhr abort -----")
     @xhr.abort()
     @activeRequest = null
 

@@ -102,3 +102,5 @@ root.MobileAppBase = class MobileAppBase
         endRadius: 0
         backfillStart: true 
       }
+      
+  trackPageview: (pageUrl) => @analytics.trackPageview(pageUrl) if @analytics

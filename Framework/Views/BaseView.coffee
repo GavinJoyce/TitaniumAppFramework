@@ -22,12 +22,27 @@ root.BaseView = class BaseView
     @window.addEventListener('close', @onClose)
     @window.addEventListener('blur', @onBlur)
     
-    @content = Ti.UI.createView({
-      height: Ti.UI.FILL
-      width: "100%"
-    })
-    @window.add(@content)
-    
+    @buildLayout()
+    @assignDefaultButtons()
+  
+  buildLayout: =>
+    if Ti.Platform.osname == "android" && !@settings.isHome
+      @header = root.app.create('HeaderControl', { backgroundColor: @settings.barColor })
+      @window.add(@header.view)
+      @content = Ti.UI.createView {
+        top: 70
+        height: Ti.UI.FILL
+        width: "100%"
+      }
+      @window.add(@content)
+    else
+      @content = Ti.UI.createView({
+        height: Ti.UI.FILL
+        width: "100%"
+      })
+      @window.add(@content)
+  
+  assignDefaultButtons: =>
     if @settings.useImageButtons && @settings.hasBackButton
       button = root.app.create 'ImageButton', {
         type: 'back'
@@ -41,7 +56,7 @@ root.BaseView = class BaseView
         onClick: => @close()
       }
       @window.setRightNavButton(button.view)
-    
+      
   applyStyle: -> #TODO: GJ: add support for different platforms
     if @settings.viewTitleBarStyle?
       if Ti.Platform.osname == 'ipad'

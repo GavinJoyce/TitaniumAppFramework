@@ -16,13 +16,13 @@ root.HeaderControl_Framework_Android = class HeaderControl_Framework_Android
     
     @leftView = Ti.UI.createView {
       left: 0, top: 0, bottom: 0
-      width: 50, height: 70
+      width: Ti.UI.SIZE, height: 70
       layout: "horizontal"
     }
 
     @rightView = Ti.UI.createView {
       right: 0, top: 0, bottom: 0
-      width: 50, height: 70
+      width: Ti.UI.SIZE, height: 70
       layout: "horizontal"
     }
 

@@ -41,14 +41,14 @@ root.WorkQueue.Queue = class Queue
       
   onJobSuccess: (job) =>
     Ti.API.info 'job was successful ' + job.settings.worker
-    @jobs = @jobs.without job
+    @jobs = root._.without @jobs, job
     @checking = false
     @activeJob = null
     @check true
     
   onJobError: (job) =>
     Ti.API.info 'job was error'
-    @jobs = @jobs.without job #TODO: GJ: retry or set error state?
+    @jobs = root._.without @jobs, job #TODO: GJ: retry or set error state?
     @checking = false
     @activeJob = null
     @check true

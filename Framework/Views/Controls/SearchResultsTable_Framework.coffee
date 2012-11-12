@@ -3,9 +3,12 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     @options = root._.extend({
       onTableClick: (e) =>
       loadMoreOnClick: =>
+      resetResultsOnClick: =>
       infiniteScroll: true
       infiniteScrollCallback: (e) => Ti.API.info("scrolled to bottom")
       rowClassName: "SearchResultsTableRow"
+      noResultsRowClassName: "SearchResultsTableNoResultsRow"
+      loadMoreRowClassName: "SearchResultsTableMoreRow"
       top: "auto"
       pullToRefresh: false
       pullToRefreshCallback: (e) => Ti.API.info("pull to refresh fired")
@@ -60,7 +63,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
         @i++
     else
       @table.scrollable = false
-      @table.setData([@noResultsRow])
+      @table.setData([@noResultsRow.noResultsRow])
 
     if hasMoreRows
       @table.hasMoreRows = true
@@ -72,9 +75,11 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     
     
   createMoreRow: =>
-    root.app.create("SearchResultsTableMoreRow", {
+    root.app.create(@options.loadMoreRowClassName, {
       loadMoreOnClick: @options.loadMoreOnClick
     })
     
   createNoResultsRow: =>
-    root.app.create("SearchResultsTableNoResultsRow").noResultsRow
+    root.app.create(@options.noResultsRowClassName, {
+      resetResultsOnClick: @options.resetResultsOnClick
+    })

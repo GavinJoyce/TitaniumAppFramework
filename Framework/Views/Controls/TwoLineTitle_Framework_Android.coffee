@@ -25,7 +25,7 @@ root.TwoLineTitle_Framework_Android = class TwoLineTitle_Framework_Android exten
     bigTitle = super
     bigTitle.updateLayout {
       height: Ti.UI.SIZE
-      font: { fontSize: 28 }
+      font: { fontSize: 28, fontWeight: 'bold' }
     }
     
     bigTitle

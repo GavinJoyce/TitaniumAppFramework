@@ -106,6 +106,7 @@ root.BaseView = class BaseView
       root.navGroup.navGroup.open(@window, options)
     else
       @open options
+    @isOpen = true
       
   open: (options = {}) =>
     options = root._.extend({}, options)
@@ -121,6 +122,7 @@ root.BaseView = class BaseView
     else
       @window.close(options)
     @onClose()
+    @isOpen = false
       
   onClose: ->
     

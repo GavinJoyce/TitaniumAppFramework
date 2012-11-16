@@ -39,7 +39,19 @@ root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS e
   getFormattedDate: ->
     date = new Date()
     return date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes()
-    
+  
+  addScrollListener: ->
+    @table.addEventListener("scroll", (e) =>
+      offset = e.contentOffset.y
+      height = e.size.height
+      total = offset + height
+      theEnd = e.contentSize.height
+      distance = theEnd - total
+      if distance < @lastDistance
+        if (total >= theEnd) && e.contentSize.height > e.size.height && @table.hasMoreRows
+          @options.infiniteScrollCallback()
+      @lastDistance = distance
+    )
     
   createTableHeader: =>
     tableHeader = Ti.UI.createView({

@@ -63,3 +63,6 @@ root.TwoLineTitle_Framework = class TwoLineTitle_Framework
     @title.text = title
     @bigtitle.text = title
     @subtitle.text = subtitle
+
+  clear: =>
+    @update('', null)

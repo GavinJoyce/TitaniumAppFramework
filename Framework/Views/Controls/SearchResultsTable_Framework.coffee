@@ -1,6 +1,7 @@
 root.SearchResultsTable_Framework = class SearchResultsTable_Framework
   constructor:(options = {}) ->
-    @options = root._.extend({
+    @options = root._.extend {
+      top: 0
       onTableClick: (e) =>
       loadMoreOnClick: =>
       resetResultsOnClick: =>
@@ -9,41 +10,41 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       rowClassName: "SearchResultsTableRow"
       noResultsRowClassName: "SearchResultsTableNoResultsRow"
       loadMoreRowClassName: "SearchResultsTableMoreRow"
-      top: "auto"
       pullToRefresh: false
       pullToRefreshCallback: (e) => Ti.API.info("pull to refresh fired")
-    }, options)
+    }, options
     
-    @table = Ti.UI.createTableView({
+    @table = Ti.UI.createTableView {
       top: @options.top
-    })
+    }
     @table.addEventListener("click", (e) =>
-      if e.row.type != "noResultsRow" && e.row.type != "loadMoreRow" && e.row.type != "retryRow"
-        @options.onTableClick(e)
+      switch e.row.type
+        when "noResultsRow", "loadMoreRow", "retryRow"
+          alert 'do nothing'
+        else @options.onTableClick(e)
+      # if e.row.type != "noResultsRow" && e.row.type != "loadMoreRow" && e.row.type != "retryRow"
+        # @options.onTableClick(e)
     )
+    
     @moreRow = @createMoreRow()
     @noResultsRow = @createNoResultsRow()
-    
+ 
     if @options.infiniteScroll
       @lastDistance = 0
       @addScrollListener()
-      
-  addScrollListener: ->
-    @table.addEventListener("scroll", (e) =>
-      offset = e.contentOffset.y
-      height = e.size.height
-      total = offset + height
-      theEnd = e.contentSize.height
-      distance = theEnd - total
-      if distance < @lastDistance
-        if (total >= theEnd) && e.contentSize.height > e.size.height && @table.hasMoreRows
-          @options.infiniteScrollCallback()
-      @lastDistance = distance
-    )
-    
-  clear: ->
-    @table.setData([])  
   
+  createMoreRow: =>
+    root.app.create(@options.loadMoreRowClassName, {
+      loadMoreOnClick: @options.loadMoreOnClick
+    })
+    
+  createNoResultsRow: =>
+    root.app.create(@options.noResultsRowClassName, {
+      resetResultsOnClick: @options.resetResultsOnClick
+    })
+     
+  addScrollListener: ->
+    
   update: (items, hasMoreRows) =>
     Ti.API.info("----- Update Table -----")
     
@@ -72,14 +73,6 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       @table.hasMoreRows = false
     
     Ti.API.info("-- Finish Update Table --")
-    
-    
-  createMoreRow: =>
-    root.app.create(@options.loadMoreRowClassName, {
-      loadMoreOnClick: @options.loadMoreOnClick
-    })
-    
-  createNoResultsRow: =>
-    root.app.create(@options.noResultsRowClassName, {
-      resetResultsOnClick: @options.resetResultsOnClick
-    })
+
+  clear: ->
+    @table.setData [] 

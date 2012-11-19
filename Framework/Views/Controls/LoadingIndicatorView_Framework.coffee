@@ -10,7 +10,7 @@ root.LoadingIndicatorView_Framework = class LoadingIndicatorView_Framework exten
       })
       
       @activityIndicator = Ti.UI.createActivityIndicator({
-        top: 200
+        top: '50%'
         message: "Loading..."
         width: Ti.UI.SIZE
         height: Ti.UI.SIZE

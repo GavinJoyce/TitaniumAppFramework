@@ -16,6 +16,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     
     @table = Ti.UI.createTableView {
       top: @options.top
+      separatorColor: "#CCC"
     }
     @table.addEventListener("click", (e) =>
       switch e.row.type

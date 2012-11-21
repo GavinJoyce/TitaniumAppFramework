@@ -6,10 +6,10 @@ root.TwoLineTitle_Framework_iOS = class TwoLineTitle_Framework_iOS extends root.
   createTitle: =>
     title = super
     title.updateLayout { 
-      setminimumFontSize : 13
       shadowColor: '#222'
       shadowOffset: { x: 0, y: -1 }
     }
+    title.setMinimumFontSize 13
     
     title
     
@@ -25,9 +25,9 @@ root.TwoLineTitle_Framework_iOS = class TwoLineTitle_Framework_iOS extends root.
   createBigTitle: =>
     bigTitle = super
     bigTitle.updateLayout { 
-      setminimumFontSize : 15
       shadowColor: '#222'
       shadowOffset: { x: 0, y: -1 }
     }
+    bigTitle.setMinimumFontSize 15
     
     bigTitle

@@ -9,6 +9,7 @@ root.ImageButton_Framework = class ImageButton_Framework
     
     @bg = ""
     @bgPressed = ""
+    @enabled
     
     if @options.type == "back"
       @view = @createBackButton(@options)
@@ -124,17 +125,20 @@ root.ImageButton_Framework = class ImageButton_Framework
     @button.backgroundImage = @bg if !@button.isPressed
      
   setEnabled: (enabled) =>
-    if enabled
-      @button.addEventListener "touchstart", @onTouchStart
-      @button.addEventListener "touchend", @onTouchEnd
-      if @label?
-        @label.setOpacity(1)
-      if @icon
-        @icon.setOpacity(1)
-    else
-      @button.removeEventListener "touchstart", @onTouchStart
-      @button.removeEventListener "touchend", @onTouchEnd
-      if @label?
-        @label.setOpacity(0.4)
-      if @icon
-        @icon.setOpacity(0.4)
+    if @enabled != enabled
+      if enabled
+        @button.addEventListener "touchstart", @onTouchStart
+        @button.addEventListener "touchend", @onTouchEnd
+        if @label?
+          @label.setOpacity(1)
+        if @icon
+          @icon.setOpacity(1)
+        @enabled = enabled
+      else
+        @button.removeEventListener "touchstart", @onTouchStart
+        @button.removeEventListener "touchend", @onTouchEnd
+        if @label?
+          @label.setOpacity(0.4)
+        if @icon
+          @icon.setOpacity(0.4)
+        @enabled = enabled

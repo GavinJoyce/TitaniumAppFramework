@@ -29,6 +29,17 @@ root.ImageButton_Framework_Android = class ImageButton_Framework_Android extends
       @icon.zIndex = 1000
       @button.add @icon
     
+    if settings.text?
+      @label = Ti.UI.createLabel {
+        text: settings.text
+        textAlign: "center"
+        color: "#FFF"
+        font: { fontSize: 20, fontWeight: "bold" }
+        width: Ti.UI.SIZE
+        zIndex: 1100
+      }
+      @button.add(@label)
+    
     @button.add @buttonBackground
     
     @setEnabled(settings.enabled)
@@ -36,6 +47,7 @@ root.ImageButton_Framework_Android = class ImageButton_Framework_Android extends
     @button
     
   setTitle: (title) =>
+    @label.setText title
     
   togglePressed: =>
      
@@ -45,7 +57,18 @@ root.ImageButton_Framework_Android = class ImageButton_Framework_Android extends
     @options.onClick()
      
   setEnabled: (enabled) =>
-    if enabled
-      @button.addEventListener "click", @onTouchEnd
-    else
-      @button.removeEventListener "click", @onTouchEnd
+    if @enabled != enabled
+      if enabled
+        @button.addEventListener "click", @onTouchEnd
+        if @label?
+          @label.setOpacity(1)
+        if @icon?
+          @icon.setOpacity(1)
+        @enabled = enabled
+      else
+        @button.removeEventListener "click", @onTouchEnd
+        if @label?
+          @label.setOpacity(0.4)
+        if @icon?
+          @icon.setOpacity(0.4)
+        @enabled = enabled

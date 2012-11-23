@@ -5,6 +5,7 @@ root.ImageButton_Framework = class ImageButton_Framework
       onClick: () => Ti.API.info("button clicked")
       backgroundColor: "transparent"
       enabled: true
+      text: null
     }, options)
     
     @bg = ""

@@ -7,7 +7,7 @@ root.TwoLineTitle_Framework = class TwoLineTitle_Framework
     
     @view = Ti.UI.createView {
       top: 0
-      width: Ti.UI.FILL, height: Ti.UI.FILL
+      width: '50%', height: Ti.UI.SIZE
     }
     
     @title = @createTitle()
@@ -25,7 +25,7 @@ root.TwoLineTitle_Framework = class TwoLineTitle_Framework
     Ti.UI.createLabel {
       color: '#FFF'
       height: 18
-      width: Ti.UI.FILL
+      width: Ti.UI.SIZE
       top: 5
       text: ' '
       textAlign: 'center'
@@ -36,7 +36,7 @@ root.TwoLineTitle_Framework = class TwoLineTitle_Framework
     Ti.UI.createLabel {
       color:'#FFF'
       height: 14
-      width: Ti.UI.FILL
+      width: Ti.UI.SIZE
       bottom: 7
       text: ' '
       textAlign: 'center'
@@ -46,8 +46,8 @@ root.TwoLineTitle_Framework = class TwoLineTitle_Framework
   createBigTitle: ->
     Ti.UI.createLabel {
       color:'#FFF'
-      height: 20
-      width: Ti.UI.FILL
+      height: '100%'
+      width: Ti.UI.SIZE
       text: ' '
       textAlign: 'center'
       font: { fontSize: 17, fontWeight: 'bold' }

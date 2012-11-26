@@ -17,7 +17,6 @@ root.TwoLineTitle_Framework_Android = class TwoLineTitle_Framework_Android exten
   
   createBigTitle: =>
     bigTitle = super()
-    bigTitle.setHeight 'auto'
-    bigTitle.setFont { fontSize: '20dp', fontWeight: 'bold' }
+    bigTitle.setFont { fontSize: '18dp' }
     
     bigTitle

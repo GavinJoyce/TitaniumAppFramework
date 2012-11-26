@@ -50,7 +50,7 @@ root.BaseView = class BaseView
         text: 'Back'
         onClick: => @close()
       }
-      @window.setLeftNavButton(button.view)
+      @window.setLeftNavButton button.view
     else if @settings.useImageButtons && @settings.hasDoneButton
       button = root.app.create 'ImageButton', {
         text: 'Done'

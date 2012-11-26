@@ -6,18 +6,18 @@ root.TwoLineTitle_Framework_Android = class TwoLineTitle_Framework_Android exten
   createTitle: =>
     title = super()
     title.setHeight 'auto'
-    title.setFont { fontSize: 22 }
+    title.setFont { fontSize: '16dp' }
     title
     
   createSubTitle: =>
     subTitle = super()
     subTitle.setHeight 'auto'
-    subTitle.setFont { fontSize: 18 }
+    subTitle.setFont { fontSize: '14dp' }
     subTitle
   
   createBigTitle: =>
     bigTitle = super()
     bigTitle.setHeight 'auto'
-    bigTitle.setFont { fontSize: 28, fontWeight: 'bold' }
+    bigTitle.setFont { fontSize: '20dp', fontWeight: 'bold' }
     
     bigTitle

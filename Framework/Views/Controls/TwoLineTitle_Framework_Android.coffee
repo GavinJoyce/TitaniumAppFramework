@@ -3,6 +3,8 @@ root.TwoLineTitle_Framework_Android = class TwoLineTitle_Framework_Android exten
     options = root._.extend {}, options
     super options
     
+    @view.setWidth '50%'
+    
   createTitle: =>
     title = super()
     title.setHeight 'auto'

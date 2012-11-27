@@ -7,7 +7,7 @@ root.TwoLineTitle_Framework = class TwoLineTitle_Framework
     
     @view = Ti.UI.createView {
       top: 0
-      width: '50%', height: Ti.UI.SIZE
+      width: Ti.UI.FILL, height: Ti.UI.SIZE
     }
     
     @title = @createTitle()

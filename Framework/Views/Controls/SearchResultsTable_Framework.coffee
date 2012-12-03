@@ -21,7 +21,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     @table.addEventListener("click", (e) =>
       switch e.row.type
         when "noResultsRow", "loadMoreRow", "retryRow"
-          alert 'do nothing'
+          Ti.API.info("do nothing")
         else @options.onTableClick(e)
       # if e.row.type != "noResultsRow" && e.row.type != "loadMoreRow" && e.row.type != "retryRow"
         # @options.onTableClick(e)

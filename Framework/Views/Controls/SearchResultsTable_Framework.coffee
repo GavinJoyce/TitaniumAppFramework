@@ -23,13 +23,11 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
         when "noResultsRow", "loadMoreRow", "retryRow"
           Ti.API.info("do nothing")
         else @options.onTableClick(e)
-      # if e.row.type != "noResultsRow" && e.row.type != "loadMoreRow" && e.row.type != "retryRow"
-        # @options.onTableClick(e)
     )
     
     @moreRow = @createMoreRow()
     @noResultsRow = @createNoResultsRow()
- 
+
     if @options.infiniteScroll
       @lastDistance = 0
       @addScrollListener()

@@ -58,7 +58,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       for item in items
         
         if @options.adRowSettings? && root._.contains(@options.adRowSettings.indexes, @i)
-          adRow = root.app.create(@options.adRowSettings.rowClassName).row
+          adRow = root.app.create(@options.adRowSettings.rowClassName, { url: @options.adRowSettings.url }).row
           @table.appendRow(adRow)
         
         @table.appendRow(root.app.create(@options.rowClassName, { item: item }).row)

@@ -12,6 +12,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       loadMoreRowClassName: "SearchResultsTableMoreRow"
       pullToRefresh: false
       pullToRefreshCallback: (e) => Ti.API.info("pull to refresh fired")
+      adRowSettings: null
     }, options
     
     @table = Ti.UI.createTableView {
@@ -55,6 +56,11 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     if items.length > 0
       @i = 0
       for item in items
+        
+        if @options.adRowSettings? && root._.contains(@options.adRowSettings.indexes, @i)
+          adRow = root.app.create(@options.adRowSettings.rowClassName).row
+          @table.appendRow(adRow)
+        
         @table.appendRow(root.app.create(@options.rowClassName, { item: item }).row)
       
         if @i == 0 && rowToDeleteIndex

@@ -11,23 +11,24 @@ root.PhotoPicker.PhotoGrid = class PhotoGrid
       onRemove: (thumb, filename) ->
     }, options)
     @controls = []
-    @view = Ti.UI.createView({
+    
+    @view = Ti.UI.createView {
       height: @settings.height
       width: @settings.width
       top: @settings.top
-    })
+    }
     
-    @placeHolder = Ti.UI.createView({
+    @placeHolder = Ti.UI.createView {
       height: @settings.height
       width: @settings.width
       backgroundColor: "#EFEFEF"
       zIndex: 1
-    })
-    @placeHolder.add(Ti.UI.createLabel({
+    }
+    @placeHolder.add(Ti.UI.createLabel {
       text: "No Photos", shadowOffset: { x: 0, y: 1 }, shadowColor: '#fff'
       font: { fontSize: 16 }
       color: "#333"
-    }))
+    })
     @view.add(@placeHolder)
     
     @scrollView = Ti.UI.createScrollView @settings

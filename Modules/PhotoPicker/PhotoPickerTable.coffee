@@ -9,28 +9,42 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     @photos = @settings.photos
     @thumbnails = []
 
-    @view = Ti.UI.createView @settings
+    @view = @createToolbar()
+    @grid = @createPhotoGrid()
+    @view.add @grid.view
     
-    @buttons = Ti.UI.createView({
-      width: "100%"
-      height: Ti.UI.SIZE
+    for existingPhoto in @settings.photos
+      @grid.addPhoto existingPhoto, existingPhoto #TODO: GJ: thumbnail?
+    
+    @update()
+    
+  createToolbar: =>
+    view = Ti.UI.createView @settings
+    
+    buttonView = Ti.UI.createView {
       top: 0
+      width: "100%", height: 54
       backgroundColor: "#3b3b43"
-    })
+    }
     
-    @addFromCameraButton = root.app.create("Button", {
+    if Ti.Media.isCameraSupported
+      buttonView.add @createCameraButton().view
+    
+    @addFromGalleryButton = @createGalleryButton()
+    buttonView.add @addFromGalleryButton.view
+    
+    view.add buttonView
+    view
+    
+  createCameraButton: =>
+    root.app.create("Button", {
       text: "Take Photo"
-      left: 10
-      top: 10
-      bottom: 10
-      height: 34
-      width: 120
+      left: 10, top: 10, bottom: 10
+      width: 120, height: 34
       iconSettings: {
+        left: 5, right: 5
         image: "/Common/Modules/PhotoPicker/Images/black/camera.png"
-        height: 20
-        width: 20
-        left: 5
-        right: 5
+        width: 20, height: 20
       }
       style: {
         gradient: ["#EEE", "#CECECE"]
@@ -43,21 +57,16 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       }
       onClick: @addFromCamera
     })
-    @buttons.add @addFromCameraButton.view if Ti.Media.isCameraSupported
     
-    @addFromGalleryButton = root.app.create("Button", {
+  createGalleryButton: =>
+    root.app.create("Button", {
       text: "From Library"
-      right: 10
-      top: 10
-      bottom: 10
-      height: 34
-      width: 120
+      top: 10, right: 10, bottom: 10
+      width: 120, height: 34
       iconSettings: {
         image: "/Common/Modules/PhotoPicker/Images/black/photos.png"
-        height: 20
-        width: 20
-        left: 5
-        right: 5
+        width: 20, height: 20
+        left: 5, right: 5
       }
       style: {
         gradient: ["#EEE", "#CECECE"]
@@ -70,23 +79,15 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
       }
       onClick: @addFromGallery
     })
-    @buttons.add @addFromGalleryButton.view
     
-    @view.add(@buttons)
-    
-    @grid = root.app.create 'PhotoPicker.PhotoGrid', {
+  createPhotoGrid: ->
+    root.app.create 'PhotoPicker.PhotoGrid', {
       top: 54
       onRemove: (photo, thumbnail) =>  #TODO: GJ: record existing image deletes
         @photos = @photos.without photo
         @thumbnails = @thumbnails.without thumbnail
         @update()
     }
-    @view.add @grid.view
-    
-    for existingPhoto in @settings.photos
-      @grid.addPhoto existingPhoto, existingPhoto #TODO: GJ: thumbnail?
-    
-    @update()
     
   update: =>
     @settings.onUpdate @photos, @thumbnails

@@ -45,7 +45,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
      
   addScrollListener: ->
     
-  update: (items, hasMoreRows, enableAds = false) =>
+  update: (items, hasMoreRows, enableAds = false, adData = {}) =>
     Ti.API.info("----- Update Table -----")
     
     @table.scrollable = true
@@ -58,7 +58,7 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       for item in items
         
         if enableAds && @options.adRowSettings? && root._.contains(@options.adRowSettings.indexes, @i)
-          adRow = root.app.create(@options.adRowSettings.rowClassName, { height: @options.adRowSettings.height, width: @options.adRowSettings.width, url: @options.adRowSettings.url }).row
+          adRow = root.app.create(@options.adRowSettings.rowClassName, { height: @options.adRowSettings.height, width: @options.adRowSettings.width, url: @options.adRowSettings.url, adData: adData }).row
           @table.appendRow(adRow)
         
         @table.appendRow(root.app.create(@options.rowClassName, { item: item }).row)

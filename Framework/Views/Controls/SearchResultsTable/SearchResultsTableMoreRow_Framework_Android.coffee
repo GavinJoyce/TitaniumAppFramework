@@ -1,21 +1,13 @@
 root.SearchResultsTableMoreRow_Framework_Android = class SearchResultsTableMoreRow_Framework_Android
-  constructor: (options = {}) ->
-    @settings = root._.extend {}, options
-    
+  constructor: ->
     @moreRow = Ti.UI.createTableViewRow({
       backgroundColor: "#DDD"
-      height: '50dp'
-      type: "loadMoreRow"
+      height: 50
     })
     
-    label = Ti.UI.createLabel {
-      text: 'Loading More....'
-      color: '#666'
-      font: { fontSize: '15dp' }
-    }
-    
-    @moreRow.add label
-    
-  showLoadMoreButton: =>
-    
-  hideLoadMoreButton: =>
+    text = Ti.UI.createLabel({
+      text: "Loading More..."
+      color: "#333"
+      font: { fontSize: 14 }
+    })
+    @moreRow.add(text)

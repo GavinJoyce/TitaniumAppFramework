@@ -1,3 +1,4 @@
+root.framework.include("/Common/Framework/Views/Controls/SearchResultsTable/SearchResultsTable_Framework.js")
 root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS extends root.SearchResultsTable_Framework
   constructor:(options = {}) ->
     @options = root._.extend({}, options)

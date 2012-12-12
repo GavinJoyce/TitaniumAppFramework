@@ -1,5 +1,4 @@
-root.framework.include("/Common/Framework/Views/Controls/SearchResultsTable_Framework.js")
-
+root.framework.include("/Common/Framework/Views/Controls/SearchResultsTable/SearchResultsTable_Framework.js")
 root.SearchResultsTable_Framework_Android = class SearchResultsTable_Framework_Android extends root.SearchResultsTable_Framework
   constructor:(options = {}) ->
     @options = root._.extend({}, options)

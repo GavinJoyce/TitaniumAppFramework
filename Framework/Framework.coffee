@@ -84,7 +84,20 @@ root.Framework = class Framework
         else
           object[key] = deepExtend object[key], val
     object
-    
+  
+  getImageResolutionUrl: (url) ->
+    if Ti.Platform.osname is "android"
+      dpi = Titanium.Platform.displayCaps.dpi
+      if dpi < 160 then size = 'l'
+      else if dpi >= 160 and dpi < 240  then size = 'm'
+      else if dpi >= 240 and dpi < 320 then size = 'h'
+      else if dpi >= 320 then size = 'x'
+      else size = 'm'
+      urlParts = url.split('.')
+      return "#{urlParts[0]}-#{size}.#{urlParts[1]}"
+    else
+      return url
+  
   post: (url, params, onSuccess, onError = null) =>
     @xhr.abort()
     @xhr.open('POST', url)

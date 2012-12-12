@@ -13,6 +13,7 @@ root.MobileAppBase = class MobileAppBase
       viewBackgroundColor: null
       viewBackgroundGradient: null
       viewTitleBarColor: '#000000'
+      viewTitleBarGradient: null
       viewTitleBarImage: null
       debugMode: false
       noInternetViewEnabled: false

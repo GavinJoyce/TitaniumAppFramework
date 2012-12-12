@@ -28,7 +28,10 @@ root.BaseView = class BaseView
   
   buildLayout: =>
     if Ti.Platform.osname == "android" && !@settings.isHome
-      @header = root.app.create('HeaderControl', { backgroundColor: @settings.barColor, height: '50dp' })
+      @header = root.app.create('HeaderControl', {
+        backgroundGradient: root.app.settings.viewTitleBarGradient
+        height: '50dp'
+      })
       @window.add(@header.view)
       @content = Ti.UI.createView {
         top: '50dp'

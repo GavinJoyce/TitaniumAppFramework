@@ -53,6 +53,9 @@ root.SearchResultsTable_Framework_iOS = class SearchResultsTable_Framework_iOS e
           @options.infiniteScrollCallback()
       @lastDistance = distance
     )
+  
+  scrollingEnabled: (enabled) =>
+    @table.setScrollable enabled
     
   createTableHeader: =>
     tableHeader = Ti.UI.createView({

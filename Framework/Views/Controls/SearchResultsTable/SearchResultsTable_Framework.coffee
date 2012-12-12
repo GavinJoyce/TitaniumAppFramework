@@ -6,26 +6,16 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       loadMoreOnClick: =>
       resetResultsOnClick: =>
       infiniteScroll: true
-      infiniteScrollCallback: (e) => Ti.API.info("scrolled to bottom")
-      rowClassName: "SearchResultsTableRow"
-      noResultsRowClassName: "SearchResultsTableNoResultsRow"
-      loadMoreRowClassName: "SearchResultsTableMoreRow"
+      infiniteScrollCallback: (e) => Ti.API.info('SearchResultsTable_Framework.infiniteScrollCallback')
+      rowClassName: 'SearchResultsTableRow'
+      noResultsRowClassName: 'SearchResultsTableNoResultsRow'
+      loadMoreRowClassName: 'SearchResultsTableMoreRow'
       pullToRefresh: false
-      pullToRefreshCallback: (e) => Ti.API.info("pull to refresh fired")
+      pullToRefreshCallback: => Ti.API.info('SearchResultsTable_Framework.pullToRefreshCallback')
       adRowSettings: null
     }, options
     
-    @table = Ti.UI.createTableView {
-      top: @options.top
-      separatorColor: "#ddd"
-    }
-    @table.addEventListener("click", (e) =>
-      switch e.row.type
-        when "noResultsRow", "loadMoreRow", "retryRow"
-          Ti.API.info("do nothing")
-        else @options.onTableClick(e)
-    )
-    
+    @table = @createTableView()
     @moreRow = @createMoreRow()
     @noResultsRow = @createNoResultsRow()
 
@@ -33,6 +23,19 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       @lastDistance = 0
       @addScrollListener()
   
+  createTableView: =>
+    table = Ti.UI.createTableView {
+      top: @options.top
+      separatorColor: "#ddd"
+    }
+    table.addEventListener("click", (e) =>
+      switch e.row.type
+        when "noResultsRow", "loadMoreRow", "retryRow"
+          Ti.API.info("SearchResultsTable_Framework.table: click: do nothing")
+        else @options.onTableClick(e)
+    )
+    table
+    
   createMoreRow: =>
     root.app.create(@options.loadMoreRowClassName, {
       loadMoreOnClick: @options.loadMoreOnClick
@@ -44,31 +47,30 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     })
      
   addScrollListener: ->
+    alert 'SearchResultsTable_Framework.addScrollListener: Abstract override'
     
   update: (items, hasMoreRows, enableAds = false, adData = {}) =>
-    Ti.API.info("----- Update Table -----")
+    Ti.API.info("----- Updating SearchResultsTable -----")
     
-    @table.scrollable = true
-
-    if @table.data != null && @table.data.length > 0 && @table.data[0].rows.length > 0
-      rowToDeleteIndex = @table.data[0].rows.length - 1
+    @scrollingEnabled true
 
     if items.length > 0
-      @i = 0
-      for item in items
+      extraRows = []
+      for item, index in items
         
-        if enableAds && @options.adRowSettings? && root._.contains(@options.adRowSettings.indexes, @i)
+        if enableAds && @options.adRowSettings? && root._.contains(@options.adRowSettings.indexes, index)
           adRow = root.app.create(@options.adRowSettings.rowClassName, { height: @options.adRowSettings.height, width: @options.adRowSettings.width, url: @options.adRowSettings.url, adData: adData }).row
           @table.appendRow(adRow)
         
-        @table.appendRow(root.app.create(@options.rowClassName, { item: item }).row)
+        row = root.app.create(@options.rowClassName, { item: item }).row
+        extraRows.push row
       
-        if @i == 0 && rowToDeleteIndex
-          @table.deleteRow(rowToDeleteIndex)
+      if @table.data.length > 0
+        @table.deleteRow(@table.data[0].rows.length - 1)
       
-        @i++
+      @table.appendRow extraRows
     else
-      @table.scrollable = false
+      @scrollingEnabled = false
       @table.setData([@noResultsRow.noResultsRow])
 
     if hasMoreRows
@@ -77,7 +79,9 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     else
       @table.hasMoreRows = false
     
-    Ti.API.info("-- Finish Update Table --")
+    Ti.API.info("-- Finished Updating SearchResultsTable --")
+
+  scrollingEnabled: (enabled) =>
 
   clear: ->
     @table.setData [] 

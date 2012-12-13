@@ -3,6 +3,7 @@ Framework/*.js
 Framework/Views/*.js
 Framework/Views/**/*.js
 Framework/Views/**/**/*.js
+Framework/Views/**/**/**/*.js
 Modules/**/*.js
 Modules/**/**/*.js
 Modules/**/***/**/*.js

@@ -3,8 +3,7 @@ root.SearchResultsTableNoResultsRow_Framework = class SearchResultsTableNoResult
     @options = root._.extend {}, options
     
     @noResultsRow = Ti.UI.createTableViewRow {
-      backgroundColor: '#FFF'
-      height: '100%'
+      backgroundColor: '#333'
       title: 'No Results'
     }
     @noResultsRow.type = "noResultsRow"

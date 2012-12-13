@@ -1,6 +1,7 @@
 root.SearchResultsTableNoResultsRow_Framework_iOS = class SearchResultsTableNoResultsRow_Framework_iOS
   constructor: (options = {}) ->
-    @options = root._.extend({}, options)
+    options = root._.extend {}, options
+    super options
     
     @noResultsRow = Ti.UI.createTableViewRow({
       backgroundColor: "#FFF"
@@ -30,6 +31,6 @@ root.SearchResultsTableNoResultsRow_Framework_iOS = class SearchResultsTableNoRe
       onClickStyle: {
         gradient: ['#003cb4', '#0044cc']
       }
-      onClick: @options.resetResultsOnClick
+      onClick: options.resetResultsOnClick
     })
     @noResultsRow.add(button.view)

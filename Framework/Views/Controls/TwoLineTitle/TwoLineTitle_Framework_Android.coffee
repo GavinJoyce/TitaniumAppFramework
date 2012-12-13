@@ -7,18 +7,24 @@ root.TwoLineTitle_Framework_Android = class TwoLineTitle_Framework_Android exten
     
   createTitle: =>
     title = super()
-    title.setHeight 'auto'
+    title.setTop '5dp'
+    title.setHeight '20dp'
     title.setFont { fontSize: '15dp' }
+    title.setEllipsize true
     title
     
   createSubTitle: =>
     subTitle = super()
-    subTitle.setHeight 'auto'
+    subTitle.setTop '25dp'
+    subTitle.setHeight '20dp'
     subTitle.setFont { fontSize: '13dp' }
+    subTitle.setEllipsize true
     subTitle
   
   createBigTitle: =>
     bigTitle = super()
+    bigTitle.setHeight 'auto'
     bigTitle.setFont { fontSize: '17dp' }
+    bigTitle.setEllipsize true
     
     bigTitle

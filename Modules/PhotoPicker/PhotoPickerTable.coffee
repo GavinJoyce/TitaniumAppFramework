@@ -1,39 +1,40 @@
 root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
   constructor:(options = {}) ->
-    @settings = root._.extend({
-      backgroundColor: '#EEE'
+    @settings = root._.extend {
       photos: []
-      onUpdate: (photos, thumbnails) ->
-    }, options)
+      onUpdate: (photos, thumbnails) -> Ti.API.info 'PhotoPicker.PhotoPickerTable.onUpdate'
+    }, options
     
     @photos = @settings.photos
     @thumbnails = []
 
-    @view = @createToolbar()
+    @view = Ti.UI.createView {
+      width: Ti.UI.FILL, height: Ti.UI.FILL
+    }
+
+    @view.add @createToolbar()
+
     @grid = @createPhotoGrid()
     @view.add @grid.view
     
     for existingPhoto in @settings.photos
-      @grid.addPhoto existingPhoto, existingPhoto #TODO: GJ: thumbnail?
+      @grid.addPhoto existingPhoto, existingPhoto #TODO: thumb second
     
     @update()
     
   createToolbar: =>
-    view = Ti.UI.createView @settings
-    
-    buttonView = Ti.UI.createView {
+    view = Ti.UI.createView {
       top: 0
       width: "100%", height: 54
-      backgroundColor: "#3b3b43"
+      backgroundColor: "#333"
     }
     
     if Ti.Media.isCameraSupported
-      buttonView.add @createCameraButton().view
+      view.add @createCameraButton().view
     
     @addFromGalleryButton = @createGalleryButton()
-    buttonView.add @addFromGalleryButton.view
-    
-    view.add buttonView
+    view.add @addFromGalleryButton.view
+
     view
     
   createCameraButton: =>
@@ -103,11 +104,14 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     }
     
   addFromCamera: =>
-    Ti.Media.showCamera { #TODO: GJ: can we set the orientation to force landscape?
-      success: (e) => @addMedia e.media
-      cancel: ->
-      error: ->
-    }
+    Ti.Media.showCamera {
+        success: (e) => @addMedia e.media
+        cancel: ->
+        error: (error) ->
+        saveToPhotoGallery: true
+        allowEditing: true
+        mediaTypes: [Ti.Media.MEDIA_TYPE_PHOTO]
+      }
       
   addMedia: (image) =>
     thumbnail = image.imageAsThumbnail(100)

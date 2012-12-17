@@ -4,37 +4,50 @@ root.PhotoPicker.PhotoGrid = class PhotoGrid
       layout: 'horizontal'
       width: '100%'
       height: Ti.UI.FILL
-      contentWidth: 320
-      contentHeight: "auto"
-      showVerticalScrollIndicator: true
-      showHorizontalScrollIndicator: false
       onRemove: (thumb, filename) ->
     }, options)
     @controls = []
     
-    @view = Ti.UI.createView {
+    @view = @createView()
+    @placeHolder = @createPlaceHolder()
+    @scrollView = @createScrollView()
+
+    @view.add @placeHolder
+    @view.add @scrollView
+  
+  createView: ->
+    Ti.UI.createView {
       height: @settings.height
       width: @settings.width
       top: @settings.top
     }
     
-    @placeHolder = Ti.UI.createView {
+  createPlaceHolder: ->
+    placeHolder = Ti.UI.createView {
       height: @settings.height
       width: @settings.width
-      backgroundColor: "#EFEFEF"
-      zIndex: 1
+      visible: false
     }
-    @placeHolder.add(Ti.UI.createLabel {
-      text: "No Photos", shadowOffset: { x: 0, y: 1 }, shadowColor: '#fff'
-      font: { fontSize: 16 }
-      color: "#333"
-    })
-    @view.add(@placeHolder)
     
-    @scrollView = Ti.UI.createScrollView @settings
-    @scrollView.top = 0
-    @scrollView.zIndex = 2
-    @view.add(@scrollView)
+    placeHolder.add @createPlaceHolderLabel()
+    placeHolder
+    
+  createPlaceHolderLabel: ->
+    Ti.UI.createLabel {
+      text: "No Photos"
+      font: { fontSize: 16 }
+      color: "#111"
+    }
+    
+  createScrollView: ->
+    Ti.UI.createScrollView {
+      top: 0
+      layout: 'horizontal'
+      contentWidth: 320
+      contentHeight: "auto"
+      showVerticalScrollIndicator: true
+      showHorizontalScrollIndicator: false
+    }
   
   addPhoto: (thumb, filename) ->
     photo = root.app.create 'PhotoPicker.Photo', {

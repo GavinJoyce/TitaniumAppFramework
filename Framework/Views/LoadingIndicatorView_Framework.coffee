@@ -24,11 +24,11 @@ root.LoadingIndicatorView_Framework = class LoadingIndicatorView_Framework exten
       @add(@loadingView)
     else if Ti.Platform.osname == "android"
       @activityIndicator = Ti.UI.createActivityIndicator({
-        message: "Loading..."
         width: Ti.UI.SIZE, height: Ti.UI.SIZE
         color: "#333"
         cancelable: true
-        font: { fontSize: 14, fontWeight: 'bold' }
+        style: Ti.UI.ActivityIndicatorStyle.BIG_DARK
+        font: { fontSize: '20dp', fontWeight: 'bold' }
       })
       @add(@activityIndicator)
   

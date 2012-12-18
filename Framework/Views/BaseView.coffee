@@ -47,19 +47,20 @@ root.BaseView = class BaseView
       @window.add(@content)
   
   assignDefaultButtons: =>
-    if @settings.useImageButtons && @settings.hasBackButton
-      button = root.app.create 'ImageButton', {
-        type: 'back'
-        text: 'Back'
-        onClick: => @close()
-      }
-      @window.setLeftNavButton button.view
-    else if @settings.useImageButtons && @settings.hasDoneButton
-      button = root.app.create 'ImageButton', {
-        text: 'Done'
-        onClick: => @close()
-      }
-      @window.setRightNavButton(button.view)
+    if Ti.Platform.osname != "android"
+      if @settings.useImageButtons && @settings.hasBackButton
+        button = root.app.create 'ImageButton', {
+          type: 'back'
+          text: 'Back'
+          onClick: => @close()
+        }
+        @window.setLeftNavButton button.view
+      else if @settings.useImageButtons && @settings.hasDoneButton
+        button = root.app.create 'ImageButton', {
+          text: 'Done'
+          onClick: => @close()
+        }
+        @window.setRightNavButton(button.view)
       
   applyStyle: -> #TODO: GJ: add support for different platforms
     if @settings.viewTitleBarStyle?

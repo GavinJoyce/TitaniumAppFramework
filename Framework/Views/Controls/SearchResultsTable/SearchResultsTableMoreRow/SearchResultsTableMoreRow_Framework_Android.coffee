@@ -9,3 +9,7 @@ root.SearchResultsTableMoreRow_Framework_Android = class SearchResultsTableMoreR
       font: { fontSize: '13dp', fontWeight: 'bold' }
     }
     @moreRow.add text
+    
+  showLoadMoreButton: =>
+    
+  hideLoadMoreButton: =>

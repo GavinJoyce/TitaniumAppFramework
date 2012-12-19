@@ -58,10 +58,9 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
     if items.length > 0
       extraRows = []
       for item, index in items
-        
         if enableAds && @options.adRowSettings? && root._.contains(@options.adRowSettings.indexes, index)
           adRow = root.app.create(@options.adRowSettings.rowClassName, { height: @options.adRowSettings.height, width: @options.adRowSettings.width, url: @options.adRowSettings.url, adData: adData }).row
-          @table.appendRow(adRow)
+          extraRows.push adRow
         
         row = root.app.create(@options.rowClassName, { item: item }).row
         extraRows.push row
@@ -71,12 +70,12 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
       
       @table.appendRow extraRows
     else
-      @scrollingEnabled = false
-      @table.setData([@noResultsRow.noResultsRow])
+      @scrollingEnabled false
+      @table.appendRow @noResultsRow.noResultsRow
 
     if hasMoreRows
       @table.hasMoreRows = true
-      @table.appendRow(@moreRow.moreRow)
+      @table.appendRow @moreRow.moreRow
     else
       @table.hasMoreRows = false
     
@@ -84,5 +83,5 @@ root.SearchResultsTable_Framework = class SearchResultsTable_Framework
 
   scrollingEnabled: (enabled) =>
 
-  clear: ->
-    @table.setData [] 
+  clear: =>
+    @table.data = [] 

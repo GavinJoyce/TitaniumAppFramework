@@ -1,8 +1,6 @@
-root.framework.include("/Common/Framework/Views/Controls/SearchResultsTable/SearchResultsTableNoResultsRow/SearchResultsTableNoResultsRow_Framework.js")
 root.SearchResultsTableNoResultsRow_Framework_iOS = class SearchResultsTableNoResultsRow_Framework_iOS extends root.SearchResultsTableNoResultsRow_Framework
   constructor: (options = {}) ->
     options = root._.extend {}, options
-    super options
     
     @noResultsRow = Ti.UI.createTableViewRow({
       backgroundColor: "#FFF"

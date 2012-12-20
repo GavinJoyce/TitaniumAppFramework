@@ -85,8 +85,8 @@ root.PhotoPicker.PhotoPickerTable = class PhotoPickerTable
     root.app.create 'PhotoPicker.PhotoGrid', {
       top: 54
       onRemove: (photo, thumbnail) =>  #TODO: GJ: record existing image deletes
-        @photos = @photos.without photo
-        @thumbnails = @thumbnails.without thumbnail
+        @photos = root._.without(@photos, photo)
+        @thumbnails = root._.without(@thumbnails, thumbnail)
         @update()
     }
     

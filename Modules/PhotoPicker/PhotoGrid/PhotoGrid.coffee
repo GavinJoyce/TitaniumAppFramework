@@ -55,7 +55,7 @@ root.PhotoPicker.PhotoGrid = class PhotoGrid
       thumb: thumb
       filename: filename
       onRemoveClick: (photo) =>
-        @controls = @controls.without(photo.view)
+        @controls = root._.without(@controls, photo.view)
         @scrollView.remove photo.view
         @settings.onRemove(photo.settings.thumb, photo.settings.filename)
     }

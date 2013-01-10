@@ -238,8 +238,7 @@ var Analytics = AnalyticsBase.extend({
 			
 			var eventsToDelete = [];
 			
-			while(eventRows.isValidRow()) {
-				
+			while(eventRows.isValidRow()) {				
 				var event = {
 					event_id:eventRows.fieldByName('event_id'),
 					user_id:eventRows.fieldByName('user_id'),
@@ -252,10 +251,11 @@ var Analytics = AnalyticsBase.extend({
 					action:eventRows.fieldByName('action'),
 					label:eventRows.fieldByName('label'),
 					value:eventRows.fieldByName('value'),
-					customVars:eventRows.fieldByName('customVars')
+					customVars:eventRows.fieldByName('customVars'),
 				};
 				
 				var path = this._constructRequestPath(event);
+				Titanium.API.log(path);
 				
 				this._httpClient.open('GET', 'http://www.google-analytics.com' + path, false);
 				this._httpClient.setRequestHeader('User-Agent', this._USER_AGENT);
@@ -283,33 +283,25 @@ var Analytics = AnalyticsBase.extend({
 		path.append('&utmcs=UTF-8');
 		path.append('&utmsr=' + Titanium.Platform.displayCaps.platformWidth + 'x' + Titanium.Platform.displayCaps.platformHeight);
 		path.append('&utmsc=24-bit');
-		path.append('&utmul='+ Titanium.Platform.locale + '-' + Titanium.Platform.countryCode);
+		path.append('&utmul='+ Titanium.Platform.locale);
 		
 		path.append('&utmac=').append(this._accountId);
 		
 		if (event.category == this._PAGEVIEW) {
 		    //just page tracking
-		    path.append('&utmp=').append(event.action);
+		    path.append('&utmp=').append(Ti.Network.encodeURIComponent(event.action));
 		    
 		    var customVars = JSON.parse(event.customVars);
-		    if (customVars != null && customVars.length > 0) {
-		      var customVarString = '&utme=8(';
-		      for(var i = 0; i < customVars.length; i++) {
-		        customVarString += customVars[i][1];
-		        if (i != (customVars.length - 1)) {
-		          customVarString += '*';
-		        }
-		      }
-		      customVarString += ')';
-		      customVarString += '9(';
-		      for(var i = 0; i < customVars.length; i++) {
-		        customVarString += customVars[i][2];
-		        if (i != (customVars.length - 1)) {
-		          customVarString += '*';
-		        }
-		      }
-		      customVarString += ')';
-		      path.append(customVarString);
+		    if (customVars && customVars.length > 0) {
+		    	var keys = [];
+		    	var values = [];
+		    	customVars.forEach(function(pair) {
+		    		var key = Object.keys(pair)[0] || null;
+		    		keys.push(key);
+		    		values.push(pair[key] || null);
+		    	});
+				var utme = "&utme=8(" + keys.join("*") + ")9(" + values.join("*") + ")";
+				path.append(utme);
 		    }
 	    } else {
 		    //event tracking

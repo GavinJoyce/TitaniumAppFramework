@@ -38,7 +38,7 @@ root.Framework = class Framework
     if moduleName in @unloadedModules
       Ti.API.info("Loading Dynamic Module ..... [#{moduleName}]")
       @includeModule moduleName
-      @unloadedModules = @unloadedModules.without moduleName
+      @unloadedModules = _.without @unloadedModules, moduleName
     
   include: (file) =>    
     if @includedFiles.indexOf(file) == -1

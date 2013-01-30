@@ -48,10 +48,10 @@ root.BaseView = class BaseView
   
   assignDefaultButtons: =>
     if Ti.Platform.osname != "android"
-      if @settings.useImageButtons && @settings.hasBackButton
+      if @settings.useImageButtons && @settings.hasBackButton && !@settings.isHome
         button = root.app.create 'ImageButton', {
           type: 'back'
-          text: 'Back'
+          text: if @settings.backButtonTitle then @settings.backButtonTitle else 'Back'
           onClick: => @close()
         }
         @window.setLeftNavButton button.view
@@ -74,7 +74,7 @@ root.BaseView = class BaseView
        #@settings.backgroundRepeat = true #NOTE: GJ: waiting for titanium retina bug to be fixed
 
   focus: (e) =>
-    Ti.API.info 'BaseView.focus'
+    Ti.API.debug 'BaseView.focus'
     @onInit() if !@uiInitialised
     @onFocus()
     @uiInitialised = true
@@ -98,7 +98,7 @@ root.BaseView = class BaseView
       @onLandscape()
       
   onFocus: ->
-    Ti.API.info 'BaseView.onFocus'
+    Ti.API.debug 'BaseView.onFocus'
     
   show: (options = {}) =>
     if @settings.navGroup?
@@ -149,8 +149,6 @@ root.BaseView = class BaseView
   click: (callback) ->
     @window.addEventListener("click", callback)
     
-    
-  # events for orientation changes
   onPortrait: ->
     
   onLandscape: ->
